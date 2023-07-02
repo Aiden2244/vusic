@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "138094580765",
+    "project_id": "vusic-final-c44ec",
+    "storage_bucket": "vusic-final-c44ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138094580765:android:52addb81ccf8de344c62f4",
+        "android_client_info": {
+          "package_name": "com.vusic.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138094580765-8qs7jqqhjhckafhq18gt7iagq7k40r76.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vusic.app",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "138094580765-chp8ffg65kj1otmta3gf4de9r2f6c7ql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQKKYSKhnpFGuEoiP_4avaNt9_tkdklzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138094580765-chp8ffg65kj1otmta3gf4de9r2f6c7ql.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "138094580765-qt7m9rf9739sq3716u7v9tddsj9uiedg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vusic.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
