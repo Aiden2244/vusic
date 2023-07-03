@@ -4,3 +4,4 @@ export '/pages/sample_theme_test/sample_theme_test_widget.dart'
     show SampleThemeTestWidget;
 export '/pages/create_account_page/create_account_page_widget.dart'
     show CreateAccountPageWidget;
+export '/pages/settings_page/settings_page_widget.dart' show SettingsPageWidget;
