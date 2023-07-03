@@ -131,8 +131,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                             children: [
                               AuthUserStreamWidget(
                                 builder: (context) => Text(
-                                  valueOrDefault(
-                                      currentUserDocument?.fullName, ''),
+                                  currentUserDisplayName,
                                   style: FlutterFlowTheme.of(context)
                                       .headlineSmall,
                                 ),
@@ -140,12 +139,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 0.0, 0.0),
-                                child: AuthUserStreamWidget(
-                                  builder: (context) => Text(
-                                    currentUserDisplayName,
-                                    style: FlutterFlowTheme.of(context)
-                                        .labelMedium,
-                                  ),
+                                child: Text(
+                                  currentUserUid,
+                                  style:
+                                      FlutterFlowTheme.of(context).labelMedium,
                                 ),
                               ),
                             ],
