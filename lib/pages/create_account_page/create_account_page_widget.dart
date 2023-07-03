@@ -273,8 +273,9 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                 },
                 text: 'Next',
                 options: FFButtonOptions(
+                  width: 100.0,
                   height: 40.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).alternate,
