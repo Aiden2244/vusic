@@ -289,7 +289,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Error: User Name and Full Name cannot be empty',
+                          'Error: User Name, Full Name, and Account Type cannot be empty',
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
@@ -305,7 +305,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                 text: 'Create Account',
                 options: FFButtonOptions(
                   height: 40.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).alternate,

@@ -242,51 +242,58 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
               ),
               Align(
                 alignment: AlignmentDirectional(0.0, 0.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    GoRouter.of(context).prepareAuthEvent();
-                    final user = await authManager.signInWithGoogle(context);
-                    if (user == null) {
-                      return;
-                    }
-                    if (valueOrDefault(currentUserDocument?.userName, '') !=
-                            null &&
-                        valueOrDefault(currentUserDocument?.userName, '') !=
-                            '') {
-                      context.pushNamedAuth('SampleThemeTest', context.mounted);
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      GoRouter.of(context).prepareAuthEvent();
+                      final user = await authManager.signInWithGoogle(context);
+                      if (user == null) {
+                        return;
+                      }
+                      if (valueOrDefault(currentUserDocument?.userName, '') !=
+                              null &&
+                          valueOrDefault(currentUserDocument?.userName, '') !=
+                              '') {
+                        context.pushNamedAuth(
+                            'SampleThemeTest', context.mounted);
 
-                      return;
-                    } else {
-                      context.pushNamedAuth('SetUnamePage', context.mounted);
+                        return;
+                      } else {
+                        context.pushNamedAuth('SetUnamePage', context.mounted);
 
-                      return;
-                    }
-                  },
-                  text: 'Sign In With Google',
-                  icon: FaIcon(
-                    FontAwesomeIcons.google,
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    size: 20.0,
-                  ),
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily:
-                              FlutterFlowTheme.of(context).titleSmallFamily,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).titleSmallFamily),
-                        ),
-                    elevation: 3.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                        return;
+                      }
+                    },
+                    text: 'Sign In With Google',
+                    icon: FaIcon(
+                      FontAwesomeIcons.google,
+                      color: FlutterFlowTheme.of(context).tertiary,
+                      size: 20.0,
                     ),
-                    borderRadius: BorderRadius.circular(6.0),
+                    options: FFButtonOptions(
+                      height: 40.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      textStyle: FlutterFlowTheme.of(context)
+                          .titleSmall
+                          .override(
+                            fontFamily:
+                                FlutterFlowTheme.of(context).titleSmallFamily,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                FlutterFlowTheme.of(context).titleSmallFamily),
+                          ),
+                      elevation: 3.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
                   ),
                 ),
               ),
