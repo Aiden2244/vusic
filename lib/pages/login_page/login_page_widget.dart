@@ -249,8 +249,18 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     if (user == null) {
                       return;
                     }
+                    if (valueOrDefault(currentUserDocument?.userName, '') !=
+                            null &&
+                        valueOrDefault(currentUserDocument?.userName, '') !=
+                            '') {
+                      context.pushNamedAuth('SampleThemeTest', context.mounted);
 
-                    context.goNamedAuth('SampleThemeTest', context.mounted);
+                      return;
+                    } else {
+                      context.pushNamedAuth('SetUnamePage', context.mounted);
+
+                      return;
+                    }
                   },
                   text: 'Sign In With Google',
                   icon: FaIcon(

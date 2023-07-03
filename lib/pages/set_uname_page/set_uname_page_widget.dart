@@ -1,34 +1,38 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-import 'create_account_page_model.dart';
-export 'create_account_page_model.dart';
+import 'set_uname_page_model.dart';
+export 'set_uname_page_model.dart';
 
-class CreateAccountPageWidget extends StatefulWidget {
-  const CreateAccountPageWidget({Key? key}) : super(key: key);
+class SetUnamePageWidget extends StatefulWidget {
+  const SetUnamePageWidget({Key? key}) : super(key: key);
 
   @override
-  _CreateAccountPageWidgetState createState() =>
-      _CreateAccountPageWidgetState();
+  _SetUnamePageWidgetState createState() => _SetUnamePageWidgetState();
 }
 
-class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
-  late CreateAccountPageModel _model;
+class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
+  late SetUnamePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateAccountPageModel());
+    _model = createModel(context, () => SetUnamePageModel());
 
-    _model.emailFieldController ??= TextEditingController();
-    _model.passFieldController ??= TextEditingController();
-    _model.confPassFieldController ??= TextEditingController();
+    _model.nameFieldController ??= TextEditingController();
+    _model.unameFieldController ??= TextEditingController();
+    _model.phoneFieldController ??= TextEditingController();
   }
 
   @override
@@ -58,7 +62,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                 color: FlutterFlowTheme.of(context).primaryBackground,
               ),
               Text(
-                'WELCOME TO THE \nMUSIC REVOLUTION',
+                'YOU\'RE ALMOST \nREADY TO ROCK',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       fontFamily: 'Poppins',
@@ -77,16 +81,62 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                     thickness: 1.0,
                     color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
+                    child: TextFormField(
+                      controller: _model.nameFieldController,
+                      autofocus: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                        hintText: 'Full Name',
+                        hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).alternate,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primary,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      cursorColor: FlutterFlowTheme.of(context).primary,
+                      validator: _model.nameFieldControllerValidator
+                          .asValidator(context),
+                    ),
+                  ),
                 ],
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
                 child: TextFormField(
-                  controller: _model.emailFieldController,
+                  controller: _model.unameFieldController,
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'Username',
                     labelStyle: FlutterFlowTheme.of(context).labelMedium,
                     hintStyle: FlutterFlowTheme.of(context).labelMedium,
                     enabledBorder: OutlineInputBorder(
@@ -121,17 +171,17 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                   style: FlutterFlowTheme.of(context).bodyMedium,
                   cursorColor: FlutterFlowTheme.of(context).primary,
                   validator:
-                      _model.emailFieldControllerValidator.asValidator(context),
+                      _model.unameFieldControllerValidator.asValidator(context),
                 ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
                 child: TextFormField(
-                  controller: _model.passFieldController,
+                  controller: _model.phoneFieldController,
                   autofocus: true,
-                  obscureText: !_model.passFieldVisibility,
+                  obscureText: false,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: 'Phone Number (Optional)',
                     labelStyle: FlutterFlowTheme.of(context).labelMedium,
                     hintStyle: FlutterFlowTheme.of(context).labelMedium,
                     enabledBorder: OutlineInputBorder(
@@ -162,82 +212,54 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    suffixIcon: InkWell(
-                      onTap: () => setState(
-                        () => _model.passFieldVisibility =
-                            !_model.passFieldVisibility,
-                      ),
-                      focusNode: FocusNode(skipTraversal: true),
-                      child: Icon(
-                        _model.passFieldVisibility
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: FlutterFlowTheme.of(context).alternate,
-                        size: 25.0,
-                      ),
-                    ),
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium,
+                  keyboardType: TextInputType.phone,
+                  cursorColor: FlutterFlowTheme.of(context).primary,
                   validator:
-                      _model.passFieldControllerValidator.asValidator(context),
+                      _model.phoneFieldControllerValidator.asValidator(context),
+                  inputFormatters: [_model.phoneFieldMask],
                 ),
+              ),
+              Divider(
+                height: 30.0,
+                thickness: 1.0,
+                color: FlutterFlowTheme.of(context).primaryBackground,
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
-                child: TextFormField(
-                  controller: _model.confPassFieldController,
-                  autofocus: true,
-                  obscureText: !_model.confPassFieldVisibility,
-                  decoration: InputDecoration(
-                    labelText: 'Confirm Password',
-                    labelStyle: FlutterFlowTheme.of(context).labelMedium,
-                    hintStyle: FlutterFlowTheme.of(context).labelMedium,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).primary,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).error,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).error,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    suffixIcon: InkWell(
-                      onTap: () => setState(
-                        () => _model.confPassFieldVisibility =
-                            !_model.confPassFieldVisibility,
-                      ),
-                      focusNode: FocusNode(skipTraversal: true),
-                      child: Icon(
-                        _model.confPassFieldVisibility
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: FlutterFlowTheme.of(context).alternate,
-                        size: 25.0,
-                      ),
-                    ),
+                child: FlutterFlowDropDown<String>(
+                  controller: _model.accountMenuValueController ??=
+                      FormFieldController<String>(
+                    _model.accountMenuValue ??= '',
                   ),
-                  style: FlutterFlowTheme.of(context).bodyMedium,
-                  validator: _model.confPassFieldControllerValidator
-                      .asValidator(context),
+                  options: ['artist', 'musician'],
+                  optionLabels: ['Artist', 'Musician'],
+                  onChanged: (val) =>
+                      setState(() => _model.accountMenuValue = val),
+                  width: 300.0,
+                  height: 50.0,
+                  textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily:
+                            FlutterFlowTheme.of(context).bodyMediumFamily,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        useGoogleFonts: GoogleFonts.asMap().containsKey(
+                            FlutterFlowTheme.of(context).bodyMediumFamily),
+                      ),
+                  hintText: 'Account Type...',
+                  icon: Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 24.0,
+                  ),
+                  fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                  elevation: 2.0,
+                  borderColor: FlutterFlowTheme.of(context).alternate,
+                  borderWidth: 2.0,
+                  borderRadius: 8.0,
+                  margin: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
+                  hidesUnderline: true,
+                  isSearchable: false,
                 ),
               ),
               Divider(
@@ -247,31 +269,35 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  GoRouter.of(context).prepareAuthEvent();
-                  if (_model.passFieldController.text !=
-                      _model.confPassFieldController.text) {
+                  await currentUserReference!.update(createUsersRecordData(
+                    displayName: _model.nameFieldController.text,
+                    userName: _model.unameFieldController.text,
+                    phoneNumber: _model.phoneFieldController.text,
+                    accountType: _model.accountMenuValue,
+                  ));
+                  if ((currentUserDisplayName == null ||
+                          currentUserDisplayName == '') ||
+                      (valueOrDefault(currentUserDocument?.userName, '') ==
+                              null ||
+                          valueOrDefault(currentUserDocument?.userName, '') ==
+                              '')) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Passwords don\'t match!',
+                          'Error: User Name and Full Name cannot be empty',
+                          style: TextStyle(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                          ),
                         ),
+                        duration: Duration(milliseconds: 4000),
+                        backgroundColor: FlutterFlowTheme.of(context).error,
                       ),
                     );
-                    return;
+                  } else {
+                    context.pushNamed('SampleThemeTest');
                   }
-
-                  final user = await authManager.createAccountWithEmail(
-                    context,
-                    _model.emailFieldController.text,
-                    _model.passFieldController.text,
-                  );
-                  if (user == null) {
-                    return;
-                  }
-
-                  context.goNamedAuth('SampleThemeTest', context.mounted);
                 },
-                text: 'Next',
+                text: 'Create Account',
                 options: FFButtonOptions(
                   height: 40.0,
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
@@ -292,6 +318,11 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                   ),
                   borderRadius: BorderRadius.circular(6.0),
                 ),
+              ),
+              Divider(
+                height: 30.0,
+                thickness: 1.0,
+                color: FlutterFlowTheme.of(context).primaryBackground,
               ),
             ],
           ),

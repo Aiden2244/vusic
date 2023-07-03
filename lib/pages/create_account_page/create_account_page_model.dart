@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -9,15 +10,9 @@ class CreateAccountPageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for NameField widget.
-  TextEditingController? nameFieldController;
-  String? Function(BuildContext, String?)? nameFieldControllerValidator;
   // State field(s) for EmailField widget.
   TextEditingController? emailFieldController;
   String? Function(BuildContext, String?)? emailFieldControllerValidator;
-  // State field(s) for UnameField widget.
-  TextEditingController? unameFieldController;
-  String? Function(BuildContext, String?)? unameFieldControllerValidator;
   // State field(s) for PassField widget.
   TextEditingController? passFieldController;
   late bool passFieldVisibility;
@@ -36,9 +31,7 @@ class CreateAccountPageModel extends FlutterFlowModel {
 
   void dispose() {
     unfocusNode.dispose();
-    nameFieldController?.dispose();
     emailFieldController?.dispose();
-    unameFieldController?.dispose();
     passFieldController?.dispose();
     confPassFieldController?.dispose();
   }
