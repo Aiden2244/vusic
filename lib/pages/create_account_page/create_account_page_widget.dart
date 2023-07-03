@@ -269,7 +269,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                     return;
                   }
 
-                  context.goNamedAuth('SampleThemeTest', context.mounted);
+                  context.pushNamedAuth('SetUnamePage', context.mounted);
                 },
                 text: 'Next',
                 options: FFButtonOptions(
