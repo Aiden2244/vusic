@@ -56,8 +56,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               color: FlutterFlowTheme.of(context).primaryText,
               size: 30.0,
             ),
-            onPressed: () {
-              print('IconButton pressed ...');
+            onPressed: () async {
+              context.pushNamed('SampleThemeTest');
             },
           ),
           title: Text(
@@ -140,7 +140,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 0.0, 0.0),
                                 child: Text(
-                                  currentUserUid,
+                                  currentUserEmail,
                                   style:
                                       FlutterFlowTheme.of(context).labelMedium,
                                 ),
