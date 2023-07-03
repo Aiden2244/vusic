@@ -139,10 +139,13 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 0.0, 0.0),
-                                child: Text(
-                                  currentUserEmail,
-                                  style:
-                                      FlutterFlowTheme.of(context).labelMedium,
+                                child: AuthUserStreamWidget(
+                                  builder: (context) => Text(
+                                    valueOrDefault(
+                                        currentUserDocument?.userName, ''),
+                                    style: FlutterFlowTheme.of(context)
+                                        .labelMedium,
+                                  ),
                                 ),
                               ),
                             ],

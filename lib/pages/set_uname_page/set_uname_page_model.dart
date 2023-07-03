@@ -23,7 +23,7 @@ class SetUnamePageModel extends FlutterFlowModel {
   String? Function(BuildContext, String?)? unameFieldControllerValidator;
   // State field(s) for PhoneField widget.
   TextEditingController? phoneFieldController;
-  final phoneFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
+  final phoneFieldMask = MaskTextInputFormatter(mask: '(###) ###-####');
   String? Function(BuildContext, String?)? phoneFieldControllerValidator;
   // State field(s) for AccountMenu widget.
   String? accountMenuValue;

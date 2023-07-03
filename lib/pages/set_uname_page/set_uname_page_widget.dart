@@ -280,6 +280,11 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                       (valueOrDefault(currentUserDocument?.userName, '') ==
                               null ||
                           valueOrDefault(currentUserDocument?.userName, '') ==
+                              '') ||
+                      (valueOrDefault(currentUserDocument?.accountType, '') ==
+                              null ||
+                          valueOrDefault(
+                                  currentUserDocument?.accountType, '') ==
                               '')) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -300,7 +305,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                 text: 'Create Account',
                 options: FFButtonOptions(
                   height: 40.0,
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).alternate,
