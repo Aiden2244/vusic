@@ -41,6 +41,8 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
@@ -337,12 +339,11 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  if (_model.nameFieldController.text != null &&
-                      _model.nameFieldController.text != '') {
+                  if (_model.nameFieldController.text == '\'\'') {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Name field is set',
+                          'name is empty',
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
@@ -355,7 +356,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Name field not set',
+                          'name not empty',
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
