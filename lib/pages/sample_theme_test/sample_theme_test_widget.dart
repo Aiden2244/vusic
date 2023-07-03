@@ -355,10 +355,10 @@ class _SampleThemeTestWidgetState extends State<SampleThemeTestWidget>
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 0.0),
                               child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
+                                onPressed: () async {
+                                  context.pushNamed('SettingsPage');
                                 },
-                                text: 'Explore Now',
+                                text: 'Navigate to settings',
                                 options: FFButtonOptions(
                                   width: double.infinity,
                                   height: 44.0,
