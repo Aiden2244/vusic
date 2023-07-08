@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -15,12 +16,42 @@ class SetUnamePageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
   // State field(s) for NameField widget.
   TextEditingController? nameFieldController;
   String? Function(BuildContext, String?)? nameFieldControllerValidator;
+  String? _nameFieldControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length > 50) {
+      return 'Name cannot exceed 50 characters';
+    }
+
+    return null;
+  }
+
   // State field(s) for UnameField widget.
   TextEditingController? unameFieldController;
   String? Function(BuildContext, String?)? unameFieldControllerValidator;
+  String? _unameFieldControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 6) {
+      return 'Username must be at least 6 charaters';
+    }
+    if (val.length > 20) {
+      return 'Username cannot be longer than 20 characters';
+    }
+    if (!RegExp('^[a-z][a-z0-9_.]{5,19}\$').hasMatch(val)) {
+      return 'Username is not valid';
+    }
+    return null;
+  }
+
   // State field(s) for PhoneField widget.
   TextEditingController? phoneFieldController;
   final phoneFieldMask = MaskTextInputFormatter(mask: '(###) ###-####');
@@ -31,7 +62,10 @@ class SetUnamePageModel extends FlutterFlowModel {
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    nameFieldControllerValidator = _nameFieldControllerValidator;
+    unameFieldControllerValidator = _unameFieldControllerValidator;
+  }
 
   void dispose() {
     unfocusNode.dispose();

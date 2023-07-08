@@ -12,18 +12,39 @@ class LoginPageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
   // State field(s) for EmailField widget.
   TextEditingController? emailFieldController;
   String? Function(BuildContext, String?)? emailFieldControllerValidator;
+  String? _emailFieldControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+      return 'Email is invalid';
+    }
+    return null;
+  }
+
   // State field(s) for PassField widget.
   TextEditingController? passFieldController;
   late bool passFieldVisibility;
   String? Function(BuildContext, String?)? passFieldControllerValidator;
+  String? _passFieldControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    return null;
+  }
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
+    emailFieldControllerValidator = _emailFieldControllerValidator;
     passFieldVisibility = false;
+    passFieldControllerValidator = _passFieldControllerValidator;
   }
 
   void dispose() {

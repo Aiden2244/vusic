@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -51,13 +52,46 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              await currentUserReference!.delete();
+              await authManager.deleteUser(context);
+              context.pop();
+            },
+          ),
+          title: Text(
+            ' ',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
+                  color: Colors.white,
+                  fontSize: 22.0,
+                  useGoogleFonts: GoogleFonts.asMap().containsKey(
+                      FlutterFlowTheme.of(context).headlineMediumFamily),
+                ),
+          ),
+          actions: [],
+          centerTitle: false,
+          elevation: 0.0,
+        ),
         body: SafeArea(
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Divider(
-                height: 100.0,
+                height: 75.0,
                 thickness: 1.0,
                 color: FlutterFlowTheme.of(context).primaryBackground,
               ),
@@ -81,215 +115,220 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                     thickness: 1.0,
                     color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
-                    child: TextFormField(
-                      controller: _model.nameFieldController,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelStyle: FlutterFlowTheme.of(context).labelMedium,
-                        hintText: 'Full Name',
-                        hintStyle: FlutterFlowTheme.of(context).labelMedium,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).alternate,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primary,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyMedium,
-                      cursorColor: FlutterFlowTheme.of(context).primary,
-                      validator: _model.nameFieldControllerValidator
-                          .asValidator(context),
-                    ),
-                  ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
-                child: TextFormField(
-                  controller: _model.unameFieldController,
-                  autofocus: true,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                    labelStyle: FlutterFlowTheme.of(context).labelMedium,
-                    hintStyle: FlutterFlowTheme.of(context).labelMedium,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        width: 2.0,
+              Form(
+                key: _model.formKey,
+                autovalidateMode: AutovalidateMode.disabled,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
+                      child: TextFormField(
+                        controller: _model.nameFieldController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                          hintText: 'Full Name',
+                          hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primary,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                        cursorColor: FlutterFlowTheme.of(context).primary,
+                        validator: _model.nameFieldControllerValidator
+                            .asValidator(context),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).primary,
-                        width: 2.0,
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
+                      child: TextFormField(
+                        controller: _model.unameFieldController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                          hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primary,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                        cursorColor: FlutterFlowTheme.of(context).primary,
+                        validator: _model.unameFieldControllerValidator
+                            .asValidator(context),
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).error,
-                        width: 2.0,
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
+                      child: TextFormField(
+                        controller: _model.phoneFieldController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Phone Number (Optional)',
+                          labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                          hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primary,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).error,
+                              width: 2.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                        keyboardType: TextInputType.phone,
+                        cursorColor: FlutterFlowTheme.of(context).primary,
+                        validator: _model.phoneFieldControllerValidator
+                            .asValidator(context),
+                        inputFormatters: [_model.phoneFieldMask],
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).error,
-                        width: 2.0,
+                    Divider(
+                      height: 30.0,
+                      thickness: 1.0,
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
+                      child: FlutterFlowDropDown<String>(
+                        controller: _model.accountMenuValueController ??=
+                            FormFieldController<String>(
+                          _model.accountMenuValue ??= '',
+                        ),
+                        options: ['fan', 'musician'],
+                        optionLabels: ['a music lover', 'a musician'],
+                        onChanged: (val) =>
+                            setState(() => _model.accountMenuValue = val),
+                        width: 300.0,
+                        height: 50.0,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyMedium
+                            .override(
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).bodyMediumFamily,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily),
+                            ),
+                        hintText: 'I am...',
+                        icon: Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 24.0,
+                        ),
+                        fillColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
+                        elevation: 2.0,
+                        borderColor: FlutterFlowTheme.of(context).alternate,
+                        borderWidth: 2.0,
+                        borderRadius: 8.0,
+                        margin: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 4.0, 16.0, 4.0),
+                        hidesUnderline: true,
+                        isSearchable: false,
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyMedium,
-                  cursorColor: FlutterFlowTheme.of(context).primary,
-                  validator:
-                      _model.unameFieldControllerValidator.asValidator(context),
+                    Divider(
+                      height: 30.0,
+                      thickness: 1.0,
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                    ),
+                  ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
-                child: TextFormField(
-                  controller: _model.phoneFieldController,
-                  autofocus: true,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Phone Number (Optional)',
-                    labelStyle: FlutterFlowTheme.of(context).labelMedium,
-                    hintStyle: FlutterFlowTheme.of(context).labelMedium,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).primary,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).error,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).error,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyMedium,
-                  keyboardType: TextInputType.phone,
-                  cursorColor: FlutterFlowTheme.of(context).primary,
-                  validator:
-                      _model.phoneFieldControllerValidator.asValidator(context),
-                  inputFormatters: [_model.phoneFieldMask],
-                ),
-              ),
-              Divider(
-                height: 30.0,
-                thickness: 1.0,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(70.0, 7.0, 70.0, 7.0),
-                child: FlutterFlowDropDown<String>(
-                  controller: _model.accountMenuValueController ??=
-                      FormFieldController<String>(
-                    _model.accountMenuValue ??= '',
-                  ),
-                  options: ['artist', 'musician'],
-                  optionLabels: ['Artist', 'Musician'],
-                  onChanged: (val) =>
-                      setState(() => _model.accountMenuValue = val),
-                  width: 300.0,
-                  height: 50.0,
-                  textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily:
-                            FlutterFlowTheme.of(context).bodyMediumFamily,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        useGoogleFonts: GoogleFonts.asMap().containsKey(
-                            FlutterFlowTheme.of(context).bodyMediumFamily),
-                      ),
-                  hintText: 'Account Type...',
-                  icon: Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 24.0,
-                  ),
-                  fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                  elevation: 2.0,
-                  borderColor: FlutterFlowTheme.of(context).alternate,
-                  borderWidth: 2.0,
-                  borderRadius: 8.0,
-                  margin: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
-                  hidesUnderline: true,
-                  isSearchable: false,
-                ),
-              ),
-              Divider(
-                height: 30.0,
-                thickness: 1.0,
-                color: FlutterFlowTheme.of(context).primaryBackground,
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  await currentUserReference!.update(createUsersRecordData(
-                    displayName: _model.nameFieldController.text,
-                    userName: _model.unameFieldController.text,
-                    phoneNumber: _model.phoneFieldController.text,
-                    accountType: _model.accountMenuValue,
-                  ));
-                  if ((currentUserDisplayName == null ||
-                          currentUserDisplayName == '') ||
-                      (valueOrDefault(currentUserDocument?.userName, '') ==
-                              null ||
-                          valueOrDefault(currentUserDocument?.userName, '') ==
-                              '') ||
-                      (valueOrDefault(currentUserDocument?.accountType, '') ==
-                              null ||
-                          valueOrDefault(
-                                  currentUserDocument?.accountType, '') ==
-                              '')) {
+                  if (_model.formKey.currentState == null ||
+                      !_model.formKey.currentState!.validate()) {
+                    return;
+                  }
+                  if (_model.accountMenuValue == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Error: User Name, Full Name, and Account Type cannot be empty',
+                          'Account type must be specified',
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
@@ -298,7 +337,30 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                         backgroundColor: FlutterFlowTheme.of(context).error,
                       ),
                     );
+                    return;
+                  }
+                  if (_model.accountMenuValue == null ||
+                      _model.accountMenuValue == '') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Account type must be selected',
+                          style: TextStyle(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                          ),
+                        ),
+                        duration: Duration(milliseconds: 5000),
+                        backgroundColor: FlutterFlowTheme.of(context).secondary,
+                      ),
+                    );
                   } else {
+                    await currentUserReference!.update(createUsersRecordData(
+                      displayName: _model.nameFieldController.text,
+                      userName: _model.unameFieldController.text,
+                      phoneNumber: _model.phoneFieldController.text,
+                      accountType: _model.accountMenuValue,
+                    ));
+
                     context.pushNamed('SampleThemeTest');
                   }
                 },
@@ -326,7 +388,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                 ),
               ),
               Divider(
-                height: 30.0,
+                height: 10.0,
                 thickness: 1.0,
                 color: FlutterFlowTheme.of(context).primaryBackground,
               ),
