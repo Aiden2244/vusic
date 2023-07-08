@@ -62,7 +62,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed('LoginPage');
             },
           ),
           title: Text(
