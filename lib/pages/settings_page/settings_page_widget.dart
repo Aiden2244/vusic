@@ -571,7 +571,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                             context: context,
                             builder: (alertDialogContext) {
                               return AlertDialog(
-                                title: Text('Delete Account'),
+                                title: Text('Confirm Account Deletion'),
                                 content: Text(
                                     'Proceeding will permanently delete your account and data. This cannot be undone.'),
                                 actions: [

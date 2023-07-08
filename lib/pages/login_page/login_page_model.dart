@@ -21,7 +21,8 @@ class LoginPageModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (!RegExp('').hasMatch(val)) {
+    if (!RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$')
+        .hasMatch(val)) {
       return 'Email is invalid';
     }
     return null;
