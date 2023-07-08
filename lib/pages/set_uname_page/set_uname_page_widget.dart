@@ -66,9 +66,9 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
+              await currentUserReference!.delete();
               await authManager.deleteUser(context);
-
-              context.pushNamed('LoginPage');
+              context.pop();
             },
           ),
           title: Text(
@@ -350,7 +350,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                           ),
                         ),
                         duration: Duration(milliseconds: 5000),
-                        backgroundColor: FlutterFlowTheme.of(context).secondary,
+                        backgroundColor: FlutterFlowTheme.of(context).error,
                       ),
                     );
                   } else {

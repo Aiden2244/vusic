@@ -20,7 +20,8 @@ class CreateAccountPageModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+    if (!RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\$')
+        .hasMatch(val)) {
       return 'Email is not properly formatted';
     }
     return null;

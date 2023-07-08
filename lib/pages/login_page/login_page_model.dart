@@ -21,7 +21,7 @@ class LoginPageModel extends FlutterFlowModel {
       return 'Field is required';
     }
 
-    if (!RegExp(kTextValidatorEmailRegex).hasMatch(val)) {
+    if (!RegExp('').hasMatch(val)) {
       return 'Email is invalid';
     }
     return null;
