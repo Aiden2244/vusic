@@ -67,7 +67,8 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
             ),
             onPressed: () async {
               await authManager.deleteUser(context);
-              context.pop();
+
+              context.pushNamed('LoginPage');
             },
           ),
           title: Text(
