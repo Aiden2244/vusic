@@ -113,7 +113,10 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                 builder: (context) => ClipRRect(
                                   borderRadius: BorderRadius.circular(50.0),
                                   child: CachedNetworkImage(
-                                    imageUrl: currentUserPhoto,
+                                    imageUrl: valueOrDefault<String>(
+                                      currentUserPhoto,
+                                      'gs://vusic-final-c44ec.appspot.com/Vusic Logo.png',
+                                    ),
                                     width: 60.0,
                                     height: 60.0,
                                     fit: BoxFit.cover,
