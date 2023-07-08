@@ -66,7 +66,6 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              await currentUserReference!.delete();
               await authManager.deleteUser(context);
               context.pop();
             },
