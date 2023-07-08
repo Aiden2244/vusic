@@ -62,7 +62,15 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed('LoginPage');
+              context.pushNamed(
+                'LoginPage',
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.leftToRight,
+                  ),
+                },
+              );
             },
           ),
           title: Text(

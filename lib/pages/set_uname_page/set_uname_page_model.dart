@@ -56,6 +56,21 @@ class SetUnamePageModel extends FlutterFlowModel {
   TextEditingController? phoneFieldController;
   final phoneFieldMask = MaskTextInputFormatter(mask: '(###) ###-####');
   String? Function(BuildContext, String?)? phoneFieldControllerValidator;
+  String? _phoneFieldControllerValidator(BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Field is required';
+    }
+
+    if (val.length < 0) {
+      return 'Requires at least 0 characters.';
+    }
+
+    if (!RegExp('^\\(\\d{3}\\)\\s\\d{3}-\\d{4}\$').hasMatch(val)) {
+      return 'Phone number is not valid';
+    }
+    return null;
+  }
+
   // State field(s) for AccountMenu widget.
   String? accountMenuValue;
   FormFieldController<String>? accountMenuValueController;
@@ -65,6 +80,7 @@ class SetUnamePageModel extends FlutterFlowModel {
   void initState(BuildContext context) {
     nameFieldControllerValidator = _nameFieldControllerValidator;
     unameFieldControllerValidator = _unameFieldControllerValidator;
+    phoneFieldControllerValidator = _phoneFieldControllerValidator;
   }
 
   void dispose() {

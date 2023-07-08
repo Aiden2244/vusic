@@ -68,7 +68,15 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
             onPressed: () async {
               await authManager.deleteUser(context);
 
-              context.goNamed('LoginPage');
+              context.goNamed(
+                'LoginPage',
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.leftToRight,
+                  ),
+                },
+              );
             },
           ),
           title: Text(
@@ -277,7 +285,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                           _model.accountMenuValue ??= '',
                         ),
                         options: ['fan', 'musician'],
-                        optionLabels: ['a music lover', 'a musician'],
+                        optionLabels: ['Music Lover', 'Musician'],
                         onChanged: (val) =>
                             setState(() => _model.accountMenuValue = val),
                         width: 300.0,
@@ -292,7 +300,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                                   FlutterFlowTheme.of(context)
                                       .bodyMediumFamily),
                             ),
-                        hintText: 'I am...',
+                        hintText: 'I am a...',
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
                           color: FlutterFlowTheme.of(context).secondaryText,

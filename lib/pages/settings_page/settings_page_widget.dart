@@ -115,7 +115,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                   child: CachedNetworkImage(
                                     imageUrl: valueOrDefault<String>(
                                       currentUserPhoto,
-                                      'gs://vusic-final-c44ec.appspot.com/Vusic Logo.png',
+                                      'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=33d6a887-8d91-4c79-9bfe-cfed91da14fe',
                                     ),
                                     width: 60.0,
                                     height: 60.0,
