@@ -70,7 +70,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 180.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 150.0, 0.0, 0.0),
                     child: Text(
                       'VUSIC',
                       style: GoogleFonts.getFont(
@@ -130,7 +130,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
-                                        FlutterFlowTheme.of(context).secondary,
+                                        FlutterFlowTheme.of(context).tertiary,
                                     width: 2.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
@@ -150,7 +150,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context).accent1,
+                                fillColor: Color(0x7F6542DC),
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -164,7 +164,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             FlutterFlowTheme.of(context)
                                                 .bodyMediumFamily),
                                   ),
-                              cursorColor: FlutterFlowTheme.of(context).primary,
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
                               validator: _model.emailFieldControllerValidator
                                   .asValidator(context),
                             ),
@@ -193,8 +194,18 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               FlutterFlowTheme.of(context)
                                                   .labelMediumFamily),
                                     ),
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .labelMediumFamily,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMediumFamily),
+                                    ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context).primary,
@@ -205,7 +216,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
-                                        FlutterFlowTheme.of(context).secondary,
+                                        FlutterFlowTheme.of(context).tertiary,
                                     width: 2.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
@@ -225,7 +236,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 filled: true,
-                                fillColor: FlutterFlowTheme.of(context).accent1,
+                                fillColor: Color(0x806542DC),
                                 suffixIcon: InkWell(
                                   onTap: () => setState(
                                     () => _model.passFieldVisibility =
@@ -237,13 +248,25 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
                                     color:
-                                        FlutterFlowTheme.of(context).alternate,
+                                        FlutterFlowTheme.of(context).tertiary,
                                     size: 20.0,
                                   ),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium,
-                              cursorColor: FlutterFlowTheme.of(context).primary,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodyMediumFamily,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    useGoogleFonts: GoogleFonts.asMap()
+                                        .containsKey(
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily),
+                                  ),
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
                               validator: _model.passFieldControllerValidator
                                   .asValidator(context),
                             ),
@@ -355,7 +378,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: Color(0xDA6542DC),
+                        color: Color(0xCD6542DC),
                         textStyle: FlutterFlowTheme.of(context)
                             .titleSmall
                             .override(
@@ -401,8 +424,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
                                     .bodyMediumFamily,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                color: FlutterFlowTheme.of(context).secondary,
                                 fontSize: 16.0,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
