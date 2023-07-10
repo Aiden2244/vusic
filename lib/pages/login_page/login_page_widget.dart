@@ -70,7 +70,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 150.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 120.0, 0.0, 0.0),
                     child: Text(
                       'VUSIC',
                       style: GoogleFonts.getFont(
@@ -112,25 +112,24 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       fontFamily: FlutterFlowTheme.of(context)
                                           .labelMediumFamily,
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                          .secondaryText,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
                                                   .labelMediumFamily),
                                     ),
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).primary,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
                                     width: 2.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        FlutterFlowTheme.of(context).tertiary,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
                                     width: 2.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
@@ -150,7 +149,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 filled: true,
-                                fillColor: Color(0x7F6542DC),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -158,14 +158,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     fontFamily: FlutterFlowTheme.of(context)
                                         .bodyMediumFamily,
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                        .secondaryText,
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
                                                 .bodyMediumFamily),
                                   ),
-                              cursorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
+                              cursorColor: FlutterFlowTheme.of(context).primary,
                               validator: _model.emailFieldControllerValidator
                                   .asValidator(context),
                             ),
@@ -188,7 +187,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       fontFamily: FlutterFlowTheme.of(context)
                                           .labelMediumFamily,
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                          .secondaryText,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
@@ -200,7 +199,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       fontFamily: FlutterFlowTheme.of(context)
                                           .labelMediumFamily,
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                          .secondaryText,
                                       useGoogleFonts: GoogleFonts.asMap()
                                           .containsKey(
                                               FlutterFlowTheme.of(context)
@@ -208,15 +207,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).primary,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
                                     width: 2.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        FlutterFlowTheme.of(context).tertiary,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
                                     width: 2.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
@@ -236,7 +236,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 filled: true,
-                                fillColor: Color(0x806542DC),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
                                 suffixIcon: InkWell(
                                   onTap: () => setState(
                                     () => _model.passFieldVisibility =
@@ -247,8 +248,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     _model.passFieldVisibility
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color:
-                                        FlutterFlowTheme.of(context).tertiary,
+                                    color: FlutterFlowTheme.of(context).primary,
                                     size: 20.0,
                                   ),
                                 ),
@@ -259,14 +259,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     fontFamily: FlutterFlowTheme.of(context)
                                         .bodyMediumFamily,
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                        .secondaryText,
                                     useGoogleFonts: GoogleFonts.asMap()
                                         .containsKey(
                                             FlutterFlowTheme.of(context)
                                                 .bodyMediumFamily),
                                   ),
-                              cursorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
+                              cursorColor: FlutterFlowTheme.of(context).primary,
                               validator: _model.passFieldControllerValidator
                                   .asValidator(context),
                             ),
@@ -302,7 +301,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: Color(0xCD8570FF),
+                      color: Color(0xE58570FF),
                       textStyle: FlutterFlowTheme.of(context)
                           .titleSmall
                           .override(
@@ -321,13 +320,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     ),
                   ),
                   Divider(
-                    height: 25.0,
+                    height: 10.0,
                     thickness: 1.0,
                     color: Color(0x00181A1C),
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                     child: Text(
                       'OR',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -341,7 +340,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 7.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(4.0, 4.0, 4.0, 4.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         GoRouter.of(context).prepareAuthEvent();
@@ -378,7 +377,65 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: Color(0xCD6542DC),
+                        color: FlutterFlowTheme.of(context).alternate,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .titleSmall
+                            .override(
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).titleSmallFamily,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  FlutterFlowTheme.of(context)
+                                      .titleSmallFamily),
+                            ),
+                        elevation: 3.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(4.0, 4.0, 4.0, 8.0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        GoRouter.of(context).prepareAuthEvent();
+                        final user =
+                            await authManager.signInWithGoogle(context);
+                        if (user == null) {
+                          return;
+                        }
+                        if (valueOrDefault(currentUserDocument?.userName, '') !=
+                                null &&
+                            valueOrDefault(currentUserDocument?.userName, '') !=
+                                '') {
+                          context.pushNamedAuth(
+                              'SampleThemeTest', context.mounted);
+
+                          return;
+                        } else {
+                          context.pushNamedAuth(
+                              'SetUnamePage', context.mounted);
+
+                          return;
+                        }
+                      },
+                      text: 'Sign In With Spotify',
+                      icon: FaIcon(
+                        FontAwesomeIcons.spotify,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 20.0,
+                      ),
+                      options: FFButtonOptions(
+                        width: 225.0,
+                        height: 40.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).alternate,
                         textStyle: FlutterFlowTheme.of(context)
                             .titleSmall
                             .override(
@@ -410,7 +467,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       width: MediaQuery.sizeOf(context).width * 0.5,
                       height: MediaQuery.sizeOf(context).height * 0.04,
                       decoration: BoxDecoration(
-                        color: Color(0xE5292B33),
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
                         borderRadius: BorderRadius.circular(6.0),
                       ),
                       child: Padding(
