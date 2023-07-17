@@ -51,15 +51,20 @@ class PostsRecord extends FirestoreRecord {
   String get postVideo => _postVideo ?? '';
   bool hasPostVideo() => _postVideo != null;
 
-  // "comments" field.
-  List<String>? _comments;
-  List<String> get comments => _comments ?? const [];
-  bool hasComments() => _comments != null;
-
   // "num_shares" field.
   int? _numShares;
   int get numShares => _numShares ?? 0;
   bool hasNumShares() => _numShares != null;
+
+  // "comments" field.
+  List<CommentStruct>? _comments;
+  List<CommentStruct> get comments => _comments ?? const [];
+  bool hasComments() => _comments != null;
+
+  // "post_id" field.
+  String? _postId;
+  String get postId => _postId ?? '';
+  bool hasPostId() => _postId != null;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
@@ -71,8 +76,12 @@ class PostsRecord extends FirestoreRecord {
     _likes = getDataList(snapshotData['likes']);
     _numComments = castToType<int>(snapshotData['num_comments']);
     _postVideo = snapshotData['post_video'] as String?;
-    _comments = getDataList(snapshotData['comments']);
     _numShares = castToType<int>(snapshotData['num_shares']);
+    _comments = getStructList(
+      snapshotData['comments'],
+      CommentStruct.fromMap,
+    );
+    _postId = snapshotData['post_id'] as String?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -121,6 +130,7 @@ Map<String, dynamic> createPostsRecordData({
   int? numComments,
   String? postVideo,
   int? numShares,
+  String? postId,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -131,6 +141,7 @@ Map<String, dynamic> createPostsRecordData({
       'num_comments': numComments,
       'post_video': postVideo,
       'num_shares': numShares,
+      'post_id': postId,
     }.withoutNulls,
   );
 
@@ -150,8 +161,9 @@ class PostsRecordDocumentEquality implements Equality<PostsRecord> {
         listEquality.equals(e1?.likes, e2?.likes) &&
         e1?.numComments == e2?.numComments &&
         e1?.postVideo == e2?.postVideo &&
+        e1?.numShares == e2?.numShares &&
         listEquality.equals(e1?.comments, e2?.comments) &&
-        e1?.numShares == e2?.numShares;
+        e1?.postId == e2?.postId;
   }
 
   @override
@@ -163,8 +175,9 @@ class PostsRecordDocumentEquality implements Equality<PostsRecord> {
         e?.likes,
         e?.numComments,
         e?.postVideo,
+        e?.numShares,
         e?.comments,
-        e?.numShares
+        e?.postId
       ]);
 
   @override

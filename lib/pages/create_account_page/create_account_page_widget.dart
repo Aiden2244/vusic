@@ -27,6 +27,8 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
     super.initState();
     _model = createModel(context, () => CreateAccountPageModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'CreateAccountPage'});
     _model.emailFieldController ??= TextEditingController();
     _model.passFieldController ??= TextEditingController();
     _model.confPassFieldController ??= TextEditingController();
@@ -62,6 +64,9 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
+              logFirebaseEvent('CREATE_ACCOUNT_arrow_back_rounded_ICN_ON');
+              logFirebaseEvent('IconButton_navigate_to');
+
               context.pushNamed(
                 'LoginPage',
                 extra: <String, dynamic>{
@@ -319,12 +324,15 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
+                  logFirebaseEvent('CREATE_ACCOUNT_PAGE_PAGE_NEXT_BTN_ON_TAP');
+                  logFirebaseEvent('Button_validate_form');
                   if (_model.formKey.currentState == null ||
                       !_model.formKey.currentState!.validate()) {
                     return;
                   }
                   if (_model.passFieldController.text ==
                       _model.confPassFieldController.text) {
+                    logFirebaseEvent('Button_auth');
                     GoRouter.of(context).prepareAuthEvent();
                     if (_model.passFieldController.text !=
                         _model.confPassFieldController.text) {
@@ -347,8 +355,11 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                       return;
                     }
 
+                    logFirebaseEvent('Button_navigate_to');
+
                     context.pushNamedAuth('SetUnamePage', context.mounted);
                   } else {
+                    logFirebaseEvent('Button_show_snack_bar');
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -361,6 +372,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                         backgroundColor: FlutterFlowTheme.of(context).error,
                       ),
                     );
+                    logFirebaseEvent('Button_clear_text_fields');
                     setState(() {
                       _model.passFieldController?.clear();
                       _model.confPassFieldController?.clear();

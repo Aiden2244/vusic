@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,6 +31,8 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
     super.initState();
     _model = createModel(context, () => SetUnamePageModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'SetUnamePage'});
     _model.nameFieldController ??= TextEditingController();
     _model.unameFieldController ??= TextEditingController();
     _model.phoneFieldController ??= TextEditingController();
@@ -67,7 +68,10 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
+              logFirebaseEvent('SET_UNAME_arrow_back_rounded_ICN_ON_TAP');
+              logFirebaseEvent('IconButton_auth');
               await authManager.deleteUser(context);
+              logFirebaseEvent('IconButton_navigate_to');
 
               context.goNamed(
                 'LoginPage',
@@ -342,6 +346,8 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {
+                  logFirebaseEvent('SET_UNAME_CREATE_ACCOUNT_BTN_ON_TAP');
+                  logFirebaseEvent('Button_validate_form');
                   if (_model.formKey.currentState == null ||
                       !_model.formKey.currentState!.validate()) {
                     return;
@@ -363,6 +369,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                   }
                   if (_model.accountMenuValue == null ||
                       _model.accountMenuValue == '') {
+                    logFirebaseEvent('Button_show_snack_bar');
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -376,15 +383,21 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                       ),
                     );
                   } else {
+                    logFirebaseEvent('Button_backend_call');
+
                     await currentUserReference!.update(createUsersRecordData(
                       displayName: _model.nameFieldController.text,
-                      userName: _model.unameFieldController.text,
                       phoneNumber: _model.phoneFieldController.text,
                       accountType: _model.accountMenuValue,
+                      userProfile: createUserProfileStruct(
+                        userName: _model.unameFieldController.text,
+                        bio: '\'\'',
+                        profilePic: currentUserPhoto,
+                        lastUpdatedTime: getCurrentTimestamp,
+                        clearUnsetFields: false,
+                      ),
                     ));
-                    await actions.getProfilePicFromGoogle(
-                      currentUserReference,
-                    );
+                    logFirebaseEvent('Button_navigate_to');
 
                     context.pushNamed('SampleThemeTest');
                   }

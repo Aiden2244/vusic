@@ -27,8 +27,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     super.initState();
     _model = createModel(context, () => LoginPageModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'LoginPage'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('LOGIN_PAGE_PAGE_LoginPage_ON_INIT_STATE');
+      logFirebaseEvent('LoginPage_set_dark_mode_settings');
       setDarkModeSetting(context, ThemeMode.dark);
     });
 
@@ -276,10 +279,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                   ),
                   FFButtonWidget(
                     onPressed: () async {
+                      logFirebaseEvent('LOGIN_PAGE_PAGE_SIGN_IN_BTN_ON_TAP');
+                      logFirebaseEvent('Button_validate_form');
                       if (_model.formKey.currentState == null ||
                           !_model.formKey.currentState!.validate()) {
                         return;
                       }
+                      logFirebaseEvent('Button_auth');
                       GoRouter.of(context).prepareAuthEvent();
 
                       final user = await authManager.signInWithEmail(
@@ -344,21 +350,26 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(4.0, 4.0, 4.0, 4.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        logFirebaseEvent(
+                            'LOGIN_SIGN_IN_WITH_GOOGLE_BTN_ON_TAP');
+                        logFirebaseEvent('Button_auth');
                         GoRouter.of(context).prepareAuthEvent();
                         final user =
                             await authManager.signInWithGoogle(context);
                         if (user == null) {
                           return;
                         }
-                        if (valueOrDefault(currentUserDocument?.userName, '') !=
-                                null &&
-                            valueOrDefault(currentUserDocument?.userName, '') !=
-                                '') {
+                        if (currentUserReference?.id != null &&
+                            currentUserReference?.id != '') {
+                          logFirebaseEvent('Button_navigate_to');
+
                           context.pushNamedAuth(
                               'SampleThemeTest', context.mounted);
 
                           return;
                         } else {
+                          logFirebaseEvent('Button_navigate_to');
+
                           context.pushNamedAuth(
                               'SetUnamePage', context.mounted);
 
@@ -402,26 +413,18 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(4.0, 4.0, 4.0, 8.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        logFirebaseEvent(
+                            'LOGIN_SIGN_IN_WITH_SPOTIFY_BTN_ON_TAP');
+                        logFirebaseEvent('Button_auth');
                         GoRouter.of(context).prepareAuthEvent();
                         final user =
                             await authManager.signInWithGoogle(context);
                         if (user == null) {
                           return;
                         }
-                        if (valueOrDefault(currentUserDocument?.userName, '') !=
-                                null &&
-                            valueOrDefault(currentUserDocument?.userName, '') !=
-                                '') {
-                          context.pushNamedAuth(
-                              'SampleThemeTest', context.mounted);
+                        logFirebaseEvent('Button_not_defined');
 
-                          return;
-                        } else {
-                          context.pushNamedAuth(
-                              'SetUnamePage', context.mounted);
-
-                          return;
-                        }
+                        context.goNamedAuth('SampleThemeTest', context.mounted);
                       },
                       text: 'Sign In With Spotify',
                       icon: FaIcon(
@@ -462,6 +465,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      logFirebaseEvent('LOGIN_Container_x56mcgft_ON_TAP');
+                      logFirebaseEvent('Container_navigate_to');
+
                       context.pushNamed('CreateAccountPage');
                     },
                     child: Container(

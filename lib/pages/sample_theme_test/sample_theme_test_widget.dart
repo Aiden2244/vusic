@@ -153,6 +153,8 @@ class _SampleThemeTestWidgetState extends State<SampleThemeTestWidget>
     super.initState();
     _model = createModel(context, () => SampleThemeTestModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'SampleThemeTest'});
     setupAnimations(
       animationsMap.values.where((anim) =>
           anim.trigger == AnimationTrigger.onActionTrigger ||
@@ -356,6 +358,10 @@ class _SampleThemeTestWidgetState extends State<SampleThemeTestWidget>
                                   0.0, 12.0, 0.0, 0.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
+                                  logFirebaseEvent(
+                                      'SAMPLE_THEME_TEST_NAVIGATE_TO_SETTINGS_B');
+                                  logFirebaseEvent('Button_navigate_to');
+
                                   context.pushNamed('SettingsPage');
                                 },
                                 text: 'Navigate to settings',

@@ -25,6 +25,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => SettingsPageModel());
+
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'SettingsPage'});
   }
 
   @override
@@ -57,6 +60,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
+              logFirebaseEvent('SETTINGS_arrow_back_rounded_ICN_ON_TAP');
+              logFirebaseEvent('IconButton_navigate_to');
+
               context.pushNamed('SampleThemeTest');
             },
           ),
@@ -117,7 +123,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                     fadeOutDuration:
                                         Duration(milliseconds: 500),
                                     imageUrl: valueOrDefault<String>(
-                                      currentUserPhoto,
+                                      currentUserDocument
+                                          ?.userProfile?.profilePic,
                                       'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
                                     ),
                                     width: 60.0,
@@ -148,8 +155,11 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                       0.0, 4.0, 0.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => Text(
-                                      valueOrDefault(
-                                          currentUserDocument?.userName, ''),
+                                      valueOrDefault<String>(
+                                        currentUserDocument
+                                            ?.userProfile?.userName,
+                                        'VUSIC User',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                     ),
@@ -505,9 +515,14 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      logFirebaseEvent(
+                          'SETTINGS_PAGE_PAGE_contentView_1_ON_TAP');
+                      logFirebaseEvent('contentView_1_auth');
                       GoRouter.of(context).prepareAuthEvent();
                       await authManager.signOut();
                       GoRouter.of(context).clearRedirectLocation();
+
+                      logFirebaseEvent('contentView_1_navigate_to');
 
                       context.pushNamedAuth('LoginPage', context.mounted);
                     },
@@ -573,6 +588,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      logFirebaseEvent(
+                          'SETTINGS_PAGE_PAGE_contentView_1_ON_TAP');
+                      logFirebaseEvent('contentView_1_alert_dialog');
                       var confirmDialogResponse = await showDialog<bool>(
                             context: context,
                             builder: (alertDialogContext) {
@@ -596,7 +614,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                             },
                           ) ??
                           false;
+                      logFirebaseEvent('contentView_1_auth');
                       await authManager.deleteUser(context);
+                      logFirebaseEvent('contentView_1_navigate_to');
 
                       context.pushNamed('LoginPage');
                     },

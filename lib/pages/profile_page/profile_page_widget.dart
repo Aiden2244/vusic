@@ -24,6 +24,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ProfilePageModel());
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'ProfilePage'});
   }
 
   @override
@@ -56,6 +58,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
+              logFirebaseEvent('PROFILE_arrow_back_rounded_ICN_ON_TAP');
+              logFirebaseEvent('IconButton_navigate_back');
               context.pop();
             },
           ),
@@ -90,7 +94,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                           borderRadius: BorderRadius.circular(0.0),
                           child: Image.network(
                             valueOrDefault<String>(
-                              currentUserPhoto,
+                              currentUserDocument?.userProfile?.backsplashPic,
                               'https://images.unsplash.com/photo-1548502632-6b93092aad0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw5fHxtdXNpYyUyMHN0dWRpb3xlbnwwfHx8fDE2ODk2MjAxODF8MA&ixlib=rb-4.0.3&q=80&w=1080',
                             ),
                             width: MediaQuery.sizeOf(context).width * 1.0,
@@ -117,7 +121,11 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                   shape: BoxShape.circle,
                                 ),
                                 child: Image.network(
-                                  currentUserPhoto,
+                                  valueOrDefault<String>(
+                                    currentUserDocument
+                                        ?.userProfile?.profilePic,
+                                    'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
+                                  ),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -125,7 +133,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                           ),
                           AuthUserStreamWidget(
                             builder: (context) => Text(
-                              valueOrDefault(currentUserDocument?.userName, ''),
+                              valueOrDefault<String>(
+                                currentUserDocument?.userProfile?.userName,
+                                'VUSIC User',
+                              ),
                               style: FlutterFlowTheme.of(context).titleSmall,
                             ),
                           ),
