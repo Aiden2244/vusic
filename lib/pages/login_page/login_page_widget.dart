@@ -334,6 +334,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 FlutterFlowTheme.of(context).bodyMediumFamily,
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
+                            fontWeight: FontWeight.w900,
                             useGoogleFonts: GoogleFonts.asMap().containsKey(
                                 FlutterFlowTheme.of(context).bodyMediumFamily),
                           ),

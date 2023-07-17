@@ -113,6 +113,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'SetUnamePage',
           path: '/setUnamePage',
           builder: (context, params) => SetUnamePageWidget(),
+        ),
+        FFRoute(
+          name: 'ProfilePage',
+          path: '/profilePage',
+          requireAuth: true,
+          builder: (context, params) => ProfilePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

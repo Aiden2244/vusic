@@ -56,6 +56,11 @@ class UsersRecord extends FirestoreRecord {
   String get accountType => _accountType ?? '';
   bool hasAccountType() => _accountType != null;
 
+  // "favorite_genres" field.
+  List<String>? _favoriteGenres;
+  List<String> get favoriteGenres => _favoriteGenres ?? const [];
+  bool hasFavoriteGenres() => _favoriteGenres != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -65,6 +70,7 @@ class UsersRecord extends FirestoreRecord {
     _phoneNumber = snapshotData['phone_number'] as String?;
     _userName = snapshotData['user_name'] as String?;
     _accountType = snapshotData['account_type'] as String?;
+    _favoriteGenres = getDataList(snapshotData['favorite_genres']);
   }
 
   static CollectionReference get collection =>
@@ -131,6 +137,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
@@ -138,7 +145,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.createdTime == e2?.createdTime &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.userName == e2?.userName &&
-        e1?.accountType == e2?.accountType;
+        e1?.accountType == e2?.accountType &&
+        listEquality.equals(e1?.favoriteGenres, e2?.favoriteGenres);
   }
 
   @override
@@ -150,7 +158,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.createdTime,
         e?.phoneNumber,
         e?.userName,
-        e?.accountType
+        e?.accountType,
+        e?.favoriteGenres
       ]);
 
   @override

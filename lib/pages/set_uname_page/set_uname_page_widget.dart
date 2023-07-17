@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -381,6 +382,9 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                       phoneNumber: _model.phoneFieldController.text,
                       accountType: _model.accountMenuValue,
                     ));
+                    await actions.getProfilePicFromGoogle(
+                      currentUserReference,
+                    );
 
                     context.pushNamed('SampleThemeTest');
                   }

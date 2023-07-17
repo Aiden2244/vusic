@@ -7,3 +7,4 @@ export '/pages/create_account_page/create_account_page_widget.dart'
 export '/pages/settings_page/settings_page_widget.dart' show SettingsPageWidget;
 export '/pages/set_uname_page/set_uname_page_widget.dart'
     show SetUnamePageWidget;
+export '/profile_page/profile_page_widget.dart' show ProfilePageWidget;
