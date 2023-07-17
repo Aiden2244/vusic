@@ -242,7 +242,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Phone Number (Optional)',
+                            labelText: 'Phone Number',
                             labelStyle:
                                 FlutterFlowTheme.of(context).labelMedium,
                             hintStyle: FlutterFlowTheme.of(context).labelMedium,
@@ -297,8 +297,8 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                             FormFieldController<String>(
                           _model.accountMenuValue ??= '',
                         ),
-                        options: ['Option 1'],
-                        optionLabels: ['Music Lover', 'Musician'],
+                        options: ['fan', 'musician'],
+                        optionLabels: ['Music Lover', 'Musician', ''],
                         onChanged: (val) =>
                             setState(() => _model.accountMenuValue = val),
                         width: 300.0,
