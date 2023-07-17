@@ -492,21 +492,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     ),
                   ),
                   Spacer(),
-                  Divider(
-                    height: 10.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  Divider(
-                    height: 10.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  Divider(
-                    height: 10.0,
-                    thickness: 1.0,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
                 ],
               ),
             ],

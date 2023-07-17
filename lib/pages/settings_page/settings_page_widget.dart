@@ -113,6 +113,9 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                 builder: (context) => ClipRRect(
                                   borderRadius: BorderRadius.circular(50.0),
                                   child: CachedNetworkImage(
+                                    fadeInDuration: Duration(milliseconds: 500),
+                                    fadeOutDuration:
+                                        Duration(milliseconds: 500),
                                     imageUrl: valueOrDefault<String>(
                                       currentUserPhoto,
                                       'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
