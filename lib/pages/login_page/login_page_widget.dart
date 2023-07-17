@@ -359,8 +359,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         if (user == null) {
                           return;
                         }
-                        if (currentUserReference?.id != null &&
-                            currentUserReference?.id != '') {
+                        if (currentUserDocument?.userProfile != null) {
                           logFirebaseEvent('Button_navigate_to');
 
                           context.pushNamedAuth(
