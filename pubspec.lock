@@ -589,6 +589,17 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.3"
+<<<<<<< Updated upstream
+=======
+  process:
+    dependency: transitive
+    description:
+      name: process
+      sha256: "53fd8db9cec1d37b0574e12f07520d582019cb6c44abf5479a01505099a34a09"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.4"
+>>>>>>> Stashed changes
   provider:
     dependency: "direct main"
     description:
@@ -846,10 +857,17 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_macos
+<<<<<<< Updated upstream
       sha256: "1c4fdc0bfea61a70792ce97157e5cc17260f61abbe4f39354513f39ec6fd73b1"
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
+=======
+      sha256: "91ee3e75ea9dadf38036200c5d3743518f4a5eb77a8d13fda1ee5764373f185e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.5"
+>>>>>>> Stashed changes
   url_launcher_platform_interface:
     dependency: "direct main"
     description:
@@ -862,18 +880,32 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_web
+<<<<<<< Updated upstream
       sha256: cc26720eefe98c1b71d85f9dc7ef0cada5132617046369d9dc296b3ecaa5cbb4
       url: "https://pub.dev"
     source: hosted
     version: "2.0.18"
+=======
+      sha256: "6bb1e5d7fe53daf02a8fee85352432a40b1f868a81880e99ec7440113d5cfcab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.17"
+>>>>>>> Stashed changes
   url_launcher_windows:
     dependency: transitive
     description:
       name: url_launcher_windows
+<<<<<<< Updated upstream
       sha256: "7967065dd2b5fccc18c653b97958fdf839c5478c28e767c61ee879f4e7882422"
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
+=======
+      sha256: "254708f17f7c20a9c8c471f67d86d76d4a3f9c1591aad1e15292008aceb82771"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.6"
+>>>>>>> Stashed changes
   uuid:
     dependency: transitive
     description:
@@ -902,10 +934,17 @@ packages:
     dependency: transitive
     description:
       name: xdg_directories
+<<<<<<< Updated upstream
       sha256: e0b1147eec179d3911f1f19b59206448f78195ca1d20514134e10641b7d7fbff
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+=======
+      sha256: ee1505df1426458f7f60aac270645098d318a8b4766d85fde75f76f2e21807d1
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+>>>>>>> Stashed changes
   xml:
     dependency: transitive
     description:
