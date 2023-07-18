@@ -203,8 +203,11 @@ class _SampleThemeTestWidgetState extends State<SampleThemeTestWidget>
                   color: FlutterFlowTheme.of(context).secondaryText,
                   size: 24.0,
                 ),
-                onPressed: () {
-                  print('IconButton pressed ...');
+                onPressed: () async {
+                  logFirebaseEvent('SAMPLE_THEME_TEST_notifications_none_ICN');
+                  logFirebaseEvent('IconButton_navigate_to');
+
+                  context.pushNamed('ProfilePage');
                 },
               ),
             ),
