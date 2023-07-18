@@ -390,6 +390,11 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                       phoneNumber: _model.phoneFieldController.text,
                       accountType: _model.accountMenuValue,
                       userName: _model.unameFieldController.text,
+                      createdTime: getCurrentTimestamp,
+                      lastUsernameChange: getCurrentTimestamp,
+                      fanCount: 0,
+                      friendsCount: 0,
+                      followingCount: 0,
                       email: '',
                     ));
                     logFirebaseEvent('Button_navigate_to');

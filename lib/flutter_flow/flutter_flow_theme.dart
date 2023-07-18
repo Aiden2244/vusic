@@ -67,6 +67,7 @@ abstract class FlutterFlowTheme {
   late Color lineColor;
   late Color customColor1;
   late Color loginLabelColor;
+  late Color transparent;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -175,6 +176,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color lineColor = Color(0xFFE0E3E7);
   late Color customColor1 = Color(0xFF2FB73C);
   late Color loginLabelColor = Color(0xFF7CDBBB);
+  late Color transparent = Color(0x00000000);
 }
 
 abstract class Typography {
@@ -575,6 +577,7 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color lineColor = Color(0xFF22282F);
   late Color customColor1 = Color(0xFF452FB7);
   late Color loginLabelColor = Color(0xFF583AFF);
+  late Color transparent = Color(0xFFAD0BD7);
 }
 
 extension TextStyleHelper on TextStyle {

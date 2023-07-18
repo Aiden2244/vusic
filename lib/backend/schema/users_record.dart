@@ -76,11 +76,6 @@ class UsersRecord extends FirestoreRecord {
   int get friendsCount => _friendsCount ?? 0;
   bool hasFriendsCount() => _friendsCount != null;
 
-  // "friends" field.
-  List<DocumentReference>? _friends;
-  List<DocumentReference> get friends => _friends ?? const [];
-  bool hasFriends() => _friends != null;
-
   // "following_count" field.
   int? _followingCount;
   int get followingCount => _followingCount ?? 0;
@@ -131,6 +126,16 @@ class UsersRecord extends FirestoreRecord {
   List<PostStruct> get posts => _posts ?? const [];
   bool hasPosts() => _posts != null;
 
+  // "friends" field.
+  DocumentReference? _friends;
+  DocumentReference? get friends => _friends;
+  bool hasFriends() => _friends != null;
+
+  // "is_verified" field.
+  bool? _isVerified;
+  bool get isVerified => _isVerified ?? false;
+  bool hasIsVerified() => _isVerified != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -144,7 +149,6 @@ class UsersRecord extends FirestoreRecord {
     _fanCount = castToType<int>(snapshotData['fan_count']);
     _fans = getDataList(snapshotData['fans']);
     _friendsCount = castToType<int>(snapshotData['friends_count']);
-    _friends = getDataList(snapshotData['friends']);
     _followingCount = castToType<int>(snapshotData['following_count']);
     _following = getDataList(snapshotData['following']);
     _bio = snapshotData['bio'] as String?;
@@ -158,6 +162,8 @@ class UsersRecord extends FirestoreRecord {
       snapshotData['posts'],
       PostStruct.fromMap,
     );
+    _friends = snapshotData['friends'] as DocumentReference?;
+    _isVerified = snapshotData['is_verified'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -212,6 +218,8 @@ Map<String, dynamic> createUsersRecordData({
   String? artistDescription,
   String? hometown,
   String? currentLocation,
+  DocumentReference? friends,
+  bool? isVerified,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -233,6 +241,8 @@ Map<String, dynamic> createUsersRecordData({
       'artist_description': artistDescription,
       'hometown': hometown,
       'current_location': currentLocation,
+      'friends': friends,
+      'is_verified': isVerified,
     }.withoutNulls,
   );
 
@@ -257,7 +267,6 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.fanCount == e2?.fanCount &&
         listEquality.equals(e1?.fans, e2?.fans) &&
         e1?.friendsCount == e2?.friendsCount &&
-        listEquality.equals(e1?.friends, e2?.friends) &&
         e1?.followingCount == e2?.followingCount &&
         listEquality.equals(e1?.following, e2?.following) &&
         e1?.bio == e2?.bio &&
@@ -267,7 +276,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.artistDescription == e2?.artistDescription &&
         e1?.hometown == e2?.hometown &&
         e1?.currentLocation == e2?.currentLocation &&
-        listEquality.equals(e1?.posts, e2?.posts);
+        listEquality.equals(e1?.posts, e2?.posts) &&
+        e1?.friends == e2?.friends &&
+        e1?.isVerified == e2?.isVerified;
   }
 
   @override
@@ -284,7 +295,6 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.fanCount,
         e?.fans,
         e?.friendsCount,
-        e?.friends,
         e?.followingCount,
         e?.following,
         e?.bio,
@@ -294,7 +304,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.artistDescription,
         e?.hometown,
         e?.currentLocation,
-        e?.posts
+        e?.posts,
+        e?.friends,
+        e?.isVerified
       ]);
 
   @override
