@@ -9,26 +9,24 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class UserProfileStruct extends FFFirebaseStruct {
   UserProfileStruct({
-    String? userName,
     String? bio,
     String? profilePic,
     String? backsplashPic,
     String? backsplashVideo,
     DateTime? lastUpdatedTime,
+    String? aristDescription,
+    String? hometown,
+    String? currentLocation,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
-  })  : _userName = userName,
-        _bio = bio,
+  })  : _bio = bio,
         _profilePic = profilePic,
         _backsplashPic = backsplashPic,
         _backsplashVideo = backsplashVideo,
         _lastUpdatedTime = lastUpdatedTime,
+        _aristDescription = aristDescription,
+        _hometown = hometown,
+        _currentLocation = currentLocation,
         super(firestoreUtilData);
-
-  // "user_name" field.
-  String? _userName;
-  String get userName => _userName ?? '';
-  set userName(String? val) => _userName = val;
-  bool hasUserName() => _userName != null;
 
   // "bio" field.
   String? _bio;
@@ -60,34 +58,52 @@ class UserProfileStruct extends FFFirebaseStruct {
   set lastUpdatedTime(DateTime? val) => _lastUpdatedTime = val;
   bool hasLastUpdatedTime() => _lastUpdatedTime != null;
 
+  // "arist_description" field.
+  String? _aristDescription;
+  String get aristDescription => _aristDescription ?? '';
+  set aristDescription(String? val) => _aristDescription = val;
+  bool hasAristDescription() => _aristDescription != null;
+
+  // "hometown" field.
+  String? _hometown;
+  String get hometown => _hometown ?? '';
+  set hometown(String? val) => _hometown = val;
+  bool hasHometown() => _hometown != null;
+
+  // "current_location" field.
+  String? _currentLocation;
+  String get currentLocation => _currentLocation ?? '';
+  set currentLocation(String? val) => _currentLocation = val;
+  bool hasCurrentLocation() => _currentLocation != null;
+
   static UserProfileStruct fromMap(Map<String, dynamic> data) =>
       UserProfileStruct(
-        userName: data['user_name'] as String?,
         bio: data['bio'] as String?,
         profilePic: data['profile_pic'] as String?,
         backsplashPic: data['backsplash_pic'] as String?,
         backsplashVideo: data['backsplash_video'] as String?,
         lastUpdatedTime: data['last_updated_time'] as DateTime?,
+        aristDescription: data['arist_description'] as String?,
+        hometown: data['hometown'] as String?,
+        currentLocation: data['current_location'] as String?,
       );
 
   static UserProfileStruct? maybeFromMap(dynamic data) =>
       data is Map<String, dynamic> ? UserProfileStruct.fromMap(data) : null;
 
   Map<String, dynamic> toMap() => {
-        'user_name': _userName,
         'bio': _bio,
         'profile_pic': _profilePic,
         'backsplash_pic': _backsplashPic,
         'backsplash_video': _backsplashVideo,
         'last_updated_time': _lastUpdatedTime,
+        'arist_description': _aristDescription,
+        'hometown': _hometown,
+        'current_location': _currentLocation,
       }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'user_name': serializeParam(
-          _userName,
-          ParamType.String,
-        ),
         'bio': serializeParam(
           _bio,
           ParamType.String,
@@ -108,15 +124,22 @@ class UserProfileStruct extends FFFirebaseStruct {
           _lastUpdatedTime,
           ParamType.DateTime,
         ),
+        'arist_description': serializeParam(
+          _aristDescription,
+          ParamType.String,
+        ),
+        'hometown': serializeParam(
+          _hometown,
+          ParamType.String,
+        ),
+        'current_location': serializeParam(
+          _currentLocation,
+          ParamType.String,
+        ),
       }.withoutNulls;
 
   static UserProfileStruct fromSerializableMap(Map<String, dynamic> data) =>
       UserProfileStruct(
-        userName: deserializeParam(
-          data['user_name'],
-          ParamType.String,
-          false,
-        ),
         bio: deserializeParam(
           data['bio'],
           ParamType.String,
@@ -142,6 +165,21 @@ class UserProfileStruct extends FFFirebaseStruct {
           ParamType.DateTime,
           false,
         ),
+        aristDescription: deserializeParam(
+          data['arist_description'],
+          ParamType.String,
+          false,
+        ),
+        hometown: deserializeParam(
+          data['hometown'],
+          ParamType.String,
+          false,
+        ),
+        currentLocation: deserializeParam(
+          data['current_location'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -150,44 +188,52 @@ class UserProfileStruct extends FFFirebaseStruct {
   @override
   bool operator ==(Object other) {
     return other is UserProfileStruct &&
-        userName == other.userName &&
         bio == other.bio &&
         profilePic == other.profilePic &&
         backsplashPic == other.backsplashPic &&
         backsplashVideo == other.backsplashVideo &&
-        lastUpdatedTime == other.lastUpdatedTime;
+        lastUpdatedTime == other.lastUpdatedTime &&
+        aristDescription == other.aristDescription &&
+        hometown == other.hometown &&
+        currentLocation == other.currentLocation;
   }
 
   @override
   int get hashCode => const ListEquality().hash([
-        userName,
         bio,
         profilePic,
         backsplashPic,
         backsplashVideo,
-        lastUpdatedTime
+        lastUpdatedTime,
+        aristDescription,
+        hometown,
+        currentLocation
       ]);
 }
 
 UserProfileStruct createUserProfileStruct({
-  String? userName,
   String? bio,
   String? profilePic,
   String? backsplashPic,
   String? backsplashVideo,
   DateTime? lastUpdatedTime,
+  String? aristDescription,
+  String? hometown,
+  String? currentLocation,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
 }) =>
     UserProfileStruct(
-      userName: userName,
       bio: bio,
       profilePic: profilePic,
       backsplashPic: backsplashPic,
       backsplashVideo: backsplashVideo,
       lastUpdatedTime: lastUpdatedTime,
+      aristDescription: aristDescription,
+      hometown: hometown,
+      currentLocation: currentLocation,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

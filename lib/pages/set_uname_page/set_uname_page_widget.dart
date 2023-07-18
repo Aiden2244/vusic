@@ -389,13 +389,8 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                       displayName: _model.nameFieldController.text,
                       phoneNumber: _model.phoneFieldController.text,
                       accountType: _model.accountMenuValue,
-                      userProfile: createUserProfileStruct(
-                        userName: _model.unameFieldController.text,
-                        bio: '\'\'',
-                        profilePic: currentUserPhoto,
-                        lastUpdatedTime: getCurrentTimestamp,
-                        clearUnsetFields: false,
-                      ),
+                      userName: _model.unameFieldController.text,
+                      email: '',
                     ));
                     logFirebaseEvent('Button_navigate_to');
 

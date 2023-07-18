@@ -56,10 +56,80 @@ class UsersRecord extends FirestoreRecord {
   List<String> get favoriteGenres => _favoriteGenres ?? const [];
   bool hasFavoriteGenres() => _favoriteGenres != null;
 
-  // "user_profile" field.
-  UserProfileStruct? _userProfile;
-  UserProfileStruct get userProfile => _userProfile ?? UserProfileStruct();
-  bool hasUserProfile() => _userProfile != null;
+  // "user_name" field.
+  String? _userName;
+  String get userName => _userName ?? '';
+  bool hasUserName() => _userName != null;
+
+  // "fan_count" field.
+  int? _fanCount;
+  int get fanCount => _fanCount ?? 0;
+  bool hasFanCount() => _fanCount != null;
+
+  // "fans" field.
+  List<DocumentReference>? _fans;
+  List<DocumentReference> get fans => _fans ?? const [];
+  bool hasFans() => _fans != null;
+
+  // "friends_count" field.
+  int? _friendsCount;
+  int get friendsCount => _friendsCount ?? 0;
+  bool hasFriendsCount() => _friendsCount != null;
+
+  // "friends" field.
+  List<DocumentReference>? _friends;
+  List<DocumentReference> get friends => _friends ?? const [];
+  bool hasFriends() => _friends != null;
+
+  // "following_count" field.
+  int? _followingCount;
+  int get followingCount => _followingCount ?? 0;
+  bool hasFollowingCount() => _followingCount != null;
+
+  // "following" field.
+  List<DocumentReference>? _following;
+  List<DocumentReference> get following => _following ?? const [];
+  bool hasFollowing() => _following != null;
+
+  // "bio" field.
+  String? _bio;
+  String get bio => _bio ?? '';
+  bool hasBio() => _bio != null;
+
+  // "backsplash_pic" field.
+  String? _backsplashPic;
+  String get backsplashPic => _backsplashPic ?? '';
+  bool hasBacksplashPic() => _backsplashPic != null;
+
+  // "backsplash_video" field.
+  String? _backsplashVideo;
+  String get backsplashVideo => _backsplashVideo ?? '';
+  bool hasBacksplashVideo() => _backsplashVideo != null;
+
+  // "last_username_change" field.
+  DateTime? _lastUsernameChange;
+  DateTime? get lastUsernameChange => _lastUsernameChange;
+  bool hasLastUsernameChange() => _lastUsernameChange != null;
+
+  // "artist_description" field.
+  String? _artistDescription;
+  String get artistDescription => _artistDescription ?? '';
+  bool hasArtistDescription() => _artistDescription != null;
+
+  // "hometown" field.
+  String? _hometown;
+  String get hometown => _hometown ?? '';
+  bool hasHometown() => _hometown != null;
+
+  // "current_location" field.
+  String? _currentLocation;
+  String get currentLocation => _currentLocation ?? '';
+  bool hasCurrentLocation() => _currentLocation != null;
+
+  // "posts" field.
+  List<PostStruct>? _posts;
+  List<PostStruct> get posts => _posts ?? const [];
+  bool hasPosts() => _posts != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -70,7 +140,24 @@ class UsersRecord extends FirestoreRecord {
     _phoneNumber = snapshotData['phone_number'] as String?;
     _accountType = snapshotData['account_type'] as String?;
     _favoriteGenres = getDataList(snapshotData['favorite_genres']);
-    _userProfile = UserProfileStruct.maybeFromMap(snapshotData['user_profile']);
+    _userName = snapshotData['user_name'] as String?;
+    _fanCount = castToType<int>(snapshotData['fan_count']);
+    _fans = getDataList(snapshotData['fans']);
+    _friendsCount = castToType<int>(snapshotData['friends_count']);
+    _friends = getDataList(snapshotData['friends']);
+    _followingCount = castToType<int>(snapshotData['following_count']);
+    _following = getDataList(snapshotData['following']);
+    _bio = snapshotData['bio'] as String?;
+    _backsplashPic = snapshotData['backsplash_pic'] as String?;
+    _backsplashVideo = snapshotData['backsplash_video'] as String?;
+    _lastUsernameChange = snapshotData['last_username_change'] as DateTime?;
+    _artistDescription = snapshotData['artist_description'] as String?;
+    _hometown = snapshotData['hometown'] as String?;
+    _currentLocation = snapshotData['current_location'] as String?;
+    _posts = getStructList(
+      snapshotData['posts'],
+      PostStruct.fromMap,
+    );
   }
 
   static CollectionReference get collection =>
@@ -114,7 +201,17 @@ Map<String, dynamic> createUsersRecordData({
   DateTime? createdTime,
   String? phoneNumber,
   String? accountType,
-  UserProfileStruct? userProfile,
+  String? userName,
+  int? fanCount,
+  int? friendsCount,
+  int? followingCount,
+  String? bio,
+  String? backsplashPic,
+  String? backsplashVideo,
+  DateTime? lastUsernameChange,
+  String? artistDescription,
+  String? hometown,
+  String? currentLocation,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -125,12 +222,19 @@ Map<String, dynamic> createUsersRecordData({
       'created_time': createdTime,
       'phone_number': phoneNumber,
       'account_type': accountType,
-      'user_profile': UserProfileStruct().toMap(),
+      'user_name': userName,
+      'fan_count': fanCount,
+      'friends_count': friendsCount,
+      'following_count': followingCount,
+      'bio': bio,
+      'backsplash_pic': backsplashPic,
+      'backsplash_video': backsplashVideo,
+      'last_username_change': lastUsernameChange,
+      'artist_description': artistDescription,
+      'hometown': hometown,
+      'current_location': currentLocation,
     }.withoutNulls,
   );
-
-  // Handle nested data for "user_profile" field.
-  addUserProfileStructData(firestoreData, userProfile, 'user_profile');
 
   return firestoreData;
 }
@@ -149,7 +253,21 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.accountType == e2?.accountType &&
         listEquality.equals(e1?.favoriteGenres, e2?.favoriteGenres) &&
-        e1?.userProfile == e2?.userProfile;
+        e1?.userName == e2?.userName &&
+        e1?.fanCount == e2?.fanCount &&
+        listEquality.equals(e1?.fans, e2?.fans) &&
+        e1?.friendsCount == e2?.friendsCount &&
+        listEquality.equals(e1?.friends, e2?.friends) &&
+        e1?.followingCount == e2?.followingCount &&
+        listEquality.equals(e1?.following, e2?.following) &&
+        e1?.bio == e2?.bio &&
+        e1?.backsplashPic == e2?.backsplashPic &&
+        e1?.backsplashVideo == e2?.backsplashVideo &&
+        e1?.lastUsernameChange == e2?.lastUsernameChange &&
+        e1?.artistDescription == e2?.artistDescription &&
+        e1?.hometown == e2?.hometown &&
+        e1?.currentLocation == e2?.currentLocation &&
+        listEquality.equals(e1?.posts, e2?.posts);
   }
 
   @override
@@ -162,7 +280,21 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.phoneNumber,
         e?.accountType,
         e?.favoriteGenres,
-        e?.userProfile
+        e?.userName,
+        e?.fanCount,
+        e?.fans,
+        e?.friendsCount,
+        e?.friends,
+        e?.followingCount,
+        e?.following,
+        e?.bio,
+        e?.backsplashPic,
+        e?.backsplashVideo,
+        e?.lastUsernameChange,
+        e?.artistDescription,
+        e?.hometown,
+        e?.currentLocation,
+        e?.posts
       ]);
 
   @override

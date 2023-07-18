@@ -123,8 +123,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                     fadeOutDuration:
                                         Duration(milliseconds: 500),
                                     imageUrl: valueOrDefault<String>(
-                                      currentUserDocument
-                                          ?.userProfile?.profilePic,
+                                      currentUserPhoto,
                                       'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
                                     ),
                                     width: 60.0,
@@ -155,11 +154,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                       0.0, 4.0, 0.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => Text(
-                                      valueOrDefault<String>(
-                                        currentUserDocument
-                                            ?.userProfile?.userName,
-                                        'VUSIC User',
-                                      ),
+                                      valueOrDefault(
+                                          currentUserDocument?.userName, ''),
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium,
                                     ),
