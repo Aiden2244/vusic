@@ -329,7 +329,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                             'musician') {
                                           logFirebaseEvent('Card_navigate_to');
 
-                                          context.pushNamed('FanProfilePage');
+                                          context
+                                              .pushNamed('MusicianProfilePage');
                                         } else {
                                           logFirebaseEvent('Card_navigate_to');
 
