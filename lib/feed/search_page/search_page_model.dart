@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
+import 'package:text_search/text_search.dart';
 
 class SearchPageModel extends FlutterFlowModel {
   ///  Local state fields for this page.
@@ -22,11 +22,7 @@ class SearchPageModel extends FlutterFlowModel {
   // State field(s) for TextField widget.
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  // State field(s) for ListView widget.
-
-  PagingController<DocumentSnapshot?, UsersRecord>? listViewPagingController;
-  Query? listViewPagingQuery;
-  List<StreamSubscription?> listViewStreamSubscriptions = [];
+  List<UsersRecord> simpleSearchResults = [];
 
   /// Initialization and disposal methods.
 
@@ -35,42 +31,9 @@ class SearchPageModel extends FlutterFlowModel {
   void dispose() {
     unfocusNode.dispose();
     textController?.dispose();
-    listViewStreamSubscriptions.forEach((s) => s?.cancel());
-    listViewPagingController?.dispose();
   }
 
   /// Action blocks are added here.
 
   /// Additional helper methods are added here.
-
-  PagingController<DocumentSnapshot?, UsersRecord> setListViewController(
-    Query query, {
-    DocumentReference<Object?>? parent,
-  }) {
-    listViewPagingController ??= _createListViewController(query, parent);
-    if (listViewPagingQuery != query) {
-      listViewPagingQuery = query;
-      listViewPagingController?.refresh();
-    }
-    return listViewPagingController!;
-  }
-
-  PagingController<DocumentSnapshot?, UsersRecord> _createListViewController(
-    Query query,
-    DocumentReference<Object?>? parent,
-  ) {
-    final controller =
-        PagingController<DocumentSnapshot?, UsersRecord>(firstPageKey: null);
-    return controller
-      ..addPageRequestListener(
-        (nextPageMarker) => queryUsersRecordPage(
-          queryBuilder: (_) => listViewPagingQuery ??= query,
-          nextPageMarker: nextPageMarker,
-          streamSubscriptions: listViewStreamSubscriptions,
-          controller: controller,
-          pageSize: 25,
-          isStream: true,
-        ),
-      );
-  }
 }
