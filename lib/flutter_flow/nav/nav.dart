@@ -121,6 +121,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/profilePage',
           requireAuth: true,
           builder: (context, params) => ProfilePageWidget(),
+        ),
+        FFRoute(
+          name: 'SearchPage',
+          path: '/searchPage',
+          requireAuth: true,
+          builder: (context, params) => SearchPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
