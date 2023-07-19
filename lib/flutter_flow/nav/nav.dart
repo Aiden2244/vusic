@@ -133,10 +133,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : SearchPageWidget(),
         ),
         FFRoute(
-          name: 'OtheUserProfilePage',
-          path: '/otheUserProfilePage',
+          name: 'FanProfilePage',
+          path: '/fanProfilePage',
           requireAuth: true,
-          builder: (context, params) => OtheUserProfilePageWidget(),
+          builder: (context, params) => FanProfilePageWidget(),
+        ),
+        FFRoute(
+          name: 'MusicianProfilePage',
+          path: '/musicianProfilePage',
+          requireAuth: true,
+          builder: (context, params) => MusicianProfilePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

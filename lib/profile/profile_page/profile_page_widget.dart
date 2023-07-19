@@ -354,7 +354,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
+                          color: FlutterFlowTheme.of(context).alternate,
                           textStyle: FlutterFlowTheme.of(context)
                               .titleSmall
                               .override(
@@ -374,11 +374,11 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                         ),
                       ),
                       FlutterFlowIconButton(
-                        borderColor: FlutterFlowTheme.of(context).primary,
+                        borderColor: FlutterFlowTheme.of(context).alternate,
                         borderRadius: 20.0,
                         borderWidth: 1.0,
                         buttonSize: 35.0,
-                        fillColor: FlutterFlowTheme.of(context).primary,
+                        fillColor: FlutterFlowTheme.of(context).alternate,
                         icon: Icon(
                           Icons.add,
                           color: FlutterFlowTheme.of(context).primaryText,

@@ -85,7 +85,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
                 child: TextFormField(
                   controller: _model.textController,
                   onChanged: (_) => EasyDebounce.debounce(
@@ -163,34 +163,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                       _model.textControllerValidator.asValidator(context),
                 ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 0.0, 0.0),
-                    child: Text(
-                      'Patients matching search',
-                      style: FlutterFlowTheme.of(context).bodySmall,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(4.0, 12.0, 16.0, 0.0),
-                    child: Text(
-                      '24',
-                      style: FlutterFlowTheme.of(context).bodySmall.override(
-                            fontFamily:
-                                FlutterFlowTheme.of(context).bodySmallFamily,
-                            color: FlutterFlowTheme.of(context).primary,
-                            useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                FlutterFlowTheme.of(context).bodySmallFamily),
-                          ),
-                    ),
-                  ),
-                ],
-              ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
@@ -267,10 +239,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
-                                                          12.0, 0.0, 12.0, 0.0),
+                                                          12.0, 0.0, 0.0, 0.0),
                                                   child: Text(
-                                                    userSearchResultsItem
-                                                        .userName,
+                                                    '@',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodySmall
@@ -293,17 +264,46 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                                         ),
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          4.0, 0.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    userSearchResultsItem
-                                                        .accountType,
-                                                    style: FlutterFlowTheme.of(
+                                                Text(
+                                                  userSearchResultsItem
+                                                      .userName,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodySmall
+                                                      .override(
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodySmallFamily,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        useGoogleFonts: GoogleFonts
+                                                                .asMap()
+                                                            .containsKey(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodySmallFamily),
+                                                      ),
+                                                ),
+                                                SizedBox(
+                                                  height: 19.0,
+                                                  child: VerticalDivider(
+                                                    thickness: 2.0,
+                                                    color: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodySmall,
+                                                        .primaryText,
                                                   ),
+                                                ),
+                                                Text(
+                                                  userSearchResultsItem
+                                                      .accountType,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodySmall,
                                                 ),
                                               ],
                                             ),
@@ -327,8 +327,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                         });
                                         logFirebaseEvent('Card_navigate_to');
 
-                                        context
-                                            .pushNamed('OtheUserProfilePage');
+                                        context.pushNamed('FanProfilePage');
                                       },
                                       child: Card(
                                         clipBehavior:

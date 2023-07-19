@@ -5,33 +5,34 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'othe_user_profile_page_model.dart';
-export 'othe_user_profile_page_model.dart';
+import 'musician_profile_page_model.dart';
+export 'musician_profile_page_model.dart';
 
-class OtheUserProfilePageWidget extends StatefulWidget {
-  const OtheUserProfilePageWidget({Key? key}) : super(key: key);
+class MusicianProfilePageWidget extends StatefulWidget {
+  const MusicianProfilePageWidget({Key? key}) : super(key: key);
 
   @override
-  _OtheUserProfilePageWidgetState createState() =>
-      _OtheUserProfilePageWidgetState();
+  _MusicianProfilePageWidgetState createState() =>
+      _MusicianProfilePageWidgetState();
 }
 
-class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
-  late OtheUserProfilePageModel _model;
+class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
+  late MusicianProfilePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => OtheUserProfilePageModel());
+    _model = createModel(context, () => MusicianProfilePageModel());
 
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'OtheUserProfilePage'});
+        parameters: {'screen_name': 'MusicianProfilePage'});
   }
 
   @override
@@ -65,7 +66,7 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
             ),
           );
         }
-        final otheUserProfilePageUsersRecord = snapshot.data!;
+        final musicianProfilePageUsersRecord = snapshot.data!;
         return GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
@@ -85,13 +86,13 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('OTHE_USER_PROFILE_arrow_back_rounded_ICN');
+                  logFirebaseEvent('MUSICIAN_PROFILE_arrow_back_rounded_ICN_');
                   logFirebaseEvent('IconButton_navigate_back');
                   context.pop();
                 },
               ),
               title: Text(
-                'Profile',
+                musicianProfilePageUsersRecord.displayName,
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       fontFamily:
                           FlutterFlowTheme.of(context).headlineMediumFamily,
@@ -135,7 +136,7 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                                   borderRadius: BorderRadius.circular(0.0),
                                   child: Image.network(
                                     valueOrDefault<String>(
-                                      otheUserProfilePageUsersRecord
+                                      musicianProfilePageUsersRecord
                                           .backsplashPic,
                                       'https://images.unsplash.com/photo-1548502632-6b93092aad0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw5fHxtdXNpYyUyMHN0dWRpb3xlbnwwfHx8fDE2ODk2MjAxODF8MA&ixlib=rb-4.0.3&q=80&w=1080',
                                     ),
@@ -165,7 +166,7 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                               child: AuthUserStreamWidget(
                                 builder: (context) => FlutterFlowVideoPlayer(
                                   path: valueOrDefault<String>(
-                                    otheUserProfilePageUsersRecord
+                                    musicianProfilePageUsersRecord
                                         .backsplashVideo,
                                     'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
                                   ),
@@ -213,7 +214,7 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                                       ),
                                       child: Image.network(
                                         valueOrDefault<String>(
-                                          otheUserProfilePageUsersRecord
+                                          musicianProfilePageUsersRecord
                                               .photoUrl,
                                           'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
                                         ),
@@ -236,7 +237,7 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             34.0, 0.0, 10.0, 0.0),
                                         child: Text(
-                                          otheUserProfilePageUsersRecord
+                                          musicianProfilePageUsersRecord
                                               .userName,
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
@@ -290,7 +291,10 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                     Align(
                       alignment: AlignmentDirectional(0.0, 0.0),
                       child: Text(
-                        otheUserProfilePageUsersRecord.bio,
+                        valueOrDefault<String>(
+                          musicianProfilePageUsersRecord.bio,
+                          'Follow my band on VUSIC!',
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium,
                       ),
                     ),
@@ -320,7 +324,7 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    otheUserProfilePageUsersRecord.fanCount
+                                    musicianProfilePageUsersRecord.fanCount
                                         .toString(),
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,
@@ -348,7 +352,7 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    otheUserProfilePageUsersRecord.friendsCount
+                                    musicianProfilePageUsersRecord.friendsCount
                                         .toString(),
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,
@@ -362,53 +366,159 @@ class _OtheUserProfilePageWidgetState extends State<OtheUserProfilePageWidget> {
                               ),
                             ),
                           ),
-                          FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
-                            text: 'Follow',
-                            options: FFButtonOptions(
-                              width: 70.0,
-                              height: 30.0,
+                          if (!(currentUserDocument?.following?.toList() ?? [])
+                              .contains(
+                                  musicianProfilePageUsersRecord.reference))
+                            Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: FlutterFlowTheme.of(context)
-                                        .titleSmallFamily,
-                                    color: Colors.white,
-                                    useGoogleFonts: GoogleFonts.asMap()
-                                        .containsKey(
-                                            FlutterFlowTheme.of(context)
-                                                .titleSmallFamily),
+                                  6.0, 0.0, 0.0, 0.0),
+                              child: AuthUserStreamWidget(
+                                builder: (context) => FFButtonWidget(
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'MUSICIAN_PROFILE_FOLLOW_BTN_ON_TAP');
+                                    logFirebaseEvent('Button_backend_call');
+
+                                    await currentUserReference!.update({
+                                      'following_count':
+                                          FieldValue.increment(1),
+                                      'following': FieldValue.arrayUnion([
+                                        musicianProfilePageUsersRecord.reference
+                                      ]),
+                                    });
+                                    logFirebaseEvent('Button_backend_call');
+
+                                    await musicianProfilePageUsersRecord
+                                        .reference
+                                        .update({
+                                      'fan_count': FieldValue.increment(1),
+                                      'fans': FieldValue.arrayUnion(
+                                          [currentUserReference]),
+                                    });
+                                  },
+                                  text: 'Follow',
+                                  icon: Icon(
+                                    Icons.play_arrow,
+                                    size: 15.0,
                                   ),
-                              elevation: 3.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                                  options: FFButtonOptions(
+                                    width: 115.0,
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmallFamily),
+                                        ),
+                                    elevation: 3.0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                          ),
-                          FlutterFlowIconButton(
-                            borderColor: FlutterFlowTheme.of(context).primary,
-                            borderRadius: 20.0,
-                            borderWidth: 1.0,
-                            buttonSize: 35.0,
-                            fillColor: FlutterFlowTheme.of(context).primary,
-                            icon: Icon(
-                              Icons.add,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 20.0,
+                          if ((currentUserDocument?.following?.toList() ?? [])
+                              .contains(
+                                  musicianProfilePageUsersRecord.reference))
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  6.0, 0.0, 0.0, 0.0),
+                              child: AuthUserStreamWidget(
+                                builder: (context) => InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'MUSICIAN_PROFILE_Container_w5bd2mdo_ON_T');
+                                    final firestoreBatch =
+                                        FirebaseFirestore.instance.batch();
+                                    try {
+                                      logFirebaseEvent(
+                                          'Container_backend_call');
+
+                                      firestoreBatch
+                                          .update(currentUserReference!, {
+                                        'following_count':
+                                            FieldValue.increment(-(1)),
+                                        'following': FieldValue.arrayRemove([
+                                          musicianProfilePageUsersRecord
+                                              .reference
+                                        ]),
+                                      });
+                                      logFirebaseEvent(
+                                          'Container_backend_call');
+
+                                      firestoreBatch.update(
+                                          musicianProfilePageUsersRecord
+                                              .reference,
+                                          {
+                                            'fan_count':
+                                                FieldValue.increment(-(1)),
+                                            'fans': FieldValue.arrayRemove(
+                                                [currentUserReference]),
+                                          });
+                                    } finally {
+                                      await firestoreBatch.commit();
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 115.0,
+                                    height: 40.0,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x00292B33),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 3.0,
+                                      ),
+                                    ),
+                                    child: Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Text(
+                                        'Unfollow',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold,
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
-                            },
-                          ),
                         ].divide(SizedBox(width: 10.0)),
                       ),
                     ),
