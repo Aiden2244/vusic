@@ -325,9 +325,16 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                           FFAppState().lastSearchedUser =
                                               userSearchResultsItem.reference;
                                         });
-                                        logFirebaseEvent('Card_navigate_to');
+                                        if (userSearchResultsItem.accountType ==
+                                            'musician') {
+                                          logFirebaseEvent('Card_navigate_to');
 
-                                        context.pushNamed('FanProfilePage');
+                                          context.pushNamed('FanProfilePage');
+                                        } else {
+                                          logFirebaseEvent('Card_navigate_to');
+
+                                          context.pushNamed('FanProfilePage');
+                                        }
                                       },
                                       child: Card(
                                         clipBehavior:
