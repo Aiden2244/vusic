@@ -134,8 +134,11 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                           alignment: AlignmentDirectional(0.0, -1.0),
                           child: AuthUserStreamWidget(
                             builder: (context) => FlutterFlowVideoPlayer(
-                              path:
-                                  'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                              path: valueOrDefault<String>(
+                                valueOrDefault(
+                                    currentUserDocument?.backsplashVideo, ''),
+                                'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                              ),
                               videoType: VideoType.network,
                               width: MediaQuery.sizeOf(context).width * 1.0,
                               height: MediaQuery.sizeOf(context).height * 0.26,

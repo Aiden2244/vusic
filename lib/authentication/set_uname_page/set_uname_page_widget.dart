@@ -303,7 +303,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                           _model.accountMenuValue ??= '',
                         ),
                         options: ['fan', 'musician'],
-                        optionLabels: ['Music Lover', 'Musician', ''],
+                        optionLabels: ['Fan', 'Musician', ''],
                         onChanged: (val) =>
                             setState(() => _model.accountMenuValue = val),
                         width: 300.0,

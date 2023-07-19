@@ -25,6 +25,12 @@ class FFAppState extends ChangeNotifier {
   set darkTheme(bool _value) {
     _darkTheme = _value;
   }
+
+  DocumentReference? _lastSearchedUser;
+  DocumentReference? get lastSearchedUser => _lastSearchedUser;
+  set lastSearchedUser(DocumentReference? _value) {
+    _lastSearchedUser = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

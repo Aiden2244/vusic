@@ -131,6 +131,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'SearchPage')
               : SearchPageWidget(),
+        ),
+        FFRoute(
+          name: 'OtheUserProfilePage',
+          path: '/otheUserProfilePage',
+          requireAuth: true,
+          builder: (context, params) => OtheUserProfilePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
