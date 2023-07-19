@@ -231,7 +231,10 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(40.0),
                                       child: Image.network(
-                                        userSearchResultsItem.photoUrl,
+                                        valueOrDefault<String>(
+                                          userSearchResultsItem.photoUrl,
+                                          'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
+                                        ),
                                         width: 60.0,
                                         height: 60.0,
                                         fit: BoxFit.cover,
