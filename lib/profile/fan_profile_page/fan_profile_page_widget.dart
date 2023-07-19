@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -32,11 +31,6 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'FanProfilePage'});
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('FAN_PROFILE_FanProfilePage_ON_INIT_STATE');
-      logFirebaseEvent('FanProfilePage_not_defined');
-    });
   }
 
   @override
