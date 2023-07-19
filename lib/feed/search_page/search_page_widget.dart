@@ -1,11 +1,8 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -97,12 +94,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     () async {
                       logFirebaseEvent(
                           'SEARCH_TextField_p9ryyse4_ON_TEXTFIELD_C');
-                      logFirebaseEvent('TextField_firestore_query');
-                      await queryUsersRecordOnce(
-                        queryBuilder: (usersRecord) => usersRecord.where(
-                            'user_name',
-                            isLessThanOrEqualTo: _model.textController.text),
-                      );
+                      logFirebaseEvent('TextField_update_widget_state');
+                      _model.searchInput = _model.textController.text;
                     },
                   ),
                   obscureText: false,
@@ -145,7 +138,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                     ),
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium,
+                  textAlign: TextAlign.start,
                   maxLines: null,
+                  cursorColor: FlutterFlowTheme.of(context).primary,
                   validator:
                       _model.textControllerValidator.asValidator(context),
                 ),
@@ -183,7 +178,10 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                   padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
                   child: PagedListView<DocumentSnapshot<Object?>?, UsersRecord>(
                     pagingController: _model.setListViewController(
-                      UsersRecord.collection.orderBy('user_name'),
+                      UsersRecord.collection
+                          .where('user_name',
+                              isLessThanOrEqualTo: _model.searchInput)
+                          .orderBy('user_name'),
                     ),
                     padding: EdgeInsets.zero,
                     reverse: false,

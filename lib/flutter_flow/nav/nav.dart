@@ -78,16 +78,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? SampleThemeTestWidget()
-          : LoginPageWidget(),
+      errorBuilder: (context, state) =>
+          appStateNotifier.loggedIn ? NavBarPage() : LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? SampleThemeTestWidget()
-              : LoginPageWidget(),
+          builder: (context, _) =>
+              appStateNotifier.loggedIn ? NavBarPage() : LoginPageWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -98,7 +96,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'SampleThemeTest',
           path: '/sampleThemeTest',
           requireAuth: true,
-          builder: (context, params) => SampleThemeTestWidget(),
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'SampleThemeTest')
+              : SampleThemeTestWidget(),
         ),
         FFRoute(
           name: 'CreateAccountPage',
@@ -120,13 +120,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ProfilePage',
           path: '/profilePage',
           requireAuth: true,
-          builder: (context, params) => ProfilePageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'ProfilePage')
+              : ProfilePageWidget(),
         ),
         FFRoute(
           name: 'SearchPage',
           path: '/searchPage',
           requireAuth: true,
-          builder: (context, params) => SearchPageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'SearchPage')
+              : SearchPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
