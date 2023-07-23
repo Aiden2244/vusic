@@ -207,7 +207,7 @@ class _SampleThemeTestWidgetState extends State<SampleThemeTestWidget>
                   logFirebaseEvent('SAMPLE_THEME_TEST_notifications_none_ICN');
                   logFirebaseEvent('IconButton_navigate_to');
 
-                  context.pushNamed('ProfilePage');
+                  context.pushNamed('NotificationsPage');
                 },
               ),
             ),
