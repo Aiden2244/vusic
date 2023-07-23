@@ -136,6 +136,11 @@ class UsersRecord extends FirestoreRecord {
   bool get isVerified => _isVerified ?? false;
   bool hasIsVerified() => _isVerified != null;
 
+  // "notifications" field.
+  List<NotificationStruct>? _notifications;
+  List<NotificationStruct> get notifications => _notifications ?? const [];
+  bool hasNotifications() => _notifications != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -164,6 +169,10 @@ class UsersRecord extends FirestoreRecord {
     );
     _friends = snapshotData['friends'] as DocumentReference?;
     _isVerified = snapshotData['is_verified'] as bool?;
+    _notifications = getStructList(
+      snapshotData['notifications'],
+      NotificationStruct.fromMap,
+    );
   }
 
   static CollectionReference get collection =>
@@ -278,7 +287,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.currentLocation == e2?.currentLocation &&
         listEquality.equals(e1?.posts, e2?.posts) &&
         e1?.friends == e2?.friends &&
-        e1?.isVerified == e2?.isVerified;
+        e1?.isVerified == e2?.isVerified &&
+        listEquality.equals(e1?.notifications, e2?.notifications);
   }
 
   @override
@@ -306,7 +316,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.currentLocation,
         e?.posts,
         e?.friends,
-        e?.isVerified
+        e?.isVerified,
+        e?.notifications
       ]);
 
   @override

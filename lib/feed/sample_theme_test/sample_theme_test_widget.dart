@@ -362,12 +362,12 @@ class _SampleThemeTestWidgetState extends State<SampleThemeTestWidget>
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   logFirebaseEvent(
-                                      'SAMPLE_THEME_TEST_NAVIGATE_TO_SETTINGS_B');
+                                      'SAMPLE_THEME_TEST_NAVIGATE_TO_PROFILE_BT');
                                   logFirebaseEvent('Button_navigate_to');
 
-                                  context.pushNamed('SettingsPage');
+                                  context.pushNamed('ProfilePage');
                                 },
-                                text: 'Navigate to settings',
+                                text: 'Navigate to profile',
                                 options: FFButtonOptions(
                                   width: double.infinity,
                                   height: 44.0,

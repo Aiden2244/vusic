@@ -318,10 +318,23 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    fanProfilePageUsersRecord.friendsCount
-                                        .toString(),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    formatNumber(
+                                      fanProfilePageUsersRecord.friendsCount,
+                                      formatType: FormatType.compact,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
+                                        ),
                                   ),
                                   Text(
                                     'Friends',
@@ -346,10 +359,23 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    fanProfilePageUsersRecord.followingCount
-                                        .toString(),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    formatNumber(
+                                      fanProfilePageUsersRecord.followingCount,
+                                      formatType: FormatType.compact,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
+                                        ),
                                   ),
                                   Text(
                                     'Following',

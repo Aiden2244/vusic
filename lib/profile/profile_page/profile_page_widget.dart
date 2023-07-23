@@ -47,6 +47,159 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        endDrawer: Container(
+          width: MediaQuery.sizeOf(context).width * 0.6,
+          child: Drawer(
+            elevation: 16.0,
+            child: Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 20.0),
+                    child: Text(
+                      'Quick Settings',
+                      style: FlutterFlowTheme.of(context).titleSmall,
+                    ),
+                  ),
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      logFirebaseEvent('PROFILE_Container_f5sxwudx_ON_TAP');
+                      logFirebaseEvent('Container_navigate_to');
+
+                      context.pushNamed('ProfileSettingsPage');
+                    },
+                    child: Material(
+                      color: Colors.transparent,
+                      elevation: 2.0,
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 0.05,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              width: 40.0,
+                              height: MediaQuery.sizeOf(context).height * 1.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 10.0, 8.0, 8.0),
+                                child: FaIcon(
+                                  FontAwesomeIcons.userEdit,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 17.0,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Edit Profile',
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.of(context).bodyMedium,
+                            ),
+                            Spacer(),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 10.0, 0.0),
+                              child: Icon(
+                                Icons.keyboard_arrow_right,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 24.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      logFirebaseEvent('PROFILE_Container_ys3bz6pw_ON_TAP');
+                      logFirebaseEvent('Container_navigate_to');
+
+                      context.pushNamed('SettingsPage');
+                    },
+                    child: Material(
+                      color: Colors.transparent,
+                      elevation: 2.0,
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 0.05,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              width: 40.0,
+                              height: MediaQuery.sizeOf(context).height * 1.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: Icon(
+                                Icons.settings_rounded,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 24.0,
+                              ),
+                            ),
+                            Text(
+                              'All Settings',
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.of(context).bodyMedium,
+                            ),
+                            Spacer(),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 10.0, 0.0),
+                              child: Icon(
+                                Icons.keyboard_arrow_right,
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                size: 24.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
@@ -282,36 +435,53 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width * 0.25,
-                          height: MediaQuery.sizeOf(context).height * 0.06,
-                          decoration: BoxDecoration(
-                            color: Color(0x00292B33),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AuthUserStreamWidget(
-                                builder: (context) => Text(
-                                  valueOrDefault(
-                                          currentUserDocument?.fanCount, 0)
-                                      .toString(),
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                ),
+                      if (valueOrDefault(
+                              currentUserDocument?.accountType, '') ==
+                          'musician')
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 0.0),
+                          child: AuthUserStreamWidget(
+                            builder: (context) => Container(
+                              width: MediaQuery.sizeOf(context).width * 0.25,
+                              height: MediaQuery.sizeOf(context).height * 0.06,
+                              decoration: BoxDecoration(
+                                color: Color(0x00292B33),
                               ),
-                              Text(
-                                'Fans',
-                                style: FlutterFlowTheme.of(context).bodySmall,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    formatNumber(
+                                      valueOrDefault(
+                                          currentUserDocument?.fanCount, 0),
+                                      formatType: FormatType.compact,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
+                                        ),
+                                  ),
+                                  Text(
+                                    'Fans',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodySmall,
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
@@ -327,11 +497,23 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             children: [
                               AuthUserStreamWidget(
                                 builder: (context) => Text(
-                                  valueOrDefault(
-                                          currentUserDocument?.friendsCount, 0)
-                                      .toString(),
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
+                                  formatNumber(
+                                    valueOrDefault(
+                                        currentUserDocument?.friendsCount, 0),
+                                    formatType: FormatType.compact,
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyMediumFamily,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        useGoogleFonts: GoogleFonts.asMap()
+                                            .containsKey(
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily),
+                                      ),
                                 ),
                               ),
                               Text(
@@ -342,52 +524,114 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                           ),
                         ),
                       ),
-                      FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
-                        text: 'Go Live',
-                        options: FFButtonOptions(
-                          width: 70.0,
-                          height: 30.0,
+                      if (valueOrDefault(
+                              currentUserDocument?.accountType, '') ==
+                          'fan')
+                        Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).alternate,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .titleSmall
-                              .override(
-                                fontFamily: FlutterFlowTheme.of(context)
-                                    .titleSmallFamily,
-                                color: Colors.white,
-                                useGoogleFonts: GoogleFonts.asMap().containsKey(
-                                    FlutterFlowTheme.of(context)
-                                        .titleSmallFamily),
+                              0.0, 10.0, 0.0, 0.0),
+                          child: AuthUserStreamWidget(
+                            builder: (context) => Container(
+                              width: MediaQuery.sizeOf(context).width * 0.25,
+                              height: MediaQuery.sizeOf(context).height * 0.06,
+                              decoration: BoxDecoration(
+                                color: Color(0x00292B33),
                               ),
-                          elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    formatNumber(
+                                      valueOrDefault(
+                                          currentUserDocument?.followingCount,
+                                          0),
+                                      formatType: FormatType.compact,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMediumFamily,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily),
+                                        ),
+                                  ),
+                                  Text(
+                                    'Following',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodySmall,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                      ),
-                      FlutterFlowIconButton(
-                        borderColor: FlutterFlowTheme.of(context).alternate,
-                        borderRadius: 20.0,
-                        borderWidth: 1.0,
-                        buttonSize: 35.0,
-                        fillColor: FlutterFlowTheme.of(context).alternate,
-                        icon: Icon(
-                          Icons.add,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 20.0,
+                      if (valueOrDefault(
+                              currentUserDocument?.accountType, '') ==
+                          'musician')
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              6.0, 0.0, 10.0, 0.0),
+                          child: AuthUserStreamWidget(
+                            builder: (context) => FFButtonWidget(
+                              onPressed: () {
+                                print('Button pressed ...');
+                              },
+                              text: 'Go Live',
+                              icon: FaIcon(
+                                FontAwesomeIcons.video,
+                              ),
+                              options: FFButtonOptions(
+                                width: 115.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).alternate,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .titleSmallFamily,
+                                      color: Colors.white,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily),
+                                    ),
+                                elevation: 3.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                            ),
+                          ),
                         ),
-                        onPressed: () {
-                          print('IconButton pressed ...');
-                        },
-                      ),
+                      if (valueOrDefault(
+                              currentUserDocument?.accountType, '') ==
+                          'fan')
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              6.0, 0.0, 10.0, 0.0),
+                          child: AuthUserStreamWidget(
+                            builder: (context) => Container(
+                              width: 115.0,
+                              height: 40.0,
+                              decoration: BoxDecoration(
+                                color: Color(0x00292B33),
+                              ),
+                            ),
+                          ),
+                        ),
                     ].divide(SizedBox(width: 10.0)),
                   ),
                 ),

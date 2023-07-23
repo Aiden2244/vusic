@@ -14,3 +14,7 @@ export '/profile/fan_profile_page/fan_profile_page_widget.dart'
     show FanProfilePageWidget;
 export '/profile/musician_profile_page/musician_profile_page_widget.dart'
     show MusicianProfilePageWidget;
+export '/profile/profile_settings_page/profile_settings_page_widget.dart'
+    show ProfileSettingsPageWidget;
+export '/notifications_page/notifications_page_widget.dart'
+    show NotificationsPageWidget;

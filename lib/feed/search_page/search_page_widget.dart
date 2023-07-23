@@ -1,12 +1,10 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
+import '/components/user_tile_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:text_search/text_search.dart';
@@ -20,8 +18,7 @@ class SearchPageWidget extends StatefulWidget {
   _SearchPageWidgetState createState() => _SearchPageWidgetState();
 }
 
-class _SearchPageWidgetState extends State<SearchPageWidget>
-    with TickerProviderStateMixin {
+class _SearchPageWidgetState extends State<SearchPageWidget> {
   late SearchPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -177,193 +174,17 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                         itemBuilder: (context, userSearchResultsIndex) {
                           final userSearchResultsItem =
                               userSearchResults[userSearchResultsIndex];
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 1.0),
-                            child: Container(
-                              width: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 0.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).lineColor,
-                                    offset: Offset(0.0, 1.0),
-                                  )
-                                ],
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 8.0, 8.0, 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(40.0),
-                                      child: Image.network(
-                                        valueOrDefault<String>(
-                                          userSearchResultsItem.photoUrl,
-                                          'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
-                                        ),
-                                        width: 60.0,
-                                        height: 60.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12.0, 0.0, 0.0, 0.0),
-                                            child: Text(
-                                              userSearchResultsItem.displayName,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 4.0, 0.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          12.0, 0.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    '@',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodySmall
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodySmallFamily,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          useGoogleFonts: GoogleFonts
-                                                                  .asMap()
-                                                              .containsKey(
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmallFamily),
-                                                        ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  userSearchResultsItem
-                                                      .userName,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall
-                                                      .override(
-                                                        fontFamily:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodySmallFamily,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        useGoogleFonts: GoogleFonts
-                                                                .asMap()
-                                                            .containsKey(
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmallFamily),
-                                                      ),
-                                                ),
-                                                SizedBox(
-                                                  height: 19.0,
-                                                  child: VerticalDivider(
-                                                    thickness: 2.0,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  userSearchResultsItem
-                                                      .accountType,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'SEARCH_PAGE_PAGE_Card_ds1iffog_ON_TAP');
-                                        logFirebaseEvent(
-                                            'Card_update_app_state');
-                                        setState(() {
-                                          FFAppState().lastSearchedUser =
-                                              userSearchResultsItem.reference;
-                                        });
-                                        if (userSearchResultsItem.accountType ==
-                                            'musician') {
-                                          logFirebaseEvent('Card_navigate_to');
-
-                                          context
-                                              .pushNamed('MusicianProfilePage');
-                                        } else {
-                                          logFirebaseEvent('Card_navigate_to');
-
-                                          context.pushNamed('FanProfilePage');
-                                        }
-                                      },
-                                      child: Card(
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        elevation: 1.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0),
-                                        ),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  4.0, 4.0, 4.0, 4.0),
-                                          child: Icon(
-                                            Icons.keyboard_arrow_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            size: 24.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                          return UserTileWidget(
+                            key: Key(
+                                'Keyg5e_${userSearchResultsIndex}_of_${userSearchResults.length}'),
+                            parameter1: valueOrDefault<String>(
+                              userSearchResultsItem.photoUrl,
+                              'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
                             ),
+                            parameter2: userSearchResultsItem.displayName,
+                            parameter3: userSearchResultsItem.userName,
+                            parameter4: userSearchResultsItem.accountType,
+                            parameter5: userSearchResultsItem.reference,
                           );
                         },
                       );

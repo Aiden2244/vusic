@@ -143,6 +143,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/musicianProfilePage',
           requireAuth: true,
           builder: (context, params) => MusicianProfilePageWidget(),
+        ),
+        FFRoute(
+          name: 'ProfileSettingsPage',
+          path: '/profileSettingsPage',
+          requireAuth: true,
+          builder: (context, params) => ProfileSettingsPageWidget(),
+        ),
+        FFRoute(
+          name: 'NotificationsPage',
+          path: '/notificationsPage',
+          requireAuth: true,
+          builder: (context, params) => NotificationsPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
