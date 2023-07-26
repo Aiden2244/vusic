@@ -126,11 +126,6 @@ class UsersRecord extends FirestoreRecord {
   List<PostStruct> get posts => _posts ?? const [];
   bool hasPosts() => _posts != null;
 
-  // "friends" field.
-  DocumentReference? _friends;
-  DocumentReference? get friends => _friends;
-  bool hasFriends() => _friends != null;
-
   // "is_verified" field.
   bool? _isVerified;
   bool get isVerified => _isVerified ?? false;
@@ -140,6 +135,11 @@ class UsersRecord extends FirestoreRecord {
   List<NotificationStruct>? _notifications;
   List<NotificationStruct> get notifications => _notifications ?? const [];
   bool hasNotifications() => _notifications != null;
+
+  // "friends" field.
+  List<DocumentReference>? _friends;
+  List<DocumentReference> get friends => _friends ?? const [];
+  bool hasFriends() => _friends != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -167,12 +167,12 @@ class UsersRecord extends FirestoreRecord {
       snapshotData['posts'],
       PostStruct.fromMap,
     );
-    _friends = snapshotData['friends'] as DocumentReference?;
     _isVerified = snapshotData['is_verified'] as bool?;
     _notifications = getStructList(
       snapshotData['notifications'],
       NotificationStruct.fromMap,
     );
+    _friends = getDataList(snapshotData['friends']);
   }
 
   static CollectionReference get collection =>
@@ -227,7 +227,6 @@ Map<String, dynamic> createUsersRecordData({
   String? artistDescription,
   String? hometown,
   String? currentLocation,
-  DocumentReference? friends,
   bool? isVerified,
 }) {
   final firestoreData = mapToFirestore(
@@ -250,7 +249,6 @@ Map<String, dynamic> createUsersRecordData({
       'artist_description': artistDescription,
       'hometown': hometown,
       'current_location': currentLocation,
-      'friends': friends,
       'is_verified': isVerified,
     }.withoutNulls,
   );
@@ -286,9 +284,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.hometown == e2?.hometown &&
         e1?.currentLocation == e2?.currentLocation &&
         listEquality.equals(e1?.posts, e2?.posts) &&
-        e1?.friends == e2?.friends &&
         e1?.isVerified == e2?.isVerified &&
-        listEquality.equals(e1?.notifications, e2?.notifications);
+        listEquality.equals(e1?.notifications, e2?.notifications) &&
+        listEquality.equals(e1?.friends, e2?.friends);
   }
 
   @override
@@ -315,9 +313,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.hometown,
         e?.currentLocation,
         e?.posts,
-        e?.friends,
         e?.isVerified,
-        e?.notifications
+        e?.notifications,
+        e?.friends
       ]);
 
   @override

@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -390,8 +391,40 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 0.0, 0.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'FAN_PROFILE_PAGE_PAGE_REQUEST_BTN_ON_TAP');
+                                logFirebaseEvent('Button_backend_call');
+
+                                await fanProfilePageUsersRecord.reference
+                                    .update({
+                                  'notifications': FieldValue.arrayUnion([
+                                    getNotificationFirestoreData(
+                                      createNotificationStruct(
+                                        notificationType: 'friend_request',
+                                        notificationTime: getCurrentTimestamp,
+                                        notificationUser: currentUserReference,
+                                        clearUnsetFields: false,
+                                      ),
+                                      true,
+                                    )
+                                  ]),
+                                });
+                                logFirebaseEvent('Button_show_snack_bar');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Friend Request Sent',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                );
                               },
                               text: 'Request',
                               icon: Icon(
