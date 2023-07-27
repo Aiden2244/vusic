@@ -9,30 +9,14 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class NotificationStruct extends FFFirebaseStruct {
   NotificationStruct({
-    String? notificationId,
-    String? notificationText,
     String? notificationType,
     DateTime? notificationTime,
     DocumentReference? notificationUser,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
-  })  : _notificationId = notificationId,
-        _notificationText = notificationText,
-        _notificationType = notificationType,
+  })  : _notificationType = notificationType,
         _notificationTime = notificationTime,
         _notificationUser = notificationUser,
         super(firestoreUtilData);
-
-  // "notification_id" field.
-  String? _notificationId;
-  String get notificationId => _notificationId ?? '';
-  set notificationId(String? val) => _notificationId = val;
-  bool hasNotificationId() => _notificationId != null;
-
-  // "notification_text" field.
-  String? _notificationText;
-  String get notificationText => _notificationText ?? '';
-  set notificationText(String? val) => _notificationText = val;
-  bool hasNotificationText() => _notificationText != null;
 
   // "notification_type" field.
   String? _notificationType;
@@ -54,8 +38,6 @@ class NotificationStruct extends FFFirebaseStruct {
 
   static NotificationStruct fromMap(Map<String, dynamic> data) =>
       NotificationStruct(
-        notificationId: data['notification_id'] as String?,
-        notificationText: data['notification_text'] as String?,
         notificationType: data['notification_type'] as String?,
         notificationTime: data['notification_time'] as DateTime?,
         notificationUser: data['notification_user'] as DocumentReference?,
@@ -65,8 +47,6 @@ class NotificationStruct extends FFFirebaseStruct {
       data is Map<String, dynamic> ? NotificationStruct.fromMap(data) : null;
 
   Map<String, dynamic> toMap() => {
-        'notification_id': _notificationId,
-        'notification_text': _notificationText,
         'notification_type': _notificationType,
         'notification_time': _notificationTime,
         'notification_user': _notificationUser,
@@ -74,14 +54,6 @@ class NotificationStruct extends FFFirebaseStruct {
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'notification_id': serializeParam(
-          _notificationId,
-          ParamType.String,
-        ),
-        'notification_text': serializeParam(
-          _notificationText,
-          ParamType.String,
-        ),
         'notification_type': serializeParam(
           _notificationType,
           ParamType.String,
@@ -98,16 +70,6 @@ class NotificationStruct extends FFFirebaseStruct {
 
   static NotificationStruct fromSerializableMap(Map<String, dynamic> data) =>
       NotificationStruct(
-        notificationId: deserializeParam(
-          data['notification_id'],
-          ParamType.String,
-          false,
-        ),
-        notificationText: deserializeParam(
-          data['notification_text'],
-          ParamType.String,
-          false,
-        ),
         notificationType: deserializeParam(
           data['notification_type'],
           ParamType.String,
@@ -132,26 +94,17 @@ class NotificationStruct extends FFFirebaseStruct {
   @override
   bool operator ==(Object other) {
     return other is NotificationStruct &&
-        notificationId == other.notificationId &&
-        notificationText == other.notificationText &&
         notificationType == other.notificationType &&
         notificationTime == other.notificationTime &&
         notificationUser == other.notificationUser;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([
-        notificationId,
-        notificationText,
-        notificationType,
-        notificationTime,
-        notificationUser
-      ]);
+  int get hashCode => const ListEquality()
+      .hash([notificationType, notificationTime, notificationUser]);
 }
 
 NotificationStruct createNotificationStruct({
-  String? notificationId,
-  String? notificationText,
   String? notificationType,
   DateTime? notificationTime,
   DocumentReference? notificationUser,
@@ -161,8 +114,6 @@ NotificationStruct createNotificationStruct({
   bool delete = false,
 }) =>
     NotificationStruct(
-      notificationId: notificationId,
-      notificationText: notificationText,
       notificationType: notificationType,
       notificationTime: notificationTime,
       notificationUser: notificationUser,
@@ -199,7 +150,9 @@ void addNotificationStructData(
     firestoreData[fieldName] = FieldValue.delete();
     return;
   }
-  if (!forFieldValue && notification.firestoreUtilData.clearUnsetFields) {
+  final clearFields =
+      !forFieldValue && notification.firestoreUtilData.clearUnsetFields;
+  if (clearFields) {
     firestoreData[fieldName] = <String, dynamic>{};
   }
   final notificationData =
@@ -207,8 +160,9 @@ void addNotificationStructData(
   final nestedData =
       notificationData.map((k, v) => MapEntry('$fieldName.$k', v));
 
-  final create = notification.firestoreUtilData.create;
-  firestoreData.addAll(create ? mergeNestedFields(nestedData) : nestedData);
+  final mergeFields = notification.firestoreUtilData.create || clearFields;
+  firestoreData
+      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getNotificationFirestoreData(

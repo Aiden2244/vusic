@@ -171,14 +171,17 @@ void addCommentStructData(
     firestoreData[fieldName] = FieldValue.delete();
     return;
   }
-  if (!forFieldValue && comment.firestoreUtilData.clearUnsetFields) {
+  final clearFields =
+      !forFieldValue && comment.firestoreUtilData.clearUnsetFields;
+  if (clearFields) {
     firestoreData[fieldName] = <String, dynamic>{};
   }
   final commentData = getCommentFirestoreData(comment, forFieldValue);
   final nestedData = commentData.map((k, v) => MapEntry('$fieldName.$k', v));
 
-  final create = comment.firestoreUtilData.create;
-  firestoreData.addAll(create ? mergeNestedFields(nestedData) : nestedData);
+  final mergeFields = comment.firestoreUtilData.create || clearFields;
+  firestoreData
+      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getCommentFirestoreData(

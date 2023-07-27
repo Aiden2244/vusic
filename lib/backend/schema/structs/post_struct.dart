@@ -371,14 +371,16 @@ void addPostStructData(
     firestoreData[fieldName] = FieldValue.delete();
     return;
   }
-  if (!forFieldValue && post.firestoreUtilData.clearUnsetFields) {
+  final clearFields = !forFieldValue && post.firestoreUtilData.clearUnsetFields;
+  if (clearFields) {
     firestoreData[fieldName] = <String, dynamic>{};
   }
   final postData = getPostFirestoreData(post, forFieldValue);
   final nestedData = postData.map((k, v) => MapEntry('$fieldName.$k', v));
 
-  final create = post.firestoreUtilData.create;
-  firestoreData.addAll(create ? mergeNestedFields(nestedData) : nestedData);
+  final mergeFields = post.firestoreUtilData.create || clearFields;
+  firestoreData
+      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getPostFirestoreData(

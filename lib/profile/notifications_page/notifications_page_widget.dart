@@ -87,20 +87,20 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
         body: AuthUserStreamWidget(
           builder: (context) => Builder(
             builder: (context) {
-              final activeNotifications =
+              final notificationsList =
                   (currentUserDocument?.notifications?.toList() ?? []).toList();
               return ListView.builder(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
-                itemCount: activeNotifications.length,
-                itemBuilder: (context, activeNotificationsIndex) {
-                  final activeNotificationsItem =
-                      activeNotifications[activeNotificationsIndex];
+                itemCount: notificationsList.length,
+                itemBuilder: (context, notificationsListIndex) {
+                  final notificationsListItem =
+                      notificationsList[notificationsListIndex];
                   return Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
                     child: StreamBuilder<UsersRecord>(
                       stream: UsersRecord.getDocument(
-                          activeNotificationsItem.notificationUser!),
+                          notificationsListItem.notificationUser!),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
@@ -270,11 +270,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                                     'notifications':
                                                         FieldValue.arrayRemove([
                                                       getNotificationFirestoreData(
-                                                        updateNotificationStruct(
-                                                          activeNotificationsItem,
-                                                          clearUnsetFields:
-                                                              false,
-                                                        ),
+                                                        createNotificationStruct(
+                                                            delete: true),
                                                         true,
                                                       )
                                                     ]),
@@ -337,10 +334,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                                   'notifications':
                                                       FieldValue.arrayRemove([
                                                     getNotificationFirestoreData(
-                                                      updateNotificationStruct(
-                                                        activeNotificationsItem,
-                                                        clearUnsetFields: false,
-                                                      ),
+                                                      createNotificationStruct(
+                                                          delete: true),
                                                       true,
                                                     )
                                                   ]),
