@@ -507,7 +507,7 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                           if ((currentUserDocument?.following?.toList() ?? [])
                                   .contains(musicianProfilePageUsersRecord
                                       .reference) ==
-                              false)
+                              true)
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 20.0, 0.0),

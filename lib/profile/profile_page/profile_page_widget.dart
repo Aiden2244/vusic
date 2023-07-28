@@ -226,7 +226,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             onPressed: () async {
               logFirebaseEvent('PROFILE_arrow_back_rounded_ICN_ON_TAP');
               logFirebaseEvent('IconButton_navigate_back');
-              context.pop();
+              context.safePop();
             },
           ),
           title: Text(
