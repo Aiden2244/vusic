@@ -449,11 +449,15 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                       child: AuthUserFanBarWidget(),
                     ),
                   ),
-                wrapWithModel(
-                  model: _model.authUserMusicianBarModel,
-                  updateCallback: () => setState(() {}),
-                  child: AuthUserMusicianBarWidget(),
-                ),
+                if (valueOrDefault(currentUserDocument?.accountType, '') !=
+                    'fan')
+                  AuthUserStreamWidget(
+                    builder: (context) => wrapWithModel(
+                      model: _model.authUserMusicianBarModel,
+                      updateCallback: () => setState(() {}),
+                      child: AuthUserMusicianBarWidget(),
+                    ),
+                  ),
               ],
             ),
           ),
