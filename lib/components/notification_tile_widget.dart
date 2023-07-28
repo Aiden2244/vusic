@@ -328,7 +328,7 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                           ),
                         ),
                       ),
-                    if (widget.notificationType == 'friend_request')
+                    if (widget.notificationType != 'friend_request')
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 20.0, 0.0),
