@@ -12,10 +12,12 @@ class NotificationStruct extends FFFirebaseStruct {
     String? notificationType,
     DateTime? notificationTime,
     DocumentReference? notificationUser,
+    String? notificationBody,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _notificationType = notificationType,
         _notificationTime = notificationTime,
         _notificationUser = notificationUser,
+        _notificationBody = notificationBody,
         super(firestoreUtilData);
 
   // "notification_type" field.
@@ -36,11 +38,18 @@ class NotificationStruct extends FFFirebaseStruct {
   set notificationUser(DocumentReference? val) => _notificationUser = val;
   bool hasNotificationUser() => _notificationUser != null;
 
+  // "notification_body" field.
+  String? _notificationBody;
+  String get notificationBody => _notificationBody ?? '';
+  set notificationBody(String? val) => _notificationBody = val;
+  bool hasNotificationBody() => _notificationBody != null;
+
   static NotificationStruct fromMap(Map<String, dynamic> data) =>
       NotificationStruct(
         notificationType: data['notification_type'] as String?,
         notificationTime: data['notification_time'] as DateTime?,
         notificationUser: data['notification_user'] as DocumentReference?,
+        notificationBody: data['notification_body'] as String?,
       );
 
   static NotificationStruct? maybeFromMap(dynamic data) =>
@@ -50,6 +59,7 @@ class NotificationStruct extends FFFirebaseStruct {
         'notification_type': _notificationType,
         'notification_time': _notificationTime,
         'notification_user': _notificationUser,
+        'notification_body': _notificationBody,
       }.withoutNulls;
 
   @override
@@ -65,6 +75,10 @@ class NotificationStruct extends FFFirebaseStruct {
         'notification_user': serializeParam(
           _notificationUser,
           ParamType.DocumentReference,
+        ),
+        'notification_body': serializeParam(
+          _notificationBody,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -86,6 +100,11 @@ class NotificationStruct extends FFFirebaseStruct {
           false,
           collectionNamePath: ['users'],
         ),
+        notificationBody: deserializeParam(
+          data['notification_body'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -96,18 +115,20 @@ class NotificationStruct extends FFFirebaseStruct {
     return other is NotificationStruct &&
         notificationType == other.notificationType &&
         notificationTime == other.notificationTime &&
-        notificationUser == other.notificationUser;
+        notificationUser == other.notificationUser &&
+        notificationBody == other.notificationBody;
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([notificationType, notificationTime, notificationUser]);
+  int get hashCode => const ListEquality().hash(
+      [notificationType, notificationTime, notificationUser, notificationBody]);
 }
 
 NotificationStruct createNotificationStruct({
   String? notificationType,
   DateTime? notificationTime,
   DocumentReference? notificationUser,
+  String? notificationBody,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -117,6 +138,7 @@ NotificationStruct createNotificationStruct({
       notificationType: notificationType,
       notificationTime: notificationTime,
       notificationUser: notificationUser,
+      notificationBody: notificationBody,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

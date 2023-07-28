@@ -2,7 +2,9 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'profile_settings_page_model.dart';
@@ -28,6 +30,13 @@ class _ProfileSettingsPageWidgetState extends State<ProfileSettingsPageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'ProfileSettingsPage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('PROFILE_SETTINGS_ProfileSettingsPage_ON_');
+      logFirebaseEvent('ProfileSettingsPage_action_block');
+      await action_blocks.updateCurrentPage(context);
+    });
+
     _model.textController1 ??= TextEditingController();
     _model.textController2 ??= TextEditingController();
   }

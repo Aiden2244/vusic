@@ -155,6 +155,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/notificationsPage',
           requireAuth: true,
           builder: (context, params) => NotificationsPageWidget(),
+        ),
+        FFRoute(
+          name: 'UserListPage',
+          path: '/userListPage',
+          requireAuth: true,
+          builder: (context, params) => UserListPageWidget(
+            displayFriends: params.getParam('displayFriends', ParamType.bool),
+            titleText: params.getParam('titleText', ParamType.String),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

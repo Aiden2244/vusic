@@ -4,7 +4,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,12 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
     _model = createModel(context, () => ProfilePageModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'ProfilePage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('PROFILE_ProfilePage_ON_INIT_STATE');
+      logFirebaseEvent('ProfilePage_action_block');
+      await action_blocks.updateCurrentPage(context);
+    });
   }
 
   @override
@@ -485,42 +493,81 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width * 0.25,
-                          height: MediaQuery.sizeOf(context).height * 0.06,
-                          decoration: BoxDecoration(
-                            color: Color(0x00292B33),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AuthUserStreamWidget(
-                                builder: (context) => Text(
-                                  formatNumber(
-                                    valueOrDefault(
-                                        currentUserDocument?.friendsCount, 0),
-                                    formatType: FormatType.compact,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: FlutterFlowTheme.of(context)
-                                            .bodyMediumFamily,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        useGoogleFonts: GoogleFonts.asMap()
-                                            .containsKey(
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            logFirebaseEvent(
+                                'PROFILE_Container_71w1r0vd_ON_TAP');
+                            logFirebaseEvent('Container_update_app_state');
+                          },
+                          child: Container(
+                            width: MediaQuery.sizeOf(context).width * 0.25,
+                            height: MediaQuery.sizeOf(context).height * 0.06,
+                            decoration: BoxDecoration(
+                              color: Color(0x00292B33),
+                            ),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'PROFILE_PAGE_PAGE_Column_56bvoey6_ON_TAP');
+                                logFirebaseEvent('Column_navigate_to');
+
+                                context.pushNamed(
+                                  'UserListPage',
+                                  queryParameters: {
+                                    'displayFriends': serializeParam(
+                                      true,
+                                      ParamType.bool,
+                                    ),
+                                    'titleText': serializeParam(
+                                      'Friends',
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
+                                );
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AuthUserStreamWidget(
+                                    builder: (context) => Text(
+                                      formatNumber(
+                                        valueOrDefault(
+                                            currentUserDocument?.friendsCount,
+                                            0),
+                                        formatType: FormatType.compact,
                                       ),
-                                ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily),
+                                          ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Friends',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodySmall,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                'Friends',
-                                style: FlutterFlowTheme.of(context).bodySmall,
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -537,37 +584,62 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               decoration: BoxDecoration(
                                 color: Color(0x00292B33),
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    formatNumber(
-                                      valueOrDefault(
-                                          currentUserDocument?.followingCount,
-                                          0),
-                                      formatType: FormatType.compact,
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  logFirebaseEvent(
+                                      'PROFILE_PAGE_PAGE_Column_ka6gxk79_ON_TAP');
+                                  logFirebaseEvent('Column_navigate_to');
+
+                                  context.pushNamed(
+                                    'UserListPage',
+                                    queryParameters: {
+                                      'displayFriends': serializeParam(
+                                        false,
+                                        ParamType.bool,
+                                      ),
+                                      'titleText': serializeParam(
+                                        'Following',
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      formatNumber(
+                                        valueOrDefault(
+                                            currentUserDocument?.followingCount,
+                                            0),
+                                        formatType: FormatType.compact,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily),
+                                          ),
                                     ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                  Text(
-                                    'Following',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodySmall,
-                                  ),
-                                ],
+                                    Text(
+                                      'Following',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodySmall,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

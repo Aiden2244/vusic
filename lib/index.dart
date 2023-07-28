@@ -18,3 +18,5 @@ export '/profile/profile_settings_page/profile_settings_page_widget.dart'
     show ProfileSettingsPageWidget;
 export '/profile/notifications_page/notifications_page_widget.dart'
     show NotificationsPageWidget;
+export '/profile/user_list_page/user_list_page_widget.dart'
+    show UserListPageWidget;

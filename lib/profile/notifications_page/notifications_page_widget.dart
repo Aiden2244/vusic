@@ -3,8 +3,10 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'notifications_page_model.dart';
@@ -30,6 +32,12 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'NotificationsPage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('NOTIFICATIONS_NotificationsPage_ON_INIT_');
+      logFirebaseEvent('NotificationsPage_action_block');
+      await action_blocks.updateCurrentPage(context);
+    });
   }
 
   @override
@@ -192,7 +200,13 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      ' sent a friend request',
+                                      valueOrDefault<String>(
+                                        contentView2UsersRecord
+                                            .notifications[
+                                                notificationsListIndex]
+                                            .notificationBody,
+                                        'sent you a notification',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -271,11 +285,30 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                                         FieldValue.arrayRemove([
                                                       getNotificationFirestoreData(
                                                         createNotificationStruct(
-                                                            delete: true),
+                                                          notificationUser:
+                                                              contentView2UsersRecord
+                                                                  .reference,
+                                                          clearUnsetFields:
+                                                              false,
+                                                        ),
                                                         true,
                                                       )
                                                     ]),
                                                   });
+                                                  logFirebaseEvent(
+                                                      'Container_action_block');
+                                                  await action_blocks
+                                                      .notifyUser(
+                                                    context,
+                                                    userToNotify:
+                                                        contentView2UsersRecord
+                                                            .reference,
+                                                    notificationType:
+                                                        'friend_requect_accept',
+                                                    notificationBody:
+                                                        'accepted your friend request',
+                                                  );
+                                                  setState(() {});
                                                   logFirebaseEvent(
                                                       'Container_show_snack_bar');
                                                   ScaffoldMessenger.of(context)
@@ -335,7 +368,11 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                                       FieldValue.arrayRemove([
                                                     getNotificationFirestoreData(
                                                       createNotificationStruct(
-                                                          delete: true),
+                                                        notificationUser:
+                                                            contentView2UsersRecord
+                                                                .reference,
+                                                        clearUnsetFields: false,
+                                                      ),
                                                       true,
                                                     )
                                                   ]),

@@ -31,6 +31,18 @@ class FFAppState extends ChangeNotifier {
   set lastSearchedUser(DocumentReference? _value) {
     _lastSearchedUser = _value;
   }
+
+  String _LastPageVisited = 'ProfilePage';
+  String get LastPageVisited => _LastPageVisited;
+  set LastPageVisited(String _value) {
+    _LastPageVisited = _value;
+  }
+
+  String _CurrentPage = 'ProfilePage';
+  String get CurrentPage => _CurrentPage;
+  set CurrentPage(String _value) {
+    _CurrentPage = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

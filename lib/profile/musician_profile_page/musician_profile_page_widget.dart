@@ -5,8 +5,10 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +35,12 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'MusicianProfilePage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('MUSICIAN_PROFILE_MusicianProfilePage_ON_');
+      logFirebaseEvent('MusicianProfilePage_action_block');
+      await action_blocks.updateCurrentPage(context);
+    });
   }
 
   @override
@@ -385,7 +393,7 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                                         ),
                                   ),
                                   Text(
-                                    'Friends',
+                                    'Mutuals',
                                     style:
                                         FlutterFlowTheme.of(context).bodySmall,
                                   ),

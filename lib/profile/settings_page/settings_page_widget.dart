@@ -2,8 +2,10 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'settings_page_model.dart';
@@ -28,6 +30,12 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'SettingsPage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('SETTINGS_SettingsPage_ON_INIT_STATE');
+      logFirebaseEvent('SettingsPage_action_block');
+      await action_blocks.updateCurrentPage(context);
+    });
   }
 
   @override
