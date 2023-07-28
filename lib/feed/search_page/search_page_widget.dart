@@ -1,5 +1,5 @@
 import '/backend/backend.dart';
-import '/components/user_tile_widget.dart';
+import '/feed/user_search_result/user_search_result_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -183,7 +183,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                         itemBuilder: (context, userSearchResultsIndex) {
                           final userSearchResultsItem =
                               userSearchResults[userSearchResultsIndex];
-                          return UserTileWidget(
+                          return UserSearchResultWidget(
                             key: Key(
                                 'Keyg5e_${userSearchResultsIndex}_of_${userSearchResults.length}'),
                             parameter1: valueOrDefault<String>(

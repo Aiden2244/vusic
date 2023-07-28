@@ -133,16 +133,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : SearchPageWidget(),
         ),
         FFRoute(
-          name: 'FanProfilePage',
-          path: '/fanProfilePage',
-          requireAuth: true,
-          builder: (context, params) => FanProfilePageWidget(),
-        ),
-        FFRoute(
           name: 'MusicianProfilePage',
           path: '/musicianProfilePage',
           requireAuth: true,
-          builder: (context, params) => MusicianProfilePageWidget(),
+          builder: (context, params) => MusicianProfilePageWidget(
+            pageUser: params.getParam(
+                'pageUser', ParamType.DocumentReference, false, ['users']),
+          ),
         ),
         FFRoute(
           name: 'ProfileSettingsPage',
@@ -161,8 +158,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/userListPage',
           requireAuth: true,
           builder: (context, params) => UserListPageWidget(
-            displayFriends: params.getParam('displayFriends', ParamType.bool),
             titleText: params.getParam('titleText', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'FanProfilePage',
+          path: '/fanProfilePage',
+          requireAuth: true,
+          builder: (context, params) => FanProfilePageWidget(
+            pageUser: params.getParam(
+                'pageUser', ParamType.DocumentReference, false, ['users']),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

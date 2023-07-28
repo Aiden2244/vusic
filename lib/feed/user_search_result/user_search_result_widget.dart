@@ -7,11 +7,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'user_tile_model.dart';
-export 'user_tile_model.dart';
+import 'user_search_result_model.dart';
+export 'user_search_result_model.dart';
 
-class UserTileWidget extends StatefulWidget {
-  const UserTileWidget({
+class UserSearchResultWidget extends StatefulWidget {
+  const UserSearchResultWidget({
     Key? key,
     this.parameter1,
     this.parameter2,
@@ -27,12 +27,12 @@ class UserTileWidget extends StatefulWidget {
   final DocumentReference? parameter5;
 
   @override
-  _UserTileWidgetState createState() => _UserTileWidgetState();
+  _UserSearchResultWidgetState createState() => _UserSearchResultWidgetState();
 }
 
-class _UserTileWidgetState extends State<UserTileWidget>
+class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
     with TickerProviderStateMixin {
-  late UserTileModel _model;
+  late UserSearchResultModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -43,7 +43,7 @@ class _UserTileWidgetState extends State<UserTileWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => UserTileModel());
+    _model = createModel(context, () => UserSearchResultModel());
   }
 
   @override
@@ -160,7 +160,7 @@ class _UserTileWidgetState extends State<UserTileWidget>
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('USER_TILE_COMP_Card_jxdkylmm_ON_TAP');
+                  logFirebaseEvent('USER_SEARCH_RESULT_Card_jxdkylmm_ON_TAP');
                   logFirebaseEvent('Card_update_app_state');
                   setState(() {
                     FFAppState().lastSearchedUser = widget.parameter5;
@@ -168,11 +168,27 @@ class _UserTileWidgetState extends State<UserTileWidget>
                   if (widget.parameter4 == 'musician') {
                     logFirebaseEvent('Card_navigate_to');
 
-                    context.pushNamed('MusicianProfilePage');
+                    context.pushNamed(
+                      'MusicianProfilePage',
+                      queryParameters: {
+                        'pageUser': serializeParam(
+                          widget.parameter5,
+                          ParamType.DocumentReference,
+                        ),
+                      }.withoutNulls,
+                    );
                   } else {
                     logFirebaseEvent('Card_navigate_to');
 
-                    context.pushNamed('FanProfilePage');
+                    context.pushNamed(
+                      'FanProfilePage',
+                      queryParameters: {
+                        'pageUser': serializeParam(
+                          widget.parameter5,
+                          ParamType.DocumentReference,
+                        ),
+                      }.withoutNulls,
+                    );
                   }
                 },
                 child: Card(

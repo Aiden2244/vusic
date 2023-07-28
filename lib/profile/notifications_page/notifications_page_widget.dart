@@ -1,10 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
+import '/components/notification_tile_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/actions/actions.dart' as action_blocks;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -104,328 +104,33 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                 itemBuilder: (context, notificationsListIndex) {
                   final notificationsListItem =
                       notificationsList[notificationsListIndex];
-                  return Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
-                    child: StreamBuilder<UsersRecord>(
-                      stream: UsersRecord.getDocument(
-                          notificationsListItem.notificationUser!),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        final contentView2UsersRecord = snapshot.data!;
-                        return Material(
-                          color: Colors.transparent,
-                          elevation: 8.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0.0),
-                          ),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF1B2020),
-                              borderRadius: BorderRadius.circular(0.0),
-                              shape: BoxShape.rectangle,
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 8.0, 8.0, 8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Image.network(
-                                      contentView2UsersRecord.photoUrl,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      '@',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            fontSize: 12.0,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily),
-                                          ),
-                                    ),
-                                  ),
-                                  Text(
-                                    valueOrDefault<String>(
-                                      contentView2UsersRecord.userName,
-                                      'VUSIC User',
-                                    ),
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          fontSize: 12.0,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      valueOrDefault<String>(
-                                        contentView2UsersRecord
-                                            .notifications[
-                                                notificationsListIndex]
-                                            .notificationBody,
-                                        'sent you a notification',
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            fontSize: 12.0,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily),
-                                          ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(1.0, 0.0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5.0, 0.0, 10.0, 0.0),
-                                      child: Container(
-                                        width: 55.0,
-                                        height: 50.0,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFF1B2020),
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                logFirebaseEvent(
-                                                    'NOTIFICATIONS_Container_m6zpvzqj_ON_TAP');
-                                                final firestoreBatch =
-                                                    FirebaseFirestore.instance
-                                                        .batch();
-                                                try {
-                                                  logFirebaseEvent(
-                                                      'Container_backend_call');
-
-                                                  firestoreBatch.update(
-                                                      currentUserReference!, {
-                                                    'friends_count':
-                                                        FieldValue.increment(1),
-                                                    'friends':
-                                                        FieldValue.arrayUnion([
-                                                      contentView2UsersRecord
-                                                          .reference
-                                                    ]),
-                                                  });
-                                                  logFirebaseEvent(
-                                                      'Container_backend_call');
-
-                                                  firestoreBatch.update(
-                                                      contentView2UsersRecord
-                                                          .reference,
-                                                      {
-                                                        'friends_count':
-                                                            FieldValue
-                                                                .increment(1),
-                                                        'friends': FieldValue
-                                                            .arrayUnion([
-                                                          currentUserReference
-                                                        ]),
-                                                      });
-                                                  logFirebaseEvent(
-                                                      'Container_backend_call');
-
-                                                  firestoreBatch.update(
-                                                      currentUserReference!, {
-                                                    'notifications':
-                                                        FieldValue.arrayRemove([
-                                                      getNotificationFirestoreData(
-                                                        createNotificationStruct(
-                                                          notificationUser:
-                                                              contentView2UsersRecord
-                                                                  .reference,
-                                                          clearUnsetFields:
-                                                              false,
-                                                        ),
-                                                        true,
-                                                      )
-                                                    ]),
-                                                  });
-                                                  logFirebaseEvent(
-                                                      'Container_action_block');
-                                                  await action_blocks
-                                                      .notifyUser(
-                                                    context,
-                                                    userToNotify:
-                                                        contentView2UsersRecord
-                                                            .reference,
-                                                    notificationType:
-                                                        'friend_requect_accept',
-                                                    notificationBody:
-                                                        'accepted your friend request',
-                                                  );
-                                                  setState(() {});
-                                                  logFirebaseEvent(
-                                                      'Container_show_snack_bar');
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                        'Friend Request Accepted',
-                                                        style: TextStyle(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                        ),
-                                                      ),
-                                                      duration: Duration(
-                                                          milliseconds: 4000),
-                                                      backgroundColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondary,
-                                                    ),
-                                                  );
-                                                } finally {
-                                                  await firestoreBatch.commit();
-                                                }
-                                              },
-                                              child: Container(
-                                                width: 30.0,
-                                                height: 30.0,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFF1B2020),
-                                                ),
-                                                child: Icon(
-                                                  Icons.check_circle_rounded,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  size: 24.0,
-                                                ),
-                                              ),
-                                            ),
-                                            Spacer(),
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                logFirebaseEvent(
-                                                    'NOTIFICATIONS_Container_57gu9jq6_ON_TAP');
-                                                logFirebaseEvent(
-                                                    'Container_backend_call');
-
-                                                await currentUserReference!
-                                                    .update({
-                                                  'notifications':
-                                                      FieldValue.arrayRemove([
-                                                    getNotificationFirestoreData(
-                                                      createNotificationStruct(
-                                                        notificationUser:
-                                                            contentView2UsersRecord
-                                                                .reference,
-                                                        clearUnsetFields: false,
-                                                      ),
-                                                      true,
-                                                    )
-                                                  ]),
-                                                });
-                                                logFirebaseEvent(
-                                                    'Container_show_snack_bar');
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'Friend Request Deleted',
-                                                      style: TextStyle(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                      ),
-                                                    ),
-                                                    duration: Duration(
-                                                        milliseconds: 4000),
-                                                    backgroundColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .secondary,
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                width: 30.0,
-                                                height: 30.0,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFF1B2020),
-                                                ),
-                                                child: Icon(
-                                                  Icons.cancel,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  size: 24.0,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                  return wrapWithModel(
+                    model: _model.notificationTileModels.getModel(
+                      random_data.randomString(
+                        10,
+                        20,
+                        true,
+                        true,
+                        true,
+                      ),
+                      notificationsListIndex,
+                    ),
+                    updateCallback: () => setState(() {}),
+                    updateOnChange: true,
+                    child: NotificationTileWidget(
+                      key: Key(
+                        'Key6hd_${random_data.randomString(
+                          10,
+                          20,
+                          true,
+                          true,
+                          true,
+                        )}',
+                      ),
+                      notificationType: notificationsListItem.notificationType,
+                      notifiicationBody: notificationsListItem.notificationBody,
+                      notificationUser: notificationsListItem.notificationUser!,
+                      notificationTime: notificationsListItem.notificationTime!,
                     ),
                   );
                 },

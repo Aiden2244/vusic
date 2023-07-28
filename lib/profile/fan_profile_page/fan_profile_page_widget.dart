@@ -16,7 +16,12 @@ import 'fan_profile_page_model.dart';
 export 'fan_profile_page_model.dart';
 
 class FanProfilePageWidget extends StatefulWidget {
-  const FanProfilePageWidget({Key? key}) : super(key: key);
+  const FanProfilePageWidget({
+    Key? key,
+    required this.pageUser,
+  }) : super(key: key);
+
+  final DocumentReference? pageUser;
 
   @override
   _FanProfilePageWidgetState createState() => _FanProfilePageWidgetState();
@@ -53,8 +58,8 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(FFAppState().lastSearchedUser!),
+    return FutureBuilder<UsersRecord>(
+      future: UsersRecord.getDocumentOnce(widget.pageUser!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -99,7 +104,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                 },
               ),
               title: Text(
-                fanProfilePageUsersRecord.displayName,
+                fanProfilePageUsersRecord.userName,
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       fontFamily:
                           FlutterFlowTheme.of(context).headlineMediumFamily,
@@ -235,49 +240,39 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            34.0, 0.0, 10.0, 0.0),
-                                        child: Text(
-                                          fanProfilePageUsersRecord.userName,
-                                          textAlign: TextAlign.center,
-                                          style: FlutterFlowTheme.of(context)
-                                              .titleSmall,
+                                    Container(
+                                      width: 30.0,
+                                      height: 30.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                      ),
+                                    ),
+                                    Text(
+                                      fanProfilePageUsersRecord.userName,
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleSmall,
+                                    ),
+                                    Container(
+                                      width: 30.0,
+                                      height: 30.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                      ),
+                                      child: Visibility(
+                                        visible: fanProfilePageUsersRecord
+                                                .isVerified ==
+                                            true,
+                                        child: Icon(
+                                          Icons.verified,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 24.0,
                                         ),
                                       ),
                                     ),
-                                    if (valueOrDefault<bool>(
-                                            currentUserDocument?.isVerified,
-                                            false) ==
-                                        true)
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(1.0, 0.0),
-                                        child: AuthUserStreamWidget(
-                                          builder: (context) => Icon(
-                                            Icons.verified,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            size: 24.0,
-                                          ),
-                                        ),
-                                      ),
-                                    if (valueOrDefault<bool>(
-                                            currentUserDocument?.isVerified,
-                                            false) ==
-                                        false)
-                                      AuthUserStreamWidget(
-                                        builder: (context) => SizedBox(
-                                          height: 0.0,
-                                          child: VerticalDivider(
-                                            width: 24.0,
-                                            thickness: 1.0,
-                                            color: Color(0x006542DC),
-                                          ),
-                                        ),
-                                      ),
                                   ],
                                 ),
                               ],
@@ -296,7 +291,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                       child: Text(
                         valueOrDefault<String>(
                           fanProfilePageUsersRecord.bio,
-                          'Add me as a friend on VUSIC!',
+                          'Follow my band on VUSIC!',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium,
                       ),
@@ -312,163 +307,272 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.25,
-                              height: MediaQuery.sizeOf(context).height * 0.06,
-                              decoration: BoxDecoration(
-                                color: Color(0x00292B33),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    formatNumber(
-                                      fanProfilePageUsersRecord.friendsCount,
-                                      formatType: FormatType.compact,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                  Text(
-                                    'Friends',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodySmall,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.25,
-                              height: MediaQuery.sizeOf(context).height * 0.06,
-                              decoration: BoxDecoration(
-                                color: Color(0x00292B33),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    formatNumber(
-                                      fanProfilePageUsersRecord.followingCount,
-                                      formatType: FormatType.compact,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                  Text(
-                                    'Following',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodySmall,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 0.0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
+                                20.0, 10.0, 0.0, 0.0),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
                                 logFirebaseEvent(
-                                    'FAN_PROFILE_PAGE_PAGE_REQUEST_BTN_ON_TAP');
-                                logFirebaseEvent('Button_backend_call');
+                                    'FAN_PROFILE_Container_gixu6tac_ON_TAP');
+                                logFirebaseEvent('Container_navigate_to');
 
-                                await fanProfilePageUsersRecord.reference
-                                    .update({
-                                  'notifications': FieldValue.arrayUnion([
-                                    getNotificationFirestoreData(
-                                      createNotificationStruct(
-                                        notificationType: 'friend_request',
-                                        notificationTime: getCurrentTimestamp,
-                                        notificationUser: currentUserReference,
-                                        clearUnsetFields: false,
-                                      ),
-                                      true,
-                                    )
-                                  ]),
-                                });
-                                logFirebaseEvent('Button_show_snack_bar');
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Friend Request Sent',
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                      ),
+                                context.pushNamed(
+                                  'UserListPage',
+                                  queryParameters: {
+                                    'titleText': serializeParam(
+                                      'Mutuals',
+                                      ParamType.String,
                                     ),
-                                    duration: Duration(milliseconds: 4000),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).secondary,
-                                  ),
+                                  }.withoutNulls,
                                 );
                               },
-                              text: 'Request',
-                              icon: Icon(
-                                Icons.person_add,
-                                size: 15.0,
-                              ),
-                              options: FFButtonOptions(
-                                width: 115.0,
-                                height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).alternate,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .titleSmallFamily,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily),
-                                    ),
-                                elevation: 3.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
+                              child: Container(
+                                width: MediaQuery.sizeOf(context).width * 0.25,
+                                height:
+                                    MediaQuery.sizeOf(context).height * 0.06,
+                                decoration: BoxDecoration(
+                                  color: Color(0x00292B33),
                                 ),
-                                borderRadius: BorderRadius.circular(16.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      formatNumber(
+                                        fanProfilePageUsersRecord.friendsCount,
+                                        formatType: FormatType.compact,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily),
+                                          ),
+                                    ),
+                                    Text(
+                                      'Friends',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodySmall,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ].divide(SizedBox(width: 10.0)),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 10.0, 0.0, 0.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  logFirebaseEvent(
+                                      'FAN_PROFILE_Container_i2an4qjd_ON_TAP');
+                                  logFirebaseEvent('Container_navigate_to');
+
+                                  context.pushNamed(
+                                    'UserListPage',
+                                    queryParameters: {
+                                      'titleText': serializeParam(
+                                        'Fans',
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                },
+                                child: Container(
+                                  width:
+                                      MediaQuery.sizeOf(context).width * 0.25,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.06,
+                                  decoration: BoxDecoration(
+                                    color: Color(0x00292B33),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        formatNumber(
+                                          fanProfilePageUsersRecord
+                                              .followingCount,
+                                          formatType: FormatType.compact,
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500,
+                                              useGoogleFonts: GoogleFonts
+                                                      .asMap()
+                                                  .containsKey(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily),
+                                            ),
+                                      ),
+                                      Text(
+                                        'Following',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          if ((currentUserDocument?.friends?.toList() ?? [])
+                                  .contains(
+                                      fanProfilePageUsersRecord.reference) ==
+                              false)
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 20.0, 0.0),
+                              child: AuthUserStreamWidget(
+                                builder: (context) => FFButtonWidget(
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'FAN_PROFILE_FriendButton_ON_TAP');
+                                    logFirebaseEvent(
+                                        'FriendButton_action_block');
+                                    await action_blocks.notifyUser(
+                                      context,
+                                      userToNotify:
+                                          fanProfilePageUsersRecord.reference,
+                                      notificationType: 'friend_request',
+                                      notificationBody:
+                                          'sent you a friend request',
+                                    );
+                                    logFirebaseEvent(
+                                        'FriendButton_show_snack_bar');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Friend request sent',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
+                                  },
+                                  text: 'Friend',
+                                  icon: Icon(
+                                    Icons.person_add,
+                                    size: 15.0,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: 115.0,
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily,
+                                          color: Colors.white,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmallFamily),
+                                        ),
+                                    elevation: 3.0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if ((currentUserDocument?.friends?.toList() ?? [])
+                                  .contains(
+                                      fanProfilePageUsersRecord.reference) ==
+                              true)
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 20.0, 0.0),
+                              child: AuthUserStreamWidget(
+                                builder: (context) => FFButtonWidget(
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'FAN_PROFILE_UnfollowButton_ON_TAP');
+                                    logFirebaseEvent(
+                                        'UnfollowButton_action_block');
+                                    await action_blocks.unfriend(
+                                      context,
+                                      userToUnfriend:
+                                          fanProfilePageUsersRecord.reference,
+                                    );
+                                    setState(() {});
+                                  },
+                                  text: 'Unfriend',
+                                  options: FFButtonOptions(
+                                    width: 115.0,
+                                    height: 40.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: Color(0x006542DC),
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily,
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          useGoogleFonts: GoogleFonts.asMap()
+                                              .containsKey(
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmallFamily),
+                                        ),
+                                    elevation: 3.0,
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 4.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   ],

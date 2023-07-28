@@ -3,8 +3,10 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/profile/auth_user_fan_bar/auth_user_fan_bar_widget.dart';
+import '/profile/auth_user_musician_bar/auth_user_musician_bar_widget.dart';
 import '/actions/actions.dart' as action_blocks;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -245,7 +247,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
           top: true,
           child: SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
@@ -438,274 +440,19 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   endIndent: 10.0,
                   color: FlutterFlowTheme.of(context).alternate,
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (valueOrDefault(
-                              currentUserDocument?.accountType, '') ==
-                          'musician')
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 10.0, 0.0, 0.0),
-                          child: AuthUserStreamWidget(
-                            builder: (context) => Container(
-                              width: MediaQuery.sizeOf(context).width * 0.25,
-                              height: MediaQuery.sizeOf(context).height * 0.06,
-                              decoration: BoxDecoration(
-                                color: Color(0x00292B33),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    formatNumber(
-                                      valueOrDefault(
-                                          currentUserDocument?.fanCount, 0),
-                                      formatType: FormatType.compact,
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMediumFamily,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w500,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily),
-                                        ),
-                                  ),
-                                  Text(
-                                    'Fans',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodySmall,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            logFirebaseEvent(
-                                'PROFILE_Container_71w1r0vd_ON_TAP');
-                            logFirebaseEvent('Container_update_app_state');
-                          },
-                          child: Container(
-                            width: MediaQuery.sizeOf(context).width * 0.25,
-                            height: MediaQuery.sizeOf(context).height * 0.06,
-                            decoration: BoxDecoration(
-                              color: Color(0x00292B33),
-                            ),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                logFirebaseEvent(
-                                    'PROFILE_PAGE_PAGE_Column_56bvoey6_ON_TAP');
-                                logFirebaseEvent('Column_navigate_to');
-
-                                context.pushNamed(
-                                  'UserListPage',
-                                  queryParameters: {
-                                    'displayFriends': serializeParam(
-                                      true,
-                                      ParamType.bool,
-                                    ),
-                                    'titleText': serializeParam(
-                                      'Friends',
-                                      ParamType.String,
-                                    ),
-                                  }.withoutNulls,
-                                );
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AuthUserStreamWidget(
-                                    builder: (context) => Text(
-                                      formatNumber(
-                                        valueOrDefault(
-                                            currentUserDocument?.friendsCount,
-                                            0),
-                                        formatType: FormatType.compact,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily),
-                                          ),
-                                    ),
-                                  ),
-                                  Text(
-                                    'Friends',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodySmall,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      if (valueOrDefault(
-                              currentUserDocument?.accountType, '') ==
-                          'fan')
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 10.0, 0.0, 0.0),
-                          child: AuthUserStreamWidget(
-                            builder: (context) => Container(
-                              width: MediaQuery.sizeOf(context).width * 0.25,
-                              height: MediaQuery.sizeOf(context).height * 0.06,
-                              decoration: BoxDecoration(
-                                color: Color(0x00292B33),
-                              ),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'PROFILE_PAGE_PAGE_Column_ka6gxk79_ON_TAP');
-                                  logFirebaseEvent('Column_navigate_to');
-
-                                  context.pushNamed(
-                                    'UserListPage',
-                                    queryParameters: {
-                                      'displayFriends': serializeParam(
-                                        false,
-                                        ParamType.bool,
-                                      ),
-                                      'titleText': serializeParam(
-                                        'Following',
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-                                },
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      formatNumber(
-                                        valueOrDefault(
-                                            currentUserDocument?.followingCount,
-                                            0),
-                                        formatType: FormatType.compact,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily),
-                                          ),
-                                    ),
-                                    Text(
-                                      'Following',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (valueOrDefault(
-                              currentUserDocument?.accountType, '') ==
-                          'musician')
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              6.0, 0.0, 10.0, 0.0),
-                          child: AuthUserStreamWidget(
-                            builder: (context) => FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: 'Go Live',
-                              icon: FaIcon(
-                                FontAwesomeIcons.video,
-                              ),
-                              options: FFButtonOptions(
-                                width: 115.0,
-                                height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).alternate,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: FlutterFlowTheme.of(context)
-                                          .titleSmallFamily,
-                                      color: Colors.white,
-                                      useGoogleFonts: GoogleFonts.asMap()
-                                          .containsKey(
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily),
-                                    ),
-                                elevation: 3.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (valueOrDefault(
-                              currentUserDocument?.accountType, '') ==
-                          'fan')
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              6.0, 0.0, 10.0, 0.0),
-                          child: AuthUserStreamWidget(
-                            builder: (context) => Container(
-                              width: 115.0,
-                              height: 40.0,
-                              decoration: BoxDecoration(
-                                color: Color(0x00292B33),
-                              ),
-                            ),
-                          ),
-                        ),
-                    ].divide(SizedBox(width: 10.0)),
+                if (valueOrDefault(currentUserDocument?.accountType, '') ==
+                    'fan')
+                  AuthUserStreamWidget(
+                    builder: (context) => wrapWithModel(
+                      model: _model.authUserFanBarModel,
+                      updateCallback: () => setState(() {}),
+                      child: AuthUserFanBarWidget(),
+                    ),
                   ),
+                wrapWithModel(
+                  model: _model.authUserMusicianBarModel,
+                  updateCallback: () => setState(() {}),
+                  child: AuthUserMusicianBarWidget(),
                 ),
               ],
             ),

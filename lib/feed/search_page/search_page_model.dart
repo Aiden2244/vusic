@@ -1,5 +1,5 @@
 import '/backend/backend.dart';
-import '/components/user_tile_widget.dart';
+import '/feed/user_search_result/user_search_result_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
