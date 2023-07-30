@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,16 +15,10 @@ export 'notification_tile_model.dart';
 class NotificationTileWidget extends StatefulWidget {
   const NotificationTileWidget({
     Key? key,
-    required this.notificationUser,
-    required this.notificationType,
-    required this.notificationTime,
-    required this.notifiicationBody,
+    required this.currentNotification,
   }) : super(key: key);
 
-  final DocumentReference? notificationUser;
-  final String? notificationType;
-  final DateTime? notificationTime;
-  final String? notifiicationBody;
+  final NotificationStruct? currentNotification;
 
   @override
   _NotificationTileWidgetState createState() => _NotificationTileWidgetState();
@@ -58,7 +53,8 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
       child: FutureBuilder<UsersRecord>(
-        future: UsersRecord.getDocumentOnce(widget.notificationUser!),
+        future: UsersRecord.getDocumentOnce(
+            widget.currentNotification!.notificationUser!),
         builder: (context, snapshot) {
           // Customize what your widget looks like when it's loading.
           if (!snapshot.hasData) {
@@ -149,7 +145,10 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                     ),
                     Expanded(
                       child: Text(
-                        widget.notifiicationBody!,
+                        valueOrDefault<String>(
+                          widget.currentNotification?.notificationBody,
+                          'sent you a notification',
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily:
                                   FlutterFlowTheme.of(context).bodyMediumFamily,
@@ -160,7 +159,8 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                             ),
                       ),
                     ),
-                    if (widget.notificationType == 'friend_request')
+                    if (widget.currentNotification?.notificationType ==
+                        'friend_request')
                       Align(
                         alignment: AlignmentDirectional(1.0, 0.0),
                         child: Padding(
@@ -285,8 +285,10 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                                     await currentUserReference!.update({
                                       'notifications': FieldValue.arrayRemove([
                                         getNotificationFirestoreData(
-                                          createNotificationStruct(
-                                              delete: true),
+                                          updateNotificationStruct(
+                                            widget.currentNotification,
+                                            clearUnsetFields: false,
+                                          ),
                                           true,
                                         )
                                       ]),
@@ -328,7 +330,8 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                           ),
                         ),
                       ),
-                    if (widget.notificationType != 'friend_request')
+                    if (widget.currentNotification?.notificationType !=
+                        'friend_request')
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 20.0, 0.0),
@@ -357,7 +360,10 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                               await currentUserReference!.update({
                                 'notifications': FieldValue.arrayRemove([
                                   getNotificationFirestoreData(
-                                    createNotificationStruct(delete: true),
+                                    updateNotificationStruct(
+                                      widget.currentNotification,
+                                      clearUnsetFields: false,
+                                    ),
                                     true,
                                   )
                                 ]),

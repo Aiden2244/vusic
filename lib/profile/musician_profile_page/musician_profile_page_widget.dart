@@ -306,262 +306,560 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                       endIndent: 10.0,
                       color: FlutterFlowTheme.of(context).alternate,
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 10.0, 0.0, 0.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                logFirebaseEvent(
-                                    'MUSICIAN_PROFILE_Container_8w3v20xp_ON_T');
-                                logFirebaseEvent('Container_navigate_to');
+                    if (valueOrDefault(currentUserDocument?.accountType, '') ==
+                        'fan')
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
+                        child: AuthUserStreamWidget(
+                          builder: (context) => Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20.0, 10.0, 0.0, 0.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'MUSICIAN_PROFILE_Container_8w3v20xp_ON_T');
+                                    logFirebaseEvent('Container_navigate_to');
 
-                                context.pushNamed(
-                                  'UserListPage',
-                                  queryParameters: {
-                                    'titleText': serializeParam(
-                                      'Fans',
-                                      ParamType.String,
+                                    context.pushNamed(
+                                      'UserListPage',
+                                      queryParameters: {
+                                        'titleText': serializeParam(
+                                          'Fans',
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.25,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.06,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x00292B33),
                                     ),
-                                  }.withoutNulls,
-                                );
-                              },
-                              child: Container(
-                                width: MediaQuery.sizeOf(context).width * 0.25,
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.06,
-                                decoration: BoxDecoration(
-                                  color: Color(0x00292B33),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          formatNumber(
+                                            musicianProfilePageUsersRecord
+                                                .fanCount,
+                                            formatType: FormatType.compact,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w500,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMediumFamily),
+                                              ),
+                                        ),
+                                        Text(
+                                          'Fans',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      formatNumber(
-                                        musicianProfilePageUsersRecord.fanCount,
-                                        formatType: FormatType.compact,
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 0.0, 0.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      logFirebaseEvent(
+                                          'MUSICIAN_PROFILE_Container_j1p06tus_ON_T');
+                                      logFirebaseEvent('Container_navigate_to');
+
+                                      context.pushNamed(
+                                        'UserListPage',
+                                        queryParameters: {
+                                          'titleText': serializeParam(
+                                            'Mutuals',
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.25,
+                                      height:
+                                          MediaQuery.sizeOf(context).height *
+                                              0.06,
+                                      decoration: BoxDecoration(
+                                        color: Color(0x00292B33),
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            formatNumber(
+                                              musicianProfilePageUsersRecord
+                                                  .friendsCount,
+                                              formatType: FormatType.compact,
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  useGoogleFonts: GoogleFonts
+                                                          .asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMediumFamily),
+                                                ),
+                                          ),
+                                          Text(
+                                            'Mutuals',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              if ((currentUserDocument?.following?.toList() ??
+                                          [])
+                                      .contains(musicianProfilePageUsersRecord
+                                          .reference) ==
+                                  false)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 20.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      logFirebaseEvent(
+                                          'MUSICIAN_PROFILE_FollowButton_ON_TAP');
+                                      logFirebaseEvent(
+                                          'FollowButton_action_block');
+                                      await action_blocks.followMusician(
+                                        context,
+                                        musicianToFollow:
+                                            musicianProfilePageUsersRecord
+                                                .reference,
+                                      );
+                                      setState(() {});
+                                    },
+                                    text: 'Follow',
+                                    icon: Icon(
+                                      Icons.music_note,
+                                      size: 15.0,
+                                    ),
+                                    options: FFButtonOptions(
+                                      width: 115.0,
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
                                           .override(
                                             fontFamily:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
+                                                    .titleSmallFamily,
+                                            color: Colors.white,
                                             useGoogleFonts: GoogleFonts.asMap()
                                                 .containsKey(
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily),
+                                                        .titleSmallFamily),
                                           ),
+                                      elevation: 3.0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
-                                    Text(
-                                      'Fans',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall,
+                                  ),
+                                ),
+                              if ((currentUserDocument?.following?.toList() ??
+                                          [])
+                                      .contains(musicianProfilePageUsersRecord
+                                          .reference) ==
+                                  true)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 20.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      logFirebaseEvent(
+                                          'MUSICIAN_PROFILE_UnfollowButton_ON_TAP');
+                                      logFirebaseEvent(
+                                          'UnfollowButton_action_block');
+                                      await action_blocks.unfollowMusican(
+                                        context,
+                                        accountToUnfollow:
+                                            musicianProfilePageUsersRecord
+                                                .reference,
+                                      );
+                                      setState(() {});
+                                    },
+                                    text: 'Unfollow',
+                                    options: FFButtonOptions(
+                                      width: 115.0,
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: Color(0x006542DC),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmallFamily,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmallFamily),
+                                          ),
+                                      elevation: 3.0,
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 4.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
-                                  ],
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    if (valueOrDefault(currentUserDocument?.accountType, '') ==
+                        'musician')
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
+                        child: AuthUserStreamWidget(
+                          builder: (context) => Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    20.0, 10.0, 0.0, 0.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'MUSICIAN_PROFILE_Container_eowaq4y4_ON_T');
+                                    logFirebaseEvent('Container_navigate_to');
+
+                                    context.pushNamed(
+                                      'UserListPage',
+                                      queryParameters: {
+                                        'titleText': serializeParam(
+                                          'Fans',
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.25,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.06,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x00292B33),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          formatNumber(
+                                            musicianProfilePageUsersRecord
+                                                .fanCount,
+                                            formatType: FormatType.compact,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMediumFamily,
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w500,
+                                                useGoogleFonts: GoogleFonts
+                                                        .asMap()
+                                                    .containsKey(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMediumFamily),
+                                              ),
+                                        ),
+                                        Text(
+                                          'Fans',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 10.0, 0.0, 0.0),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'MUSICIAN_PROFILE_Container_j1p06tus_ON_T');
-                                  logFirebaseEvent('Container_navigate_to');
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 0.0, 0.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      logFirebaseEvent(
+                                          'MUSICIAN_PROFILE_Container_6qd1a2i7_ON_T');
+                                      logFirebaseEvent('Container_navigate_to');
 
-                                  context.pushNamed(
-                                    'UserListPage',
-                                    queryParameters: {
-                                      'titleText': serializeParam(
-                                        'Mutuals',
-                                        ParamType.String,
+                                      context.pushNamed(
+                                        'UserListPage',
+                                        queryParameters: {
+                                          'titleText': serializeParam(
+                                            'Mutuals',
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.25,
+                                      height:
+                                          MediaQuery.sizeOf(context).height *
+                                              0.06,
+                                      decoration: BoxDecoration(
+                                        color: Color(0x00292B33),
                                       ),
-                                    }.withoutNulls,
-                                  );
-                                },
-                                child: Container(
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.25,
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.06,
-                                  decoration: BoxDecoration(
-                                    color: Color(0x00292B33),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        formatNumber(
-                                          musicianProfilePageUsersRecord
-                                              .friendsCount,
-                                          formatType: FormatType.compact,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500,
-                                              useGoogleFonts: GoogleFonts
-                                                      .asMap()
-                                                  .containsKey(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            formatNumber(
+                                              musicianProfilePageUsersRecord
+                                                  .friendsCount,
+                                              formatType: FormatType.compact,
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyMediumFamily),
-                                            ),
+                                                          .bodyMediumFamily,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  useGoogleFonts: GoogleFonts
+                                                          .asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMediumFamily),
+                                                ),
+                                          ),
+                                          Text(
+                                            'Mutuals',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall,
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        'Mutuals',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if ((currentUserDocument?.following?.toList() ?? [])
-                                  .contains(musicianProfilePageUsersRecord
-                                      .reference) ==
-                              false)
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 20.0, 0.0),
-                              child: AuthUserStreamWidget(
-                                builder: (context) => FFButtonWidget(
-                                  onPressed: () async {
-                                    logFirebaseEvent(
-                                        'MUSICIAN_PROFILE_FollowButton_ON_TAP');
-                                    logFirebaseEvent(
-                                        'FollowButton_action_block');
-                                    await action_blocks.followMusician(
-                                      context,
-                                      musicianToFollow:
-                                          musicianProfilePageUsersRecord
-                                              .reference,
-                                    );
-                                    setState(() {});
-                                  },
-                                  text: 'Follow',
-                                  icon: Icon(
-                                    Icons.music_note,
-                                    size: 15.0,
-                                  ),
-                                  options: FFButtonOptions(
-                                    width: 115.0,
-                                    height: 40.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily,
-                                          color: Colors.white,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmallFamily),
-                                        ),
-                                    elevation: 3.0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(16.0),
                                   ),
                                 ),
                               ),
-                            ),
-                          if ((currentUserDocument?.following?.toList() ?? [])
-                                  .contains(musicianProfilePageUsersRecord
-                                      .reference) ==
-                              true)
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 20.0, 0.0),
-                              child: AuthUserStreamWidget(
-                                builder: (context) => FFButtonWidget(
-                                  onPressed: () async {
-                                    logFirebaseEvent(
-                                        'MUSICIAN_PROFILE_UnfollowButton_ON_TAP');
-                                    logFirebaseEvent(
-                                        'UnfollowButton_action_block');
-                                    await action_blocks.unfollowMusican(
-                                      context,
-                                      accountToUnfollow:
-                                          musicianProfilePageUsersRecord
-                                              .reference,
-                                    );
-                                    setState(() {});
-                                  },
-                                  text: 'Unfollow',
-                                  options: FFButtonOptions(
-                                    width: 115.0,
-                                    height: 40.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: Color(0x006542DC),
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
+                              if ((currentUserDocument?.friends?.toList() ?? [])
+                                      .contains(musicianProfilePageUsersRecord
+                                          .reference) ==
+                                  false)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 20.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      logFirebaseEvent(
+                                          'MUSICIAN_PROFILE_FriendButton_ON_TAP');
+                                      logFirebaseEvent(
+                                          'FriendButton_action_block');
+                                      await action_blocks.notifyUser(
+                                        context,
+                                        userToNotify:
+                                            musicianProfilePageUsersRecord
+                                                .reference,
+                                        notificationType: 'friend_request',
+                                        notificationBody:
+                                            'sent you a friend request',
+                                      );
+                                      logFirebaseEvent(
+                                          'FriendButton_show_snack_bar');
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Friend request sent',
+                                            style: TextStyle(
+                                              color:
                                                   FlutterFlowTheme.of(context)
-                                                      .titleSmallFamily),
+                                                      .primaryText,
+                                            ),
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
                                         ),
-                                    elevation: 3.0,
-                                    borderSide: BorderSide(
+                                      );
+                                    },
+                                    text: 'Friend',
+                                    icon: Icon(
+                                      Icons.person_add,
+                                      size: 15.0,
+                                    ),
+                                    options: FFButtonOptions(
+                                      width: 115.0,
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
-                                      width: 4.0,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmallFamily,
+                                            color: Colors.white,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmallFamily),
+                                          ),
+                                      elevation: 3.0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
-                                    borderRadius: BorderRadius.circular(16.0),
                                   ),
                                 ),
-                              ),
-                            ),
-                        ],
+                              if ((currentUserDocument?.friends?.toList() ?? [])
+                                      .contains(musicianProfilePageUsersRecord
+                                          .reference) ==
+                                  true)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 20.0, 0.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      logFirebaseEvent(
+                                          'MUSICIAN_PROFILE_UnfriendButton_ON_TAP');
+                                      logFirebaseEvent(
+                                          'UnfriendButton_action_block');
+                                      await action_blocks.unfriend(
+                                        context,
+                                        userToUnfriend:
+                                            musicianProfilePageUsersRecord
+                                                .reference,
+                                      );
+                                      setState(() {});
+                                    },
+                                    text: 'Unfriend',
+                                    options: FFButtonOptions(
+                                      width: 115.0,
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: Color(0x006542DC),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmallFamily,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            useGoogleFonts: GoogleFonts.asMap()
+                                                .containsKey(
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmallFamily),
+                                          ),
+                                      elevation: 3.0,
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 4.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),

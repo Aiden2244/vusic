@@ -529,9 +529,9 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                 builder: (context) => FFButtonWidget(
                                   onPressed: () async {
                                     logFirebaseEvent(
-                                        'FAN_PROFILE_UnfollowButton_ON_TAP');
+                                        'FAN_PROFILE_UnfriendButton_ON_TAP');
                                     logFirebaseEvent(
-                                        'UnfollowButton_action_block');
+                                        'UnfriendButton_action_block');
                                     await action_blocks.unfriend(
                                       context,
                                       userToUnfriend:

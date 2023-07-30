@@ -127,10 +127,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                           true,
                         )}',
                       ),
-                      notificationType: notificationsListItem.notificationType,
-                      notifiicationBody: notificationsListItem.notificationBody,
-                      notificationUser: notificationsListItem.notificationUser!,
-                      notificationTime: notificationsListItem.notificationTime!,
+                      currentNotification: notificationsListItem,
                     ),
                   );
                 },
