@@ -1,6 +1,5 @@
 import '/backend/backend.dart';
 import '/feed/user_search_result/user_search_result_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/actions/actions.dart' as action_blocks;
@@ -60,22 +59,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 60.0,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30.0,
-            ),
-            onPressed: () async {
-              logFirebaseEvent('SEARCH_arrow_back_rounded_ICN_ON_TAP');
-              logFirebaseEvent('IconButton_navigate_back');
-              context.pop();
-            },
-          ),
           title: Text(
             'Search',
             style: FlutterFlowTheme.of(context).headlineSmall,

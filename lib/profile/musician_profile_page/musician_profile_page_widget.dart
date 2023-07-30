@@ -100,8 +100,17 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                 ),
                 onPressed: () async {
                   logFirebaseEvent('MUSICIAN_PROFILE_arrow_back_rounded_ICN_');
-                  logFirebaseEvent('IconButton_navigate_back');
-                  context.pop();
+                  logFirebaseEvent('IconButton_navigate_to');
+
+                  context.pushNamed(
+                    'SampleThemeTest',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.leftToRight,
+                      ),
+                    },
+                  );
                 },
               ),
               title: Text(

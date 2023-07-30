@@ -99,8 +99,17 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                 ),
                 onPressed: () async {
                   logFirebaseEvent('FAN_PROFILE_arrow_back_rounded_ICN_ON_TA');
-                  logFirebaseEvent('IconButton_navigate_back');
-                  context.pop();
+                  logFirebaseEvent('IconButton_navigate_to');
+
+                  context.pushNamed(
+                    'SampleThemeTest',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.leftToRight,
+                      ),
+                    },
+                  );
                 },
               ),
               title: Text(

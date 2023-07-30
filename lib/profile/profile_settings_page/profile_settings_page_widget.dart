@@ -68,8 +68,11 @@ class _ProfileSettingsPageWidgetState extends State<ProfileSettingsPageWidget> {
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30.0,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            logFirebaseEvent('PROFILE_SETTINGS_arrow_back_rounded_ICN_');
+            logFirebaseEvent('IconButton_navigate_to');
+
+            context.pushNamed('ProfilePage');
           },
         ),
         title: Text(

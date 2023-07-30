@@ -93,16 +93,65 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Container(
-                              width: 40.0,
-                              height: 40.0,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.network(
-                                containerUsersRecord.photoUrl,
-                                fit: BoxFit.fitWidth,
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'USER_LIST_VIEW_CircleImage_r98vbcmv_ON_T');
+                                if (containerUsersRecord.accountType == 'fan') {
+                                  logFirebaseEvent('CircleImage_navigate_to');
+
+                                  context.pushNamed(
+                                    'FanProfilePage',
+                                    queryParameters: {
+                                      'pageUser': serializeParam(
+                                        containerUsersRecord.reference,
+                                        ParamType.DocumentReference,
+                                      ),
+                                    }.withoutNulls,
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType:
+                                            PageTransitionType.rightToLeft,
+                                      ),
+                                    },
+                                  );
+                                } else {
+                                  logFirebaseEvent('CircleImage_navigate_to');
+
+                                  context.pushNamed(
+                                    'MusicianProfilePage',
+                                    queryParameters: {
+                                      'pageUser': serializeParam(
+                                        containerUsersRecord.reference,
+                                        ParamType.DocumentReference,
+                                      ),
+                                    }.withoutNulls,
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType:
+                                            PageTransitionType.rightToLeft,
+                                      ),
+                                    },
+                                  );
+                                }
+                              },
+                              child: Container(
+                                width: 40.0,
+                                height: 40.0,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.network(
+                                  containerUsersRecord.photoUrl,
+                                  fit: BoxFit.fitWidth,
+                                ),
                               ),
                             ),
                             Expanded(

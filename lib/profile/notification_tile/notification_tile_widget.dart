@@ -92,16 +92,63 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      width: 50.0,
-                      height: 50.0,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.network(
-                        contentView2UsersRecord.photoUrl,
-                        fit: BoxFit.cover,
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'NOTIFICATION_TILE_CircleImage_r5fixkoo_O');
+                        if (contentView2UsersRecord.accountType == 'fan') {
+                          logFirebaseEvent('CircleImage_navigate_to');
+
+                          context.pushNamed(
+                            'FanProfilePage',
+                            queryParameters: {
+                              'pageUser': serializeParam(
+                                contentView2UsersRecord.reference,
+                                ParamType.DocumentReference,
+                              ),
+                            }.withoutNulls,
+                            extra: <String, dynamic>{
+                              kTransitionInfoKey: TransitionInfo(
+                                hasTransition: true,
+                                transitionType: PageTransitionType.rightToLeft,
+                              ),
+                            },
+                          );
+                        } else {
+                          logFirebaseEvent('CircleImage_navigate_to');
+
+                          context.pushNamed(
+                            'MusicianProfilePage',
+                            queryParameters: {
+                              'pageUser': serializeParam(
+                                contentView2UsersRecord.reference,
+                                ParamType.DocumentReference,
+                              ),
+                            }.withoutNulls,
+                            extra: <String, dynamic>{
+                              kTransitionInfoKey: TransitionInfo(
+                                hasTransition: true,
+                                transitionType: PageTransitionType.rightToLeft,
+                              ),
+                            },
+                          );
+                        }
+                      },
+                      child: Container(
+                        width: 50.0,
+                        height: 50.0,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.network(
+                          contentView2UsersRecord.photoUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Padding(
@@ -215,8 +262,10 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                                         'notifications':
                                             FieldValue.arrayRemove([
                                           getNotificationFirestoreData(
-                                            createNotificationStruct(
-                                                delete: true),
+                                            updateNotificationStruct(
+                                              widget.currentNotification,
+                                              clearUnsetFields: false,
+                                            ),
                                             true,
                                           )
                                         ]),

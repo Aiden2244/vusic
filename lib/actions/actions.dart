@@ -228,3 +228,8 @@ Future acceptFriendRequest(
     await firestoreBatch.commit();
   }
 }
+
+Future navigateToUserProfile(
+  BuildContext context, {
+  required DocumentReference? userToNavigateTo,
+}) async {}

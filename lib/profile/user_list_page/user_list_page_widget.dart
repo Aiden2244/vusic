@@ -75,8 +75,17 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
             ),
             onPressed: () async {
               logFirebaseEvent('USER_LIST_arrow_back_rounded_ICN_ON_TAP');
-              logFirebaseEvent('IconButton_navigate_back');
-              context.pop();
+              logFirebaseEvent('IconButton_navigate_to');
+
+              context.pushNamed(
+                'ProfilePage',
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.leftToRight,
+                  ),
+                },
+              );
             },
           ),
           title: Text(
