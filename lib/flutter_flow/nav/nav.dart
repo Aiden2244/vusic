@@ -159,6 +159,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           requireAuth: true,
           builder: (context, params) => UserListPageWidget(
             titleText: params.getParam('titleText', ParamType.String),
+            account: params.getParam(
+                'account', ParamType.DocumentReference, false, ['users']),
           ),
         ),
         FFRoute(

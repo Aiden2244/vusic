@@ -67,6 +67,10 @@ class _AuthUserMusicianBarWidgetState extends State<AuthUserMusicianBarWidget> {
                       'Fans',
                       ParamType.String,
                     ),
+                    'account': serializeParam(
+                      currentUserReference,
+                      ParamType.DocumentReference,
+                    ),
                   }.withoutNulls,
                 );
               },
@@ -124,6 +128,10 @@ class _AuthUserMusicianBarWidgetState extends State<AuthUserMusicianBarWidget> {
                       'titleText': serializeParam(
                         'Mutuals',
                         ParamType.String,
+                      ),
+                      'account': serializeParam(
+                        currentUserReference,
+                        ParamType.DocumentReference,
                       ),
                     }.withoutNulls,
                   );

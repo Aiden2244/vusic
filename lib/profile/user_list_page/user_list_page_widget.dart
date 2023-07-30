@@ -1,10 +1,10 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/profile/user_list_view/user_list_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,9 +16,11 @@ class UserListPageWidget extends StatefulWidget {
   const UserListPageWidget({
     Key? key,
     required this.titleText,
+    required this.account,
   }) : super(key: key);
 
   final String? titleText;
+  final DocumentReference? account;
 
   @override
   _UserListPageWidgetState createState() => _UserListPageWidgetState();
@@ -107,22 +109,40 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: AuthUserStreamWidget(
-            builder: (context) => wrapWithModel(
-              model: _model.userListViewModel,
-              updateCallback: () => setState(() {}),
-              child: UserListViewWidget(
-                usersList: () {
-                  if (widget.titleText == 'Following') {
-                    return (currentUserDocument?.following?.toList() ?? []);
-                  } else if (widget.titleText == 'Fans') {
-                    return (currentUserDocument?.fans?.toList() ?? []);
-                  } else {
-                    return (currentUserDocument?.friends?.toList() ?? []);
-                  }
-                }(),
-              ),
-            ),
+          child: StreamBuilder<UsersRecord>(
+            stream: UsersRecord.getDocument(widget.account!),
+            builder: (context, snapshot) {
+              // Customize what your widget looks like when it's loading.
+              if (!snapshot.hasData) {
+                return Center(
+                  child: SizedBox(
+                    width: 50.0,
+                    height: 50.0,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        FlutterFlowTheme.of(context).primary,
+                      ),
+                    ),
+                  ),
+                );
+              }
+              final userListViewUsersRecord = snapshot.data!;
+              return wrapWithModel(
+                model: _model.userListViewModel,
+                updateCallback: () => setState(() {}),
+                child: UserListViewWidget(
+                  usersList: () {
+                    if (widget.titleText == 'Following') {
+                      return userListViewUsersRecord.following;
+                    } else if (widget.titleText == 'Fans') {
+                      return userListViewUsersRecord.fans;
+                    } else {
+                      return userListViewUsersRecord.friends;
+                    }
+                  }(),
+                ),
+              );
+            },
           ),
         ),
       ),

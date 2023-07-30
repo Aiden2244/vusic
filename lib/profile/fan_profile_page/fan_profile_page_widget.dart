@@ -338,6 +338,10 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                       'Mutuals',
                                       ParamType.String,
                                     ),
+                                    'account': serializeParam(
+                                      widget.pageUser,
+                                      ParamType.DocumentReference,
+                                    ),
                                   }.withoutNulls,
                                 );
                               },
@@ -401,6 +405,10 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                       'titleText': serializeParam(
                                         'Fans',
                                         ParamType.String,
+                                      ),
+                                      'account': serializeParam(
+                                        widget.pageUser,
+                                        ParamType.DocumentReference,
                                       ),
                                     }.withoutNulls,
                                   );

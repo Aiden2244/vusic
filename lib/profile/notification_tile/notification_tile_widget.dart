@@ -255,6 +255,18 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                                             [currentUserReference]),
                                       });
                                       logFirebaseEvent(
+                                          'Container_action_block');
+                                      await action_blocks.notifyUser(
+                                        context,
+                                        userToNotify:
+                                            contentView2UsersRecord.reference,
+                                        notificationType:
+                                            'friend_requect_accept',
+                                        notificationBody:
+                                            'accepted your friend request',
+                                      );
+                                      setState(() {});
+                                      logFirebaseEvent(
                                           'Container_backend_call');
 
                                       firestoreBatch
@@ -270,18 +282,6 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                                           )
                                         ]),
                                       });
-                                      logFirebaseEvent(
-                                          'Container_action_block');
-                                      await action_blocks.notifyUser(
-                                        context,
-                                        userToNotify:
-                                            contentView2UsersRecord.reference,
-                                        notificationType:
-                                            'friend_requect_accept',
-                                        notificationBody:
-                                            'accepted your friend request',
-                                      );
-                                      setState(() {});
                                       logFirebaseEvent(
                                           'Container_show_snack_bar');
                                       ScaffoldMessenger.of(context)

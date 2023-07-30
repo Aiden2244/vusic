@@ -64,6 +64,10 @@ class _AuthUserFanBarWidgetState extends State<AuthUserFanBarWidget> {
                       'Friends',
                       ParamType.String,
                     ),
+                    'account': serializeParam(
+                      currentUserReference,
+                      ParamType.DocumentReference,
+                    ),
                   }.withoutNulls,
                 );
               },
@@ -121,6 +125,10 @@ class _AuthUserFanBarWidgetState extends State<AuthUserFanBarWidget> {
                       'titleText': serializeParam(
                         'Following',
                         ParamType.String,
+                      ),
+                      'account': serializeParam(
+                        currentUserReference,
+                        ParamType.DocumentReference,
                       ),
                     }.withoutNulls,
                   );

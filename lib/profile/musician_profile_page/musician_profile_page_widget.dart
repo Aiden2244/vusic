@@ -345,6 +345,10 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                                           'Fans',
                                           ParamType.String,
                                         ),
+                                        'account': serializeParam(
+                                          widget.pageUser,
+                                          ParamType.DocumentReference,
+                                        ),
                                       }.withoutNulls,
                                     );
                                   },
@@ -413,6 +417,10 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                                           'titleText': serializeParam(
                                             'Mutuals',
                                             ParamType.String,
+                                          ),
+                                          'account': serializeParam(
+                                            widget.pageUser,
+                                            ParamType.DocumentReference,
                                           ),
                                         }.withoutNulls,
                                       );
@@ -612,6 +620,10 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                                           'Fans',
                                           ParamType.String,
                                         ),
+                                        'account': serializeParam(
+                                          widget.pageUser,
+                                          ParamType.DocumentReference,
+                                        ),
                                       }.withoutNulls,
                                     );
                                   },
@@ -680,6 +692,10 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                                           'titleText': serializeParam(
                                             'Mutuals',
                                             ParamType.String,
+                                          ),
+                                          'account': serializeParam(
+                                            widget.pageUser,
+                                            ParamType.DocumentReference,
                                           ),
                                         }.withoutNulls,
                                       );
