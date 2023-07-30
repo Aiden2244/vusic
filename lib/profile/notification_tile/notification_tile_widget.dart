@@ -78,7 +78,7 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
               borderRadius: BorderRadius.circular(0.0),
             ),
             child: Container(
-              width: double.infinity,
+              width: MediaQuery.sizeOf(context).width * 1.0,
               decoration: BoxDecoration(
                 color: Color(0xFF1B2020),
                 borderRadius: BorderRadius.circular(0.0),

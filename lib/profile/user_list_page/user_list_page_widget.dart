@@ -144,6 +144,7 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
                       return userListViewUsersRecord.friends;
                     }
                   }(),
+                  userAccount: widget.account!,
                 ),
               );
             },

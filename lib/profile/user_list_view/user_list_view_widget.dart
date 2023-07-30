@@ -15,9 +15,11 @@ class UserListViewWidget extends StatefulWidget {
   const UserListViewWidget({
     Key? key,
     required this.usersList,
+    required this.userAccount,
   }) : super(key: key);
 
   final List<DocumentReference>? usersList;
+  final DocumentReference? userAccount;
 
   @override
   _UserListViewWidgetState createState() => _UserListViewWidgetState();
@@ -243,66 +245,69 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 10.0, 0.0),
-                              child: FlutterFlowIconButton(
-                                borderColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                borderRadius: 200.0,
-                                borderWidth: 1.0,
-                                buttonSize: 40.0,
-                                fillColor: FlutterFlowTheme.of(context).primary,
-                                icon: Icon(
-                                  Icons.person_remove,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 24.0,
-                                ),
-                                onPressed: () async {
-                                  logFirebaseEvent(
-                                      'USER_LIST_VIEW_person_remove_ICN_ON_TAP');
-                                  if (containerUsersRecord.accountType ==
-                                      valueOrDefault(
-                                          currentUserDocument?.accountType,
-                                          '')) {
-                                    logFirebaseEvent('IconButton_action_block');
-                                    await action_blocks.unfriend(
-                                      context,
-                                      userToUnfriend:
-                                          containerUsersRecord.reference,
-                                    );
-                                    setState(() {});
-                                    return;
-                                  } else {
-                                    if (valueOrDefault(
+                            if (widget.userAccount == currentUserReference)
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 10.0, 0.0),
+                                child: FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  borderRadius: 200.0,
+                                  borderWidth: 1.0,
+                                  buttonSize: 40.0,
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  icon: Icon(
+                                    Icons.person_remove,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'USER_LIST_VIEW_person_remove_ICN_ON_TAP');
+                                    if (containerUsersRecord.accountType ==
+                                        valueOrDefault(
                                             currentUserDocument?.accountType,
-                                            '') ==
-                                        'fan') {
+                                            '')) {
                                       logFirebaseEvent(
                                           'IconButton_action_block');
-                                      await action_blocks.unfollowMusican(
+                                      await action_blocks.unfriend(
                                         context,
-                                        accountToUnfollow:
+                                        userToUnfriend:
                                             containerUsersRecord.reference,
                                       );
                                       setState(() {});
                                       return;
                                     } else {
-                                      logFirebaseEvent(
-                                          'IconButton_action_block');
-                                      await action_blocks.removeFanFollower(
-                                        context,
-                                        fanToRemove:
-                                            containerUsersRecord.reference,
-                                      );
-                                      setState(() {});
-                                      return;
+                                      if (valueOrDefault(
+                                              currentUserDocument?.accountType,
+                                              '') ==
+                                          'fan') {
+                                        logFirebaseEvent(
+                                            'IconButton_action_block');
+                                        await action_blocks.unfollowMusican(
+                                          context,
+                                          accountToUnfollow:
+                                              containerUsersRecord.reference,
+                                        );
+                                        setState(() {});
+                                        return;
+                                      } else {
+                                        logFirebaseEvent(
+                                            'IconButton_action_block');
+                                        await action_blocks.removeFanFollower(
+                                          context,
+                                          fanToRemove:
+                                              containerUsersRecord.reference,
+                                        );
+                                        setState(() {});
+                                        return;
+                                      }
                                     }
-                                  }
-                                },
+                                  },
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),
