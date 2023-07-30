@@ -442,10 +442,13 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                               ),
                             ),
                           ),
-                          if ((currentUserDocument?.friends?.toList() ?? [])
-                                  .contains(
-                                      fanProfilePageUsersRecord.reference) ==
-                              false)
+                          if (((currentUserDocument?.friends?.toList() ?? [])
+                                      .contains(fanProfilePageUsersRecord
+                                          .reference) ==
+                                  false) &&
+                              (valueOrDefault(
+                                      currentUserDocument?.accountType, '') ==
+                                  'fan'))
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 20.0, 0.0),
@@ -518,10 +521,13 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                 ),
                               ),
                             ),
-                          if ((currentUserDocument?.friends?.toList() ?? [])
-                                  .contains(
-                                      fanProfilePageUsersRecord.reference) ==
-                              true)
+                          if (((currentUserDocument?.friends?.toList() ?? [])
+                                      .contains(fanProfilePageUsersRecord
+                                          .reference) ==
+                                  true) &&
+                              (valueOrDefault(
+                                      currentUserDocument?.accountType, '') ==
+                                  'fan'))
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 20.0, 0.0),
