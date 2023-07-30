@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -65,30 +66,33 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 60.0,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30.0,
-            ),
-            onPressed: () async {
-              logFirebaseEvent('USER_LIST_arrow_back_rounded_ICN_ON_TAP');
-              logFirebaseEvent('IconButton_navigate_to');
+          leading: Visibility(
+            visible: widget.account == currentUserReference,
+            child: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30.0,
+              borderWidth: 1.0,
+              buttonSize: 60.0,
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: FlutterFlowTheme.of(context).primaryText,
+                size: 30.0,
+              ),
+              onPressed: () async {
+                logFirebaseEvent('USER_LIST_arrow_back_rounded_ICN_ON_TAP');
+                logFirebaseEvent('IconButton_navigate_to');
 
-              context.pushNamed(
-                'ProfilePage',
-                extra: <String, dynamic>{
-                  kTransitionInfoKey: TransitionInfo(
-                    hasTransition: true,
-                    transitionType: PageTransitionType.leftToRight,
-                  ),
-                },
-              );
-            },
+                context.pushNamed(
+                  'ProfilePage',
+                  extra: <String, dynamic>{
+                    kTransitionInfoKey: TransitionInfo(
+                      hasTransition: true,
+                      transitionType: PageTransitionType.leftToRight,
+                    ),
+                  },
+                );
+              },
+            ),
           ),
           title: Text(
             valueOrDefault<String>(

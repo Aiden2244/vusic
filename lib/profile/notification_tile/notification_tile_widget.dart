@@ -265,7 +265,6 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                                         notificationBody:
                                             'accepted your friend request',
                                       );
-                                      setState(() {});
                                       logFirebaseEvent(
                                           'Container_backend_call');
 
@@ -336,7 +335,7 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                                         getNotificationFirestoreData(
                                           updateNotificationStruct(
                                             widget.currentNotification,
-                                            clearUnsetFields: false,
+                                            clearUnsetFields: true,
                                           ),
                                           true,
                                         )
