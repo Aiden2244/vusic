@@ -230,86 +230,67 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                                   onTap: () async {
                                     logFirebaseEvent(
                                         'NOTIFICATION_TILE_Container_2d67lyns_ON_');
-                                    final firestoreBatch =
-                                        FirebaseFirestore.instance.batch();
-                                    try {
-                                      logFirebaseEvent(
-                                          'Container_backend_call');
+                                    logFirebaseEvent('Container_backend_call');
 
-                                      firestoreBatch
-                                          .update(currentUserReference!, {
-                                        'friends_count':
-                                            FieldValue.increment(1),
-                                        'friends': FieldValue.arrayUnion([
-                                          contentView2UsersRecord.reference
-                                        ]),
-                                      });
-                                      logFirebaseEvent(
-                                          'Container_backend_call');
+                                    await currentUserReference!.update({
+                                      'friends_count': FieldValue.increment(1),
+                                      'friends': FieldValue.arrayUnion(
+                                          [contentView2UsersRecord.reference]),
+                                    });
+                                    logFirebaseEvent('Container_backend_call');
 
-                                      firestoreBatch.update(
-                                          contentView2UsersRecord.reference, {
-                                        'friends_count':
-                                            FieldValue.increment(1),
-                                        'friends': FieldValue.arrayUnion(
-                                            [currentUserReference]),
-                                      });
-                                      logFirebaseEvent(
-                                          'Container_action_block');
-                                      await action_blocks.notifyUser(
-                                        context,
-                                        userToNotify:
-                                            contentView2UsersRecord.reference,
-                                        notificationType:
-                                            'friend_requect_accept',
-                                        notificationBody:
-                                            'accepted your friend request',
-                                      );
-                                      logFirebaseEvent(
-                                          'Container_backend_call');
+                                    await contentView2UsersRecord.reference
+                                        .update({
+                                      'friends_count': FieldValue.increment(1),
+                                      'friends': FieldValue.arrayUnion(
+                                          [currentUserReference]),
+                                    });
+                                    logFirebaseEvent('Container_action_block');
+                                    await action_blocks.notifyUser(
+                                      context,
+                                      userToNotify:
+                                          contentView2UsersRecord.reference,
+                                      notificationType: 'friend_requect_accept',
+                                      notificationBody:
+                                          'accepted your friend request',
+                                    );
+                                    logFirebaseEvent('Container_backend_call');
 
-                                      firestoreBatch
-                                          .update(currentUserReference!, {
-                                        'notifications':
-                                            FieldValue.arrayRemove([
-                                          getNotificationFirestoreData(
-                                            updateNotificationStruct(
-                                              widget.currentNotification,
-                                              clearUnsetFields: false,
-                                            ),
-                                            true,
-                                          )
-                                        ]),
-                                      });
-                                      logFirebaseEvent(
-                                          'Container_show_snack_bar');
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Friend Request Accepted',
-                                            style: TextStyle(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                            ),
+                                    await currentUserReference!.update({
+                                      'notifications': FieldValue.arrayRemove([
+                                        getNotificationFirestoreData(
+                                          updateNotificationStruct(
+                                            widget.currentNotification,
+                                            clearUnsetFields: false,
                                           ),
-                                          duration:
-                                              Duration(milliseconds: 4000),
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondary,
+                                          true,
+                                        )
+                                      ]),
+                                    });
+                                    logFirebaseEvent(
+                                        'Container_show_snack_bar');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Friend Request Accepted',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
                                         ),
-                                      );
-                                    } finally {
-                                      await firestoreBatch.commit();
-                                    }
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
                                   },
                                   child: Container(
-                                    width: 30.0,
-                                    height: 30.0,
+                                    width: 24.0,
+                                    height: 24.0,
                                     decoration: BoxDecoration(
                                       color: Color(0xFF1B2020),
+                                      shape: BoxShape.circle,
                                     ),
                                     child: Icon(
                                       Icons.check_circle_rounded,
@@ -360,10 +341,11 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                                     );
                                   },
                                   child: Container(
-                                    width: 30.0,
-                                    height: 30.0,
+                                    width: 24.0,
+                                    height: 24.0,
                                     decoration: BoxDecoration(
                                       color: Color(0xFF1B2020),
+                                      shape: BoxShape.circle,
                                     ),
                                     child: Icon(
                                       Icons.cancel,
