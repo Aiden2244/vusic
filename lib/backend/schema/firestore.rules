@@ -3,9 +3,114 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{document} {
       allow create: if request.auth.uid == document;
-      allow read: if request.auth.uid == document;
+      allow read: if true;
       allow write: if request.auth.uid == document;
       allow delete: if false;
     }
+
+    match /posts/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /notifications/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /usernames/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /posts/{parent}/comments/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/comments/{document} {
+      allow read: if true;
+    }
+
+
+    match /users/{parent}/friends/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/friends/{document} {
+      allow read: if true;
+    }
+
+
+    match /users/{parent}/fans/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/fans/{document} {
+      allow read: if true;
+    }
+
+
+    match /users/{parent}/following/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/following/{document} {
+      allow read: if true;
+    }
+
+
+    match /users/{parent}/userPosts/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/userPosts/{document} {
+      allow read: if true;
+    }
+
+
+    match /users/{parent}/userNotifications/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/userNotifications/{document} {
+      allow read: if true;
+    }
+
+
+    match /users/{parent}/requested/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/requested/{document} {
+      allow read: if true;
+    }
+
   }
 }

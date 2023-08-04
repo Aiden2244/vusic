@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/profile/fan_profile_stats_view/fan_profile_stats_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -318,143 +319,19 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 10.0, 0.0, 0.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                logFirebaseEvent(
-                                    'FAN_PROFILE_Container_gixu6tac_ON_TAP');
-                                logFirebaseEvent('Container_navigate_to');
-
-                                context.pushNamed(
-                                  'UserListPage',
-                                  queryParameters: {
-                                    'titleText': serializeParam(
-                                      'Mutuals',
-                                      ParamType.String,
-                                    ),
-                                    'account': serializeParam(
-                                      widget.pageUser,
-                                      ParamType.DocumentReference,
-                                    ),
-                                  }.withoutNulls,
-                                );
-                              },
-                              child: Container(
-                                width: MediaQuery.sizeOf(context).width * 0.25,
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.06,
-                                decoration: BoxDecoration(
-                                  color: Color(0x00292B33),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      formatNumber(
-                                        fanProfilePageUsersRecord.friendsCount,
-                                        formatType: FormatType.compact,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            useGoogleFonts: GoogleFonts.asMap()
-                                                .containsKey(
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily),
-                                          ),
-                                    ),
-                                    Text(
-                                      'Friends',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
                           Expanded(
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 10.0, 0.0, 0.0),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'FAN_PROFILE_Container_i2an4qjd_ON_TAP');
-                                  logFirebaseEvent('Container_navigate_to');
-
-                                  context.pushNamed(
-                                    'UserListPage',
-                                    queryParameters: {
-                                      'titleText': serializeParam(
-                                        'Fans',
-                                        ParamType.String,
-                                      ),
-                                      'account': serializeParam(
-                                        widget.pageUser,
-                                        ParamType.DocumentReference,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-                                },
-                                child: Container(
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.25,
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.06,
-                                  decoration: BoxDecoration(
-                                    color: Color(0x00292B33),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        formatNumber(
-                                          fanProfilePageUsersRecord
-                                              .followingCount,
-                                          formatType: FormatType.compact,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500,
-                                              useGoogleFonts: GoogleFonts
-                                                      .asMap()
-                                                  .containsKey(
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumFamily),
-                                            ),
-                                      ),
-                                      Text(
-                                        'Following',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall,
-                                      ),
-                                    ],
-                                  ),
+                            child: wrapWithModel(
+                              model: _model.fanProfileStatsViewModel,
+                              updateCallback: () => setState(() {}),
+                              child: FanProfileStatsViewWidget(
+                                parameter1: formatNumber(
+                                  fanProfilePageUsersRecord.friendsCount,
+                                  formatType: FormatType.compact,
+                                ),
+                                parameter2: widget.pageUser!,
+                                parameter3: formatNumber(
+                                  fanProfilePageUsersRecord.followingCount,
+                                  formatType: FormatType.compact,
                                 ),
                               ),
                             ),

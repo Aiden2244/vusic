@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/profile/fan_profile_stats_view/fan_profile_stats_view_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +22,19 @@ class FanProfilePageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // Model for FanProfileStatsView component.
+  late FanProfileStatsViewModel fanProfileStatsViewModel;
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    fanProfileStatsViewModel =
+        createModel(context, () => FanProfileStatsViewModel());
+  }
 
   void dispose() {
     unfocusNode.dispose();
+    fanProfileStatsViewModel.dispose();
   }
 
   /// Action blocks are added here.
