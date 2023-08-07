@@ -174,6 +174,10 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                             userName: userSearchResultsItem.userName,
                             userAccountType: userSearchResultsItem.accountType,
                             userRef: userSearchResultsItem.reference,
+                            followingCount:
+                                userSearchResultsItem.followingCount,
+                            fanCount: userSearchResultsItem.fanCount,
+                            friendsCount: userSearchResultsItem.friendsCount,
                           );
                         },
                       );

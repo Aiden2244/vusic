@@ -164,6 +164,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 'pageUser', ParamType.DocumentReference, false, ['users']),
             pageAccountType:
                 params.getParam('pageAccountType', ParamType.String),
+            followingCount: params.getParam('followingCount', ParamType.int),
+            fanCount: params.getParam('fanCount', ParamType.int),
+            friendCount: params.getParam('friendCount', ParamType.int),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,10 +20,19 @@ class OtherUserPFPWidget extends StatefulWidget {
     Key? key,
     required this.pageUser,
     required this.pageAccountType,
-  }) : super(key: key);
+    int? followingCount,
+    int? fanCount,
+    int? friendCount,
+  })  : this.followingCount = followingCount ?? 0,
+        this.fanCount = fanCount ?? 0,
+        this.friendCount = friendCount ?? 0,
+        super(key: key);
 
   final DocumentReference? pageUser;
   final String? pageAccountType;
+  final int followingCount;
+  final int fanCount;
+  final int friendCount;
 
   @override
   _OtherUserPFPWidgetState createState() => _OtherUserPFPWidgetState();
@@ -47,28 +55,22 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
       logFirebaseEvent('OTHER_USER_P_F_P_OtherUserPFP_ON_INIT_ST');
       logFirebaseEvent('OtherUserPFP_action_block');
       await action_blocks.updateCurrentPage(context);
-      logFirebaseEvent('OtherUserPFP_firestore_query');
-      _model.friendsCount = await queryFriendsRecordCount(
-        parent: widget.pageUser,
-      );
-      logFirebaseEvent('OtherUserPFP_update_widget_state');
-      _model.count2 = _model.friendsCount!;
       if (widget.pageAccountType == 'fan') {
-        logFirebaseEvent('OtherUserPFP_firestore_query');
-        _model.followingCoun = await queryFollowingRecordCount(
-          parent: widget.pageUser,
-        );
         logFirebaseEvent('OtherUserPFP_update_widget_state');
-        _model.count1 = _model.followingCoun!;
-        _model.label1 = 'Following';
+        setState(() {
+          _model.count1 = widget.followingCount;
+          _model.label1 = 'Following';
+          _model.count2 = widget.friendCount;
+          _model.label2 = 'Friends';
+        });
       } else {
-        logFirebaseEvent('OtherUserPFP_firestore_query');
-        _model.fansCount = await queryFansRecordCount(
-          parent: widget.pageUser,
-        );
         logFirebaseEvent('OtherUserPFP_update_widget_state');
-        _model.count1 = _model.fansCount!;
-        _model.label1 = 'Fans';
+        setState(() {
+          _model.count1 = widget.fanCount;
+          _model.label1 = 'Fans';
+          _model.count2 = widget.friendCount;
+          _model.label2 = 'Mutuals';
+        });
       }
     });
   }

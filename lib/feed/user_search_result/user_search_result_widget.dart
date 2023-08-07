@@ -18,6 +18,9 @@ class UserSearchResultWidget extends StatefulWidget {
     required this.userName,
     required this.userAccountType,
     required this.userRef,
+    this.followingCount,
+    this.fanCount,
+    required this.friendsCount,
   }) : super(key: key);
 
   final String? userImage;
@@ -25,6 +28,9 @@ class UserSearchResultWidget extends StatefulWidget {
   final String? userName;
   final String? userAccountType;
   final DocumentReference? userRef;
+  final int? followingCount;
+  final int? fanCount;
+  final int? friendsCount;
 
   @override
   _UserSearchResultWidgetState createState() => _UserSearchResultWidgetState();
@@ -177,6 +183,18 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
                       'pageAccountType': serializeParam(
                         widget.userAccountType,
                         ParamType.String,
+                      ),
+                      'followingCount': serializeParam(
+                        widget.followingCount,
+                        ParamType.int,
+                      ),
+                      'fanCount': serializeParam(
+                        widget.fanCount,
+                        ParamType.int,
+                      ),
+                      'friendCount': serializeParam(
+                        widget.friendsCount,
+                        ParamType.int,
                       ),
                     }.withoutNulls,
                     extra: <String, dynamic>{
