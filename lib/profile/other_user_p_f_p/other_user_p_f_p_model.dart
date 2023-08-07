@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/profile/profile_stats_bar/profile_stats_bar_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
@@ -35,18 +34,13 @@ class OtherUserPFPModel extends FlutterFlowModel {
   int? followingCoun;
   // Stores action output result for [Firestore Query - Query a collection] action in OtherUserPFP widget.
   int? fansCount;
-  // Model for ProfileStatsBar component.
-  late ProfileStatsBarModel profileStatsBarModel;
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {
-    profileStatsBarModel = createModel(context, () => ProfileStatsBarModel());
-  }
+  void initState(BuildContext context) {}
 
   void dispose() {
     unfocusNode.dispose();
-    profileStatsBarModel.dispose();
   }
 
   /// Action blocks are added here.
