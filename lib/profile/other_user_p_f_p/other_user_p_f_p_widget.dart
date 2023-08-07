@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/profile/profile_stats_bar/profile_stats_bar_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -483,6 +484,24 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                               ),
                             ),
                         ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: 110.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                      ),
+                      child: wrapWithModel(
+                        model: _model.profileStatsBarModel,
+                        updateCallback: () => setState(() {}),
+                        child: ProfileStatsBarWidget(
+                          userRef: currentUserReference!,
+                          count1: _model.count1,
+                          label1: _model.label1,
+                          count2: _model.count2,
+                          label2: _model.label2,
+                        ),
                       ),
                     ),
                   ],
