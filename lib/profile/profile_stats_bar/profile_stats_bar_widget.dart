@@ -119,7 +119,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                       ),
                     ),
                     Text(
-                      'Fans',
+                      widget.label1!,
                       style: FlutterFlowTheme.of(context).bodySmall,
                     ),
                   ],
@@ -187,7 +187,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                         ),
                       ),
                       Text(
-                        'Following',
+                        widget.label2!,
                         style: FlutterFlowTheme.of(context).bodySmall,
                       ),
                     ],

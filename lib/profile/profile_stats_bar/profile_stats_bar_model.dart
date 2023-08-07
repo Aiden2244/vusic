@@ -9,10 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ProfileStatsBarModel extends FlutterFlowModel {
-  ///  Local state fields for this component.
-
-  String friendLabel = 'Friends';
-
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}
