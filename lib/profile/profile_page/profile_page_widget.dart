@@ -44,25 +44,31 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
         parent: currentUserReference,
       );
       logFirebaseEvent('ProfilePage_update_widget_state');
-      _model.count2 = _model.friendsCount!;
+      setState(() {
+        _model.count2 = _model.friendsCount!;
+      });
       if (valueOrDefault(currentUserDocument?.accountType, '') == 'fan') {
         logFirebaseEvent('ProfilePage_firestore_query');
         _model.followingCoun = await queryFollowingRecordCount(
           parent: currentUserReference,
         );
         logFirebaseEvent('ProfilePage_update_widget_state');
-        _model.label2 = 'Friends';
-        _model.label1 = 'Following';
-        _model.count1 = _model.followingCoun!;
+        setState(() {
+          _model.label2 = 'Friends';
+          _model.label1 = 'Following';
+          _model.count1 = _model.followingCoun!;
+        });
       } else {
         logFirebaseEvent('ProfilePage_firestore_query');
         _model.fansCount = await queryFansRecordCount(
           parent: currentUserReference,
         );
         logFirebaseEvent('ProfilePage_update_widget_state');
-        _model.label2 = 'Mutuals';
-        _model.label1 = 'Fans';
-        _model.count1 = _model.fansCount!;
+        setState(() {
+          _model.label2 = 'Mutuals';
+          _model.label1 = 'Fans';
+          _model.count1 = _model.fansCount!;
+        });
       }
     });
   }
@@ -456,23 +462,16 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
-                  child: Visibility(
-                    visible:
-                        valueOrDefault(currentUserDocument?.accountType, '') !=
-                            'fan',
-                    child: AuthUserStreamWidget(
-                      builder: (context) => wrapWithModel(
-                        model: _model.profileStatsBarModel,
-                        updateCallback: () => setState(() {}),
-                        updateOnChange: true,
-                        child: ProfileStatsBarWidget(
-                          userRef: currentUserReference!,
-                          count1: _model.count1,
-                          label1: _model.label1,
-                          count2: _model.count2,
-                          label2: _model.label2,
-                        ),
-                      ),
+                  child: wrapWithModel(
+                    model: _model.profileStatsBarModel,
+                    updateCallback: () => setState(() {}),
+                    updateOnChange: true,
+                    child: ProfileStatsBarWidget(
+                      userRef: currentUserReference!,
+                      count1: _model.count1,
+                      label1: _model.label1,
+                      count2: _model.count2,
+                      label2: _model.label2,
                     ),
                   ),
                 ),
