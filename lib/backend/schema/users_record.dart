@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:from_css_color/from_css_color.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -194,6 +196,120 @@ class UsersRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       UsersRecord._(reference, mapFromFirestore(data));
+
+  static UsersRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      UsersRecord.getDocumentFromData(
+        {
+          'email': snapshot.data['email'],
+          'display_name': snapshot.data['display_name'],
+          'photo_url': snapshot.data['photo_url'],
+          'uid': snapshot.data['uid'],
+          'created_time': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['created_time']),
+          ),
+          'phone_number': snapshot.data['phone_number'],
+          'account_type': snapshot.data['account_type'],
+          'favorite_genres': safeGet(
+            () => snapshot.data['favorite_genres'].toList(),
+          ),
+          'user_name': snapshot.data['user_name'],
+          'fan_count': snapshot.data['fan_count']?.round(),
+          'fans': safeGet(
+            () => snapshot.data['fans'].map((s) => toRef(s)).toList(),
+          ),
+          'friends_count': snapshot.data['friends_count']?.round(),
+          'following_count': snapshot.data['following_count']?.round(),
+          'following': safeGet(
+            () => snapshot.data['following'].map((s) => toRef(s)).toList(),
+          ),
+          'bio': snapshot.data['bio'],
+          'backsplash_pic': snapshot.data['backsplash_pic'],
+          'backsplash_video': snapshot.data['backsplash_video'],
+          'last_username_change': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['last_username_change']),
+          ),
+          'artist_description': snapshot.data['artist_description'],
+          'hometown': snapshot.data['hometown'],
+          'current_location': snapshot.data['current_location'],
+          'posts': safeGet(
+            () => (snapshot.data['posts'] as Iterable)
+                .map(
+                  (data) => createPostStruct(
+                    postId: (data as Map<String, dynamic>)['post_id'],
+                    postTitle: (data as Map<String, dynamic>)['post_title'],
+                    postCaption: (data as Map<String, dynamic>)['post_caption'],
+                    postUser: safeGet(
+                      () => toRef((data as Map<String, dynamic>)['post_user']),
+                    ),
+                    timePosted: safeGet(
+                      () => DateTime.fromMillisecondsSinceEpoch(
+                          (data as Map<String, dynamic>)['time_posted']),
+                    ),
+                    likesCount:
+                        (data as Map<String, dynamic>)['likes_count']?.round(),
+                    commentsCount:
+                        (data as Map<String, dynamic>)['comments_count']
+                            ?.round(),
+                    sharesCount:
+                        (data as Map<String, dynamic>)['shares_count']?.round(),
+                    postVideo: (data as Map<String, dynamic>)['post_video'],
+                    postCoverPhoto:
+                        (data as Map<String, dynamic>)['post_cover_photo'],
+                    create: true,
+                    clearUnsetFields: false,
+                  ).toMap(),
+                )
+                .toList(),
+          ),
+          'is_verified': snapshot.data['is_verified'],
+          'notifications': safeGet(
+            () => (snapshot.data['notifications'] as Iterable)
+                .map(
+                  (data) => createNotificationStruct(
+                    notificationType:
+                        (data as Map<String, dynamic>)['notification_type'],
+                    notificationTime: safeGet(
+                      () => DateTime.fromMillisecondsSinceEpoch(
+                          (data as Map<String, dynamic>)['notification_time']),
+                    ),
+                    notificationUser: safeGet(
+                      () => toRef(
+                          (data as Map<String, dynamic>)['notification_user']),
+                    ),
+                    notificationBody:
+                        (data as Map<String, dynamic>)['notification_body'],
+                    create: true,
+                    clearUnsetFields: false,
+                  ).toMap(),
+                )
+                .toList(),
+          ),
+          'friends': safeGet(
+            () => snapshot.data['friends'].map((s) => toRef(s)).toList(),
+          ),
+        },
+        UsersRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<UsersRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'users',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:from_css_color/from_css_color.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -80,6 +82,42 @@ class PostsRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       PostsRecord._(reference, mapFromFirestore(data));
+
+  static PostsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      PostsRecord.getDocumentFromData(
+        {
+          'postedBy_ref': safeGet(
+            () => toRef(snapshot.data['postedBy_ref']),
+          ),
+          'post_video': snapshot.data['post_video'],
+          'post_photo': snapshot.data['post_photo'],
+          'post_audio': snapshot.data['post_audio'],
+          'post_bodyText': snapshot.data['post_bodyText'],
+          'post_caption': snapshot.data['post_caption'],
+          'parent_post': safeGet(
+            () => toRef(snapshot.data['parent_post']),
+          ),
+        },
+        PostsRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<PostsRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'posts',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>

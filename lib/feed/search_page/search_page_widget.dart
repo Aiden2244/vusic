@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:text_search/text_search.dart';
 import 'search_page_model.dart';
 export 'search_page_model.dart';
 
@@ -37,7 +36,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
       await action_blocks.updateCurrentPage(context);
     });
 
-    _model.textController ??= TextEditingController();
+    _model.searchFieldController ??= TextEditingController();
   }
 
   @override
@@ -76,32 +75,20 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
                 child: TextFormField(
-                  controller: _model.textController,
+                  controller: _model.searchFieldController,
                   onChanged: (_) => EasyDebounce.debounce(
-                    '_model.textController',
+                    '_model.searchFieldController',
                     Duration(milliseconds: 2000),
                     () async {
                       logFirebaseEvent(
-                          'SEARCH_TextField_p9ryyse4_ON_TEXTFIELD_C');
-                      logFirebaseEvent('TextField_simple_search');
-                      await queryUsersRecordOnce()
-                          .then(
-                            (records) => _model.simpleSearchResults =
-                                TextSearch(
-                              records
-                                  .map(
-                                    (record) => TextSearchItem(record, [
-                                      record.userName!,
-                                      record.displayName!
-                                    ]),
-                                  )
-                                  .toList(),
-                            )
-                                    .search(_model.textController.text)
-                                    .map((r) => r.object)
-                                    .toList(),
-                          )
-                          .onError((_, __) => _model.simpleSearchResults = [])
+                          'SEARCH_SearchField_ON_TEXTFIELD_CHANGE');
+                      logFirebaseEvent('SearchField_algolia_search');
+                      setState(() => _model.algoliaSearchResults = null);
+                      await UsersRecord.search(
+                        term: _model.searchFieldController.text,
+                      )
+                          .then((r) => _model.algoliaSearchResults = r)
+                          .onError((_, __) => _model.algoliaSearchResults = [])
                           .whenComplete(() => setState(() {}));
                     },
                   ),
@@ -146,10 +133,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyMedium,
                   textAlign: TextAlign.start,
-                  maxLines: null,
                   cursorColor: FlutterFlowTheme.of(context).primary,
-                  validator:
-                      _model.textControllerValidator.asValidator(context),
+                  validator: _model.searchFieldControllerValidator
+                      .asValidator(context),
                 ),
               ),
               Expanded(
@@ -157,8 +143,21 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
                   child: Builder(
                     builder: (context) {
+                      if (_model.algoliaSearchResults == null) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
                       final userSearchResults =
-                          _model.simpleSearchResults.toList();
+                          _model.algoliaSearchResults?.toList() ?? [];
                       return ListView.builder(
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.vertical,

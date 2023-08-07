@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:from_css_color/from_css_color.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -51,6 +53,35 @@ class UsernamesRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       UsernamesRecord._(reference, mapFromFirestore(data));
+
+  static UsernamesRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      UsernamesRecord.getDocumentFromData(
+        {
+          'user_ref': safeGet(
+            () => toRef(snapshot.data['user_ref']),
+          ),
+          'username_text': snapshot.data['username_text'],
+        },
+        UsernamesRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<UsernamesRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'usernames',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>

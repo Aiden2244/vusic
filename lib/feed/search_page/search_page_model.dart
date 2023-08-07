@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:text_search/text_search.dart';
 
 class SearchPageModel extends FlutterFlowModel {
   ///  Local state fields for this page.
@@ -18,10 +17,11 @@ class SearchPageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for TextField widget.
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
-  List<UsersRecord> simpleSearchResults = [];
+  // State field(s) for SearchField widget.
+  TextEditingController? searchFieldController;
+  String? Function(BuildContext, String?)? searchFieldControllerValidator;
+  // Algolia Search Results from action on SearchField
+  List<UsersRecord>? algoliaSearchResults = [];
 
   /// Initialization and disposal methods.
 
@@ -29,7 +29,7 @@ class SearchPageModel extends FlutterFlowModel {
 
   void dispose() {
     unfocusNode.dispose();
-    textController?.dispose();
+    searchFieldController?.dispose();
   }
 
   /// Action blocks are added here.
