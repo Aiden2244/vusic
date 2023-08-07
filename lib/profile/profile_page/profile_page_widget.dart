@@ -38,6 +38,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
       logFirebaseEvent('PROFILE_ProfilePage_ON_INIT_STATE');
       logFirebaseEvent('ProfilePage_action_block');
       await action_blocks.updateCurrentPage(context);
+      setState(() {});
       logFirebaseEvent('ProfilePage_firestore_query');
       _model.friendsCount = await queryFriendsRecordCount(
         parent: currentUserReference,
@@ -463,6 +464,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                       builder: (context) => wrapWithModel(
                         model: _model.profileStatsBarModel,
                         updateCallback: () => setState(() {}),
+                        updateOnChange: true,
                         child: ProfileStatsBarWidget(
                           userRef: currentUserReference!,
                           count1: _model.count1,
