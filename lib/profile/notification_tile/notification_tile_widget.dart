@@ -100,43 +100,27 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'NOTIFICATION_TILE_CircleImage_r5fixkoo_O');
-                        if (contentView2UsersRecord.accountType == 'fan') {
-                          logFirebaseEvent('CircleImage_navigate_to');
+                        logFirebaseEvent('CircleImage_navigate_to');
 
-                          context.pushNamed(
-                            'FanProfilePage',
-                            queryParameters: {
-                              'pageUser': serializeParam(
-                                contentView2UsersRecord.reference,
-                                ParamType.DocumentReference,
-                              ),
-                            }.withoutNulls,
-                            extra: <String, dynamic>{
-                              kTransitionInfoKey: TransitionInfo(
-                                hasTransition: true,
-                                transitionType: PageTransitionType.rightToLeft,
-                              ),
-                            },
-                          );
-                        } else {
-                          logFirebaseEvent('CircleImage_navigate_to');
-
-                          context.pushNamed(
-                            'MusicianProfilePage',
-                            queryParameters: {
-                              'pageUser': serializeParam(
-                                contentView2UsersRecord.reference,
-                                ParamType.DocumentReference,
-                              ),
-                            }.withoutNulls,
-                            extra: <String, dynamic>{
-                              kTransitionInfoKey: TransitionInfo(
-                                hasTransition: true,
-                                transitionType: PageTransitionType.rightToLeft,
-                              ),
-                            },
-                          );
-                        }
+                        context.pushNamed(
+                          'OtherUserPFP',
+                          queryParameters: {
+                            'pageUser': serializeParam(
+                              contentView2UsersRecord.reference,
+                              ParamType.DocumentReference,
+                            ),
+                            'pageAccountType': serializeParam(
+                              contentView2UsersRecord.accountType,
+                              ParamType.String,
+                            ),
+                          }.withoutNulls,
+                          extra: <String, dynamic>{
+                            kTransitionInfoKey: TransitionInfo(
+                              hasTransition: true,
+                              transitionType: PageTransitionType.leftToRight,
+                            ),
+                          },
+                        );
                       },
                       child: Container(
                         width: 50.0,

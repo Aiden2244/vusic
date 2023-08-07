@@ -18,10 +18,12 @@ class UserListPageWidget extends StatefulWidget {
     Key? key,
     required this.titleText,
     required this.account,
+    required this.queryType,
   }) : super(key: key);
 
   final String? titleText;
   final DocumentReference? account;
+  final String? queryType;
 
   @override
   _UserListPageWidgetState createState() => _UserListPageWidgetState();
@@ -135,16 +137,8 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
                 model: _model.userListViewModel,
                 updateCallback: () => setState(() {}),
                 child: UserListViewWidget(
-                  usersList: () {
-                    if (widget.titleText == 'Following') {
-                      return userListViewUsersRecord.following;
-                    } else if (widget.titleText == 'Fans') {
-                      return userListViewUsersRecord.fans;
-                    } else {
-                      return userListViewUsersRecord.friends;
-                    }
-                  }(),
                   userAccount: widget.account!,
+                  queryType: widget.queryType!,
                 ),
               );
             },

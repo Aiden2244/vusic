@@ -161,15 +161,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             titleText: params.getParam('titleText', ParamType.String),
             account: params.getParam(
                 'account', ParamType.DocumentReference, false, ['users']),
+            queryType: params.getParam('queryType', ParamType.String),
           ),
         ),
         FFRoute(
-          name: 'FanProfilePage',
-          path: '/fanProfilePage',
+          name: 'OtherUserPFP',
+          path: '/otherUserPFP',
           requireAuth: true,
-          builder: (context, params) => FanProfilePageWidget(
+          builder: (context, params) => OtherUserPFPWidget(
             pageUser: params.getParam(
                 'pageUser', ParamType.DocumentReference, false, ['users']),
+            pageAccountType:
+                params.getParam('pageAccountType', ParamType.String),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

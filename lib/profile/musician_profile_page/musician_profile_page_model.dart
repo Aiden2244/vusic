@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/profile/musician_profile_stats/musician_profile_stats_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -22,19 +21,13 @@ class MusicianProfilePageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Model for MusicianProfileStats component.
-  late MusicianProfileStatsModel musicianProfileStatsModel;
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {
-    musicianProfileStatsModel =
-        createModel(context, () => MusicianProfileStatsModel());
-  }
+  void initState(BuildContext context) {}
 
   void dispose() {
     unfocusNode.dispose();
-    musicianProfileStatsModel.dispose();
   }
 
   /// Action blocks are added here.

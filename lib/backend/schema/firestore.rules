@@ -11,29 +11,29 @@ service cloud.firestore {
     match /posts/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if false;
+      allow delete: if false;
     }
 
     match /notifications/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if false;
+      allow delete: if false;
     }
 
     match /usernames/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if false;
+      allow delete: if false;
     }
 
     match /posts/{parent}/comments/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if false;
+      allow delete: if false;
     }
 
     match /{path=**}/comments/{document} {
@@ -42,75 +42,45 @@ service cloud.firestore {
 
 
     match /users/{parent}/friends/{document} {
-      allow create: if true;
+      allow create: if request.auth.uid == parent;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if request.auth.uid == parent;
+      allow delete: if false;
     }
-
-    match /{path=**}/friends/{document} {
-      allow read: if true;
-    }
-
 
     match /users/{parent}/fans/{document} {
-      allow create: if true;
+      allow create: if request.auth.uid == parent;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if request.auth.uid == parent;
+      allow delete: if false;
     }
-
-    match /{path=**}/fans/{document} {
-      allow read: if true;
-    }
-
 
     match /users/{parent}/following/{document} {
-      allow create: if true;
+      allow create: if request.auth.uid == parent;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if request.auth.uid == parent;
+      allow delete: if false;
     }
-
-    match /{path=**}/following/{document} {
-      allow read: if true;
-    }
-
 
     match /users/{parent}/userPosts/{document} {
-      allow create: if true;
+      allow create: if request.auth.uid == parent;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if request.auth.uid == parent;
+      allow delete: if false;
     }
-
-    match /{path=**}/userPosts/{document} {
-      allow read: if true;
-    }
-
 
     match /users/{parent}/userNotifications/{document} {
-      allow create: if true;
+      allow create: if request.auth.uid == parent;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if request.auth.uid == parent;
+      allow delete: if false;
     }
-
-    match /{path=**}/userNotifications/{document} {
-      allow read: if true;
-    }
-
 
     match /users/{parent}/requested/{document} {
-      allow create: if true;
+      allow create: if request.auth.uid == parent;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if request.auth.uid == parent;
+      allow delete: if false;
     }
-
-    match /{path=**}/requested/{document} {
-      allow read: if true;
-    }
-
   }
 }

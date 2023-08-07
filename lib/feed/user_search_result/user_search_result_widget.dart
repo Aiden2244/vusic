@@ -13,18 +13,18 @@ export 'user_search_result_model.dart';
 class UserSearchResultWidget extends StatefulWidget {
   const UserSearchResultWidget({
     Key? key,
-    this.parameter1,
-    this.parameter2,
-    this.parameter3,
-    this.parameter4,
-    this.parameter5,
+    required this.userImage,
+    required this.displayName,
+    required this.userName,
+    required this.userAccountType,
+    required this.userRef,
   }) : super(key: key);
 
-  final String? parameter1;
-  final String? parameter2;
-  final String? parameter3;
-  final String? parameter4;
-  final DocumentReference? parameter5;
+  final String? userImage;
+  final String? displayName;
+  final String? userName;
+  final String? userAccountType;
+  final DocumentReference? userRef;
 
   @override
   _UserSearchResultWidgetState createState() => _UserSearchResultWidgetState();
@@ -60,7 +60,8 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 1.0),
       child: Container(
-        width: 100.0,
+        width: MediaQuery.sizeOf(context).width * 1.0,
+        height: 80.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           boxShadow: [
@@ -79,7 +80,7 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
               ClipRRect(
                 borderRadius: BorderRadius.circular(40.0),
                 child: Image.network(
-                  widget.parameter1!,
+                  widget.userImage!,
                   width: 60.0,
                   height: 60.0,
                   fit: BoxFit.cover,
@@ -88,13 +89,14 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
                       child: Text(
-                        widget.parameter2!,
+                        widget.displayName!,
                         style: FlutterFlowTheme.of(context).titleMedium,
                       ),
                     ),
@@ -124,7 +126,7 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
                             ),
                           ),
                           Text(
-                            widget.parameter3!,
+                            widget.userName!,
                             style: FlutterFlowTheme.of(context)
                                 .bodySmall
                                 .override(
@@ -145,7 +147,7 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
                             ),
                           ),
                           Text(
-                            widget.parameter4!,
+                            widget.userAccountType!,
                             style: FlutterFlowTheme.of(context).bodySmall,
                           ),
                         ],
@@ -162,34 +164,28 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
                 onTap: () async {
                   logFirebaseEvent('USER_SEARCH_RESULT_Card_jxdkylmm_ON_TAP');
                   logFirebaseEvent('Card_update_app_state');
-                  setState(() {
-                    FFAppState().lastSearchedUser = widget.parameter5;
-                  });
-                  if (widget.parameter4 == 'musician') {
-                    logFirebaseEvent('Card_navigate_to');
+                  FFAppState().lastSearchedUser = widget.userRef;
+                  logFirebaseEvent('Card_navigate_to');
 
-                    context.pushNamed(
-                      'MusicianProfilePage',
-                      queryParameters: {
-                        'pageUser': serializeParam(
-                          widget.parameter5,
-                          ParamType.DocumentReference,
-                        ),
-                      }.withoutNulls,
-                    );
-                  } else {
-                    logFirebaseEvent('Card_navigate_to');
-
-                    context.pushNamed(
-                      'FanProfilePage',
-                      queryParameters: {
-                        'pageUser': serializeParam(
-                          widget.parameter5,
-                          ParamType.DocumentReference,
-                        ),
-                      }.withoutNulls,
-                    );
-                  }
+                  context.pushNamed(
+                    'OtherUserPFP',
+                    queryParameters: {
+                      'pageUser': serializeParam(
+                        widget.userRef,
+                        ParamType.DocumentReference,
+                      ),
+                      'pageAccountType': serializeParam(
+                        widget.userAccountType,
+                        ParamType.String,
+                      ),
+                    }.withoutNulls,
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.leftToRight,
+                      ),
+                    },
+                  );
                 },
                 child: Card(
                   clipBehavior: Clip.antiAliasWithSaveLayer,

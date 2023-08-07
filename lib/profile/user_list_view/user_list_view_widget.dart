@@ -5,7 +5,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'user_list_view_model.dart';
@@ -14,12 +16,12 @@ export 'user_list_view_model.dart';
 class UserListViewWidget extends StatefulWidget {
   const UserListViewWidget({
     Key? key,
-    required this.usersList,
     required this.userAccount,
+    required this.queryType,
   }) : super(key: key);
 
-  final List<DocumentReference>? usersList;
   final DocumentReference? userAccount;
+  final String? queryType;
 
   @override
   _UserListViewWidgetState createState() => _UserListViewWidgetState();
@@ -38,6 +40,50 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UserListViewModel());
+
+    // On component load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('USER_LIST_VIEW_UserListView_ON_INIT_STAT');
+      if ((widget.queryType == 'Friends') || (widget.queryType == 'Mutuals')) {
+        logFirebaseEvent('UserListView_firestore_query');
+        _model.friendsList = await queryFriendsRecordOnce(
+          parent: widget.userAccount,
+        );
+        logFirebaseEvent('UserListView_update_widget_state');
+        _model.listToShow = _model.friendsList!
+            .map((e) => e.friendRef)
+            .withoutNulls
+            .toList()
+            .toList()
+            .cast<DocumentReference>();
+      } else {
+        if (widget.queryType == 'Fans') {
+          logFirebaseEvent('UserListView_firestore_query');
+          _model.fansList = await queryFansRecordOnce(
+            parent: widget.userAccount,
+          );
+          logFirebaseEvent('UserListView_update_widget_state');
+          _model.listToShow = _model.fansList!
+              .map((e) => e.fanRef)
+              .withoutNulls
+              .toList()
+              .toList()
+              .cast<DocumentReference>();
+        } else {
+          logFirebaseEvent('UserListView_firestore_query');
+          _model.followingList = await queryFollowingRecordOnce(
+            parent: widget.userAccount,
+          );
+          logFirebaseEvent('UserListView_update_widget_state');
+          _model.listToShow = _model.followingList!
+              .map((e) => e.followingRef)
+              .withoutNulls
+              .toList()
+              .toList()
+              .cast<DocumentReference>();
+        }
+      }
+    });
   }
 
   @override
@@ -53,7 +99,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
 
     return Builder(
       builder: (context) {
-        final usersQuery = widget.usersList!.toList();
+        final usersQuery = _model.listToShow.toList();
         return SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -63,7 +109,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
               final usersQueryItem = usersQuery[usersQueryIndex];
               return StreamBuilder<UsersRecord>(
                 stream:
-                    UsersRecord.getDocument(widget.usersList![usersQueryIndex]),
+                    UsersRecord.getDocument(_model.listToShow[usersQueryIndex]),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
@@ -103,45 +149,28 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                               onTap: () async {
                                 logFirebaseEvent(
                                     'USER_LIST_VIEW_CircleImage_r98vbcmv_ON_T');
-                                if (containerUsersRecord.accountType == 'fan') {
-                                  logFirebaseEvent('CircleImage_navigate_to');
+                                logFirebaseEvent('CircleImage_navigate_to');
 
-                                  context.pushNamed(
-                                    'FanProfilePage',
-                                    queryParameters: {
-                                      'pageUser': serializeParam(
-                                        containerUsersRecord.reference,
-                                        ParamType.DocumentReference,
-                                      ),
-                                    }.withoutNulls,
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType:
-                                            PageTransitionType.rightToLeft,
-                                      ),
-                                    },
-                                  );
-                                } else {
-                                  logFirebaseEvent('CircleImage_navigate_to');
-
-                                  context.pushNamed(
-                                    'MusicianProfilePage',
-                                    queryParameters: {
-                                      'pageUser': serializeParam(
-                                        containerUsersRecord.reference,
-                                        ParamType.DocumentReference,
-                                      ),
-                                    }.withoutNulls,
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType:
-                                            PageTransitionType.rightToLeft,
-                                      ),
-                                    },
-                                  );
-                                }
+                                context.pushNamed(
+                                  'OtherUserPFP',
+                                  queryParameters: {
+                                    'pageUser': serializeParam(
+                                      containerUsersRecord.reference,
+                                      ParamType.DocumentReference,
+                                    ),
+                                    'pageAccountType': serializeParam(
+                                      containerUsersRecord.accountType,
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    kTransitionInfoKey: TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType:
+                                          PageTransitionType.leftToRight,
+                                    ),
+                                  },
+                                );
                               },
                               child: Container(
                                 width: 40.0,

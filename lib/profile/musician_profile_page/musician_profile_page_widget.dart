@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/profile/musician_profile_stats/musician_profile_stats_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -326,154 +325,6 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 10.0, 0.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    logFirebaseEvent(
-                                        'MUSICIAN_PROFILE_Container_8w3v20xp_ON_T');
-                                    logFirebaseEvent('Container_navigate_to');
-
-                                    context.pushNamed(
-                                      'UserListPage',
-                                      queryParameters: {
-                                        'titleText': serializeParam(
-                                          'Fans',
-                                          ParamType.String,
-                                        ),
-                                        'account': serializeParam(
-                                          widget.pageUser,
-                                          ParamType.DocumentReference,
-                                        ),
-                                      }.withoutNulls,
-                                    );
-                                  },
-                                  child: Container(
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.25,
-                                    height: MediaQuery.sizeOf(context).height *
-                                        0.06,
-                                    decoration: BoxDecoration(
-                                      color: Color(0x00292B33),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          formatNumber(
-                                            musicianProfilePageUsersRecord
-                                                .fanCount,
-                                            formatType: FormatType.compact,
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily,
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.w500,
-                                                useGoogleFonts: GoogleFonts
-                                                        .asMap()
-                                                    .containsKey(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMediumFamily),
-                                              ),
-                                        ),
-                                        Text(
-                                          'Fans',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodySmall,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      logFirebaseEvent(
-                                          'MUSICIAN_PROFILE_Container_j1p06tus_ON_T');
-                                      logFirebaseEvent('Container_navigate_to');
-
-                                      context.pushNamed(
-                                        'UserListPage',
-                                        queryParameters: {
-                                          'titleText': serializeParam(
-                                            'Mutuals',
-                                            ParamType.String,
-                                          ),
-                                          'account': serializeParam(
-                                            widget.pageUser,
-                                            ParamType.DocumentReference,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.25,
-                                      height:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.06,
-                                      decoration: BoxDecoration(
-                                        color: Color(0x00292B33),
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            formatNumber(
-                                              musicianProfilePageUsersRecord
-                                                  .friendsCount,
-                                              formatType: FormatType.compact,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumFamily,
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  useGoogleFonts: GoogleFonts
-                                                          .asMap()
-                                                      .containsKey(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMediumFamily),
-                                                ),
-                                          ),
-                                          Text(
-                                            'Mutuals',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodySmall,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
                               if ((currentUserDocument?.following?.toList() ??
                                           [])
                                       .contains(musicianProfilePageUsersRecord
@@ -601,24 +452,6 @@ class _MusicianProfilePageWidgetState extends State<MusicianProfilePageWidget> {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: wrapWithModel(
-                                  model: _model.musicianProfileStatsModel,
-                                  updateCallback: () => setState(() {}),
-                                  child: MusicianProfileStatsWidget(
-                                    parameter1: formatNumber(
-                                      musicianProfilePageUsersRecord.fanCount,
-                                      formatType: FormatType.compact,
-                                    ),
-                                    parameter2: widget.pageUser!,
-                                    parameter3: formatNumber(
-                                      musicianProfilePageUsersRecord
-                                          .friendsCount,
-                                      formatType: FormatType.compact,
-                                    ),
-                                  ),
-                                ),
-                              ),
                               if ((currentUserDocument?.friends?.toList() ?? [])
                                       .contains(musicianProfilePageUsersRecord
                                           .reference) ==

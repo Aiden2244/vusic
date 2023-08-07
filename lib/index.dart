@@ -18,5 +18,5 @@ export '/profile/notifications_page/notifications_page_widget.dart'
     show NotificationsPageWidget;
 export '/profile/user_list_page/user_list_page_widget.dart'
     show UserListPageWidget;
-export '/profile/fan_profile_page/fan_profile_page_widget.dart'
-    show FanProfilePageWidget;
+export '/profile/other_user_p_f_p/other_user_p_f_p_widget.dart'
+    show OtherUserPFPWidget;

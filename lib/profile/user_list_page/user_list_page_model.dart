@@ -14,7 +14,12 @@ import 'package:provider/provider.dart';
 class UserListPageModel extends FlutterFlowModel {
   ///  Local state fields for this page.
 
-  UsersRecord? listToShow;
+  List<UsersRecord> listToShow = [];
+  void addToListToShow(UsersRecord item) => listToShow.add(item);
+  void removeFromListToShow(UsersRecord item) => listToShow.remove(item);
+  void removeAtIndexFromListToShow(int index) => listToShow.removeAt(index);
+  void updateListToShowAtIndex(int index, Function(UsersRecord) updateFn) =>
+      listToShow[index] = updateFn(listToShow[index]);
 
   ///  State fields for stateful widgets in this page.
 

@@ -5,46 +5,72 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/profile/fan_profile_stats_view/fan_profile_stats_view_widget.dart';
+import '/profile/profile_stats_bar/profile_stats_bar_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'fan_profile_page_model.dart';
-export 'fan_profile_page_model.dart';
+import 'other_user_p_f_p_model.dart';
+export 'other_user_p_f_p_model.dart';
 
-class FanProfilePageWidget extends StatefulWidget {
-  const FanProfilePageWidget({
+class OtherUserPFPWidget extends StatefulWidget {
+  const OtherUserPFPWidget({
     Key? key,
     required this.pageUser,
+    required this.pageAccountType,
   }) : super(key: key);
 
   final DocumentReference? pageUser;
+  final String? pageAccountType;
 
   @override
-  _FanProfilePageWidgetState createState() => _FanProfilePageWidgetState();
+  _OtherUserPFPWidgetState createState() => _OtherUserPFPWidgetState();
 }
 
-class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
-  late FanProfilePageModel _model;
+class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
+  late OtherUserPFPModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => FanProfilePageModel());
+    _model = createModel(context, () => OtherUserPFPModel());
 
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'FanProfilePage'});
+        parameters: {'screen_name': 'OtherUserPFP'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('FAN_PROFILE_FanProfilePage_ON_INIT_STATE');
-      logFirebaseEvent('FanProfilePage_action_block');
+      logFirebaseEvent('OTHER_USER_P_F_P_OtherUserPFP_ON_INIT_ST');
+      logFirebaseEvent('OtherUserPFP_action_block');
       await action_blocks.updateCurrentPage(context);
+      logFirebaseEvent('OtherUserPFP_firestore_query');
+      _model.friendsCount = await queryFriendsRecordCount(
+        parent: widget.pageUser,
+      );
+      logFirebaseEvent('OtherUserPFP_update_widget_state');
+      _model.count2 = _model.friendsCount!;
+      if (widget.pageAccountType == 'fan') {
+        logFirebaseEvent('OtherUserPFP_firestore_query');
+        _model.followingCoun = await queryFollowingRecordCount(
+          parent: widget.pageUser,
+        );
+        logFirebaseEvent('OtherUserPFP_update_widget_state');
+        _model.count1 = _model.followingCoun!;
+        _model.label1 = 'Following';
+      } else {
+        logFirebaseEvent('OtherUserPFP_firestore_query');
+        _model.fansCount = await queryFansRecordCount(
+          parent: widget.pageUser,
+        );
+        logFirebaseEvent('OtherUserPFP_update_widget_state');
+        _model.count1 = _model.fansCount!;
+        _model.label1 = 'Fans';
+      }
     });
   }
 
@@ -79,7 +105,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
             ),
           );
         }
-        final fanProfilePageUsersRecord = snapshot.data!;
+        final otherUserPFPUsersRecord = snapshot.data!;
         return GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
@@ -99,7 +125,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('FAN_PROFILE_arrow_back_rounded_ICN_ON_TA');
+                  logFirebaseEvent('OTHER_USER_P_F_P_arrow_back_rounded_ICN_');
                   logFirebaseEvent('IconButton_navigate_to');
 
                   context.pushNamed(
@@ -114,7 +140,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                 },
               ),
               title: Text(
-                fanProfilePageUsersRecord.userName,
+                otherUserPFPUsersRecord.userName,
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       fontFamily:
                           FlutterFlowTheme.of(context).headlineMediumFamily,
@@ -158,7 +184,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                   borderRadius: BorderRadius.circular(0.0),
                                   child: Image.network(
                                     valueOrDefault<String>(
-                                      fanProfilePageUsersRecord.backsplashPic,
+                                      otherUserPFPUsersRecord.backsplashPic,
                                       'https://images.unsplash.com/photo-1548502632-6b93092aad0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw5fHxtdXNpYyUyMHN0dWRpb3xlbnwwfHx8fDE2ODk2MjAxODF8MA&ixlib=rb-4.0.3&q=80&w=1080',
                                     ),
                                     width:
@@ -187,7 +213,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                               child: AuthUserStreamWidget(
                                 builder: (context) => FlutterFlowVideoPlayer(
                                   path: valueOrDefault<String>(
-                                    fanProfilePageUsersRecord.backsplashVideo,
+                                    otherUserPFPUsersRecord.backsplashVideo,
                                     'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
                                   ),
                                   videoType: VideoType.network,
@@ -234,7 +260,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                       ),
                                       child: Image.network(
                                         valueOrDefault<String>(
-                                          fanProfilePageUsersRecord.photoUrl,
+                                          otherUserPFPUsersRecord.photoUrl,
                                           'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
                                         ),
                                         fit: BoxFit.cover,
@@ -259,7 +285,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                       ),
                                     ),
                                     Text(
-                                      fanProfilePageUsersRecord.userName,
+                                      otherUserPFPUsersRecord.userName,
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .titleSmall,
@@ -272,7 +298,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                             .primaryBackground,
                                       ),
                                       child: Visibility(
-                                        visible: fanProfilePageUsersRecord
+                                        visible: otherUserPFPUsersRecord
                                                 .isVerified ==
                                             true,
                                         child: Icon(
@@ -300,7 +326,7 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                       alignment: AlignmentDirectional(0.0, 0.0),
                       child: Text(
                         valueOrDefault<String>(
-                          fanProfilePageUsersRecord.bio,
+                          otherUserPFPUsersRecord.bio,
                           'Follow my band on VUSIC!',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium,
@@ -319,26 +345,9 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: wrapWithModel(
-                              model: _model.fanProfileStatsViewModel,
-                              updateCallback: () => setState(() {}),
-                              child: FanProfileStatsViewWidget(
-                                parameter1: formatNumber(
-                                  fanProfilePageUsersRecord.friendsCount,
-                                  formatType: FormatType.compact,
-                                ),
-                                parameter2: widget.pageUser!,
-                                parameter3: formatNumber(
-                                  fanProfilePageUsersRecord.followingCount,
-                                  formatType: FormatType.compact,
-                                ),
-                              ),
-                            ),
-                          ),
                           if (((currentUserDocument?.friends?.toList() ?? [])
-                                      .contains(fanProfilePageUsersRecord
-                                          .reference) ==
+                                      .contains(
+                                          otherUserPFPUsersRecord.reference) ==
                                   false) &&
                               (valueOrDefault(
                                       currentUserDocument?.accountType, '') ==
@@ -350,13 +359,13 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                 builder: (context) => FFButtonWidget(
                                   onPressed: () async {
                                     logFirebaseEvent(
-                                        'FAN_PROFILE_FriendButton_ON_TAP');
+                                        'OTHER_USER_P_F_P_FriendButton_ON_TAP');
                                     logFirebaseEvent(
                                         'FriendButton_action_block');
                                     await action_blocks.notifyUser(
                                       context,
                                       userToNotify:
-                                          fanProfilePageUsersRecord.reference,
+                                          otherUserPFPUsersRecord.reference,
                                       notificationType: 'friend_request',
                                       notificationBody:
                                           'sent you a friend request',
@@ -416,8 +425,8 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                               ),
                             ),
                           if (((currentUserDocument?.friends?.toList() ?? [])
-                                      .contains(fanProfilePageUsersRecord
-                                          .reference) ==
+                                      .contains(
+                                          otherUserPFPUsersRecord.reference) ==
                                   true) &&
                               (valueOrDefault(
                                       currentUserDocument?.accountType, '') ==
@@ -429,13 +438,13 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                                 builder: (context) => FFButtonWidget(
                                   onPressed: () async {
                                     logFirebaseEvent(
-                                        'FAN_PROFILE_UnfriendButton_ON_TAP');
+                                        'OTHER_USER_P_F_P_UnfriendButton_ON_TAP');
                                     logFirebaseEvent(
                                         'UnfriendButton_action_block');
                                     await action_blocks.unfriend(
                                       context,
                                       userToUnfriend:
-                                          fanProfilePageUsersRecord.reference,
+                                          otherUserPFPUsersRecord.reference,
                                     );
                                     setState(() {});
                                   },
@@ -473,6 +482,20 @@ class _FanProfilePageWidgetState extends State<FanProfilePageWidget> {
                               ),
                             ),
                         ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: 100.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                      ),
+                      child: wrapWithModel(
+                        model: _model.profileStatsBarModel,
+                        updateCallback: () => setState(() {}),
+                        child: ProfileStatsBarWidget(
+                          userRef: widget.pageUser!,
+                        ),
                       ),
                     ),
                   ],

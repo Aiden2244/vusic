@@ -1,11 +1,12 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
-import '/profile/auth_user_fan_bar/auth_user_fan_bar_widget.dart';
-import '/profile/auth_user_musician_bar/auth_user_musician_bar_widget.dart';
+import '/profile/profile_stats_bar/profile_stats_bar_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -37,6 +38,31 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
       logFirebaseEvent('PROFILE_ProfilePage_ON_INIT_STATE');
       logFirebaseEvent('ProfilePage_action_block');
       await action_blocks.updateCurrentPage(context);
+      logFirebaseEvent('ProfilePage_firestore_query');
+      _model.friendsCount = await queryFriendsRecordCount(
+        parent: currentUserReference,
+      );
+      logFirebaseEvent('ProfilePage_update_widget_state');
+      _model.count2 = _model.friendsCount!;
+      if (valueOrDefault(currentUserDocument?.accountType, '') == 'fan') {
+        logFirebaseEvent('ProfilePage_firestore_query');
+        _model.followingCoun = await queryFollowingRecordCount(
+          parent: currentUserReference,
+        );
+        logFirebaseEvent('ProfilePage_update_widget_state');
+        _model.label2 = 'Friends';
+        _model.label1 = 'Following';
+        _model.count1 = _model.followingCoun!;
+      } else {
+        logFirebaseEvent('ProfilePage_firestore_query');
+        _model.fansCount = await queryFansRecordCount(
+          parent: currentUserReference,
+        );
+        logFirebaseEvent('ProfilePage_update_widget_state');
+        _model.label2 = 'Mutuals';
+        _model.label1 = 'Fans';
+        _model.count1 = _model.fansCount!;
+      }
     });
   }
 
@@ -423,24 +449,31 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   endIndent: 10.0,
                   color: FlutterFlowTheme.of(context).alternate,
                 ),
-                if (valueOrDefault(currentUserDocument?.accountType, '') ==
-                    'fan')
-                  AuthUserStreamWidget(
-                    builder: (context) => wrapWithModel(
-                      model: _model.authUserFanBarModel,
-                      updateCallback: () => setState(() {}),
-                      child: AuthUserFanBarWidget(),
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 1.0,
+                  height: 100.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                  ),
+                  child: Visibility(
+                    visible:
+                        valueOrDefault(currentUserDocument?.accountType, '') !=
+                            'fan',
+                    child: AuthUserStreamWidget(
+                      builder: (context) => wrapWithModel(
+                        model: _model.profileStatsBarModel,
+                        updateCallback: () => setState(() {}),
+                        child: ProfileStatsBarWidget(
+                          userRef: currentUserReference!,
+                          count1: _model.count1,
+                          label1: _model.label1,
+                          count2: _model.count2,
+                          label2: _model.label2,
+                        ),
+                      ),
                     ),
                   ),
-                if (valueOrDefault(currentUserDocument?.accountType, '') !=
-                    'fan')
-                  AuthUserStreamWidget(
-                    builder: (context) => wrapWithModel(
-                      model: _model.authUserMusicianBarModel,
-                      updateCallback: () => setState(() {}),
-                      child: AuthUserMusicianBarWidget(),
-                    ),
-                  ),
+                ),
               ],
             ),
           ),

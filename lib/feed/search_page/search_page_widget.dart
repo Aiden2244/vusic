@@ -169,14 +169,11 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                           return UserSearchResultWidget(
                             key: Key(
                                 'Keyg5e_${userSearchResultsIndex}_of_${userSearchResults.length}'),
-                            parameter1: valueOrDefault<String>(
-                              userSearchResultsItem.photoUrl,
-                              'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
-                            ),
-                            parameter2: userSearchResultsItem.displayName,
-                            parameter3: userSearchResultsItem.userName,
-                            parameter4: userSearchResultsItem.accountType,
-                            parameter5: userSearchResultsItem.reference,
+                            userImage: userSearchResultsItem.photoUrl,
+                            displayName: userSearchResultsItem.displayName,
+                            userName: userSearchResultsItem.userName,
+                            userAccountType: userSearchResultsItem.accountType,
+                            userRef: userSearchResultsItem.reference,
                           );
                         },
                       );
