@@ -133,15 +133,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : SearchPageWidget(),
         ),
         FFRoute(
-          name: 'MusicianProfilePage',
-          path: '/musicianProfilePage',
-          requireAuth: true,
-          builder: (context, params) => MusicianProfilePageWidget(
-            pageUser: params.getParam(
-                'pageUser', ParamType.DocumentReference, false, ['users']),
-          ),
-        ),
-        FFRoute(
           name: 'ProfileSettingsPage',
           path: '/profileSettingsPage',
           requireAuth: true,

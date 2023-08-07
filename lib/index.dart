@@ -10,8 +10,6 @@ export '/authentication/set_uname_page/set_uname_page_widget.dart'
     show SetUnamePageWidget;
 export '/profile/profile_page/profile_page_widget.dart' show ProfilePageWidget;
 export '/feed/search_page/search_page_widget.dart' show SearchPageWidget;
-export '/profile/musician_profile_page/musician_profile_page_widget.dart'
-    show MusicianProfilePageWidget;
 export '/profile/profile_settings_page/profile_settings_page_widget.dart'
     show ProfileSettingsPageWidget;
 export '/profile/notifications_page/notifications_page_widget.dart'

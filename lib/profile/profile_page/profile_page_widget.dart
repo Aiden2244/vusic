@@ -1,12 +1,9 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
 import '/profile/profile_stats_bar/profile_stats_bar_widget.dart';
 import '/actions/actions.dart' as action_blocks;
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -39,32 +36,21 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
       logFirebaseEvent('ProfilePage_action_block');
       await action_blocks.updateCurrentPage(context);
       setState(() {});
-      logFirebaseEvent('ProfilePage_firestore_query');
-      _model.friendsCount = await queryFriendsRecordCount(
-        parent: currentUserReference,
-      );
       if (valueOrDefault(currentUserDocument?.accountType, '') == 'fan') {
-        logFirebaseEvent('ProfilePage_firestore_query');
-        _model.followingCoun = await queryFollowingRecordCount(
-          parent: currentUserReference,
-        );
         logFirebaseEvent('ProfilePage_update_widget_state');
         setState(() {
           _model.label2 = 'Friends';
           _model.label1 = 'Following';
-          _model.count1 = _model.followingCoun!;
-          _model.count2 = _model.friendsCount!;
+          _model.count1 =
+              valueOrDefault(currentUserDocument?.followingCount, 0);
+          _model.count2 = valueOrDefault(currentUserDocument?.friendsCount, 0);
         });
       } else {
-        logFirebaseEvent('ProfilePage_firestore_query');
-        _model.fansCount = await queryFansRecordCount(
-          parent: currentUserReference,
-        );
         logFirebaseEvent('ProfilePage_update_widget_state');
         setState(() {
           _model.label2 = 'Mutuals';
           _model.label1 = 'Fans';
-          _model.count1 = _model.fansCount!;
+          _model.count1 = valueOrDefault(currentUserDocument?.fanCount, 0);
           _model.count2 = valueOrDefault(currentUserDocument?.friendsCount, 0);
         });
       }
@@ -463,7 +449,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   child: wrapWithModel(
                     model: _model.profileStatsBarModel,
                     updateCallback: () => setState(() {}),
-                    updateOnChange: true,
                     child: ProfileStatsBarWidget(
                       userRef: currentUserReference!,
                       count1: _model.count1,
