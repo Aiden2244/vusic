@@ -43,10 +43,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
       _model.friendsCount = await queryFriendsRecordCount(
         parent: currentUserReference,
       );
-      logFirebaseEvent('ProfilePage_update_widget_state');
-      setState(() {
-        _model.count2 = _model.friendsCount!;
-      });
       if (valueOrDefault(currentUserDocument?.accountType, '') == 'fan') {
         logFirebaseEvent('ProfilePage_firestore_query');
         _model.followingCoun = await queryFollowingRecordCount(
@@ -57,6 +53,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
           _model.label2 = 'Friends';
           _model.label1 = 'Following';
           _model.count1 = _model.followingCoun!;
+          _model.count2 = _model.friendsCount!;
         });
       } else {
         logFirebaseEvent('ProfilePage_firestore_query');
@@ -68,6 +65,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
           _model.label2 = 'Mutuals';
           _model.label1 = 'Fans';
           _model.count1 = _model.fansCount!;
+          _model.count2 = valueOrDefault(currentUserDocument?.friendsCount, 0);
         });
       }
     });
