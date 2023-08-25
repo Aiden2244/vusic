@@ -109,7 +109,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 150.0),
+                              0.0, 0.0, 0.0, 80.0),
                           child: Text(
                             'The Human Way To Discover Music',
                             style: FlutterFlowTheme.of(context).bodyMedium,
