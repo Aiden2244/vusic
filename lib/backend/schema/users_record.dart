@@ -68,11 +68,6 @@ class UsersRecord extends FirestoreRecord {
   int get fanCount => _fanCount ?? 0;
   bool hasFanCount() => _fanCount != null;
 
-  // "fans" field.
-  List<DocumentReference>? _fans;
-  List<DocumentReference> get fans => _fans ?? const [];
-  bool hasFans() => _fans != null;
-
   // "friends_count" field.
   int? _friendsCount;
   int get friendsCount => _friendsCount ?? 0;
@@ -82,11 +77,6 @@ class UsersRecord extends FirestoreRecord {
   int? _followingCount;
   int get followingCount => _followingCount ?? 0;
   bool hasFollowingCount() => _followingCount != null;
-
-  // "following" field.
-  List<DocumentReference>? _following;
-  List<DocumentReference> get following => _following ?? const [];
-  bool hasFollowing() => _following != null;
 
   // "bio" field.
   String? _bio;
@@ -123,25 +113,15 @@ class UsersRecord extends FirestoreRecord {
   String get currentLocation => _currentLocation ?? '';
   bool hasCurrentLocation() => _currentLocation != null;
 
-  // "posts" field.
-  List<PostStruct>? _posts;
-  List<PostStruct> get posts => _posts ?? const [];
-  bool hasPosts() => _posts != null;
-
   // "is_verified" field.
   bool? _isVerified;
   bool get isVerified => _isVerified ?? false;
   bool hasIsVerified() => _isVerified != null;
 
-  // "notifications" field.
-  List<NotificationStruct>? _notifications;
-  List<NotificationStruct> get notifications => _notifications ?? const [];
-  bool hasNotifications() => _notifications != null;
-
-  // "friends" field.
-  List<DocumentReference>? _friends;
-  List<DocumentReference> get friends => _friends ?? const [];
-  bool hasFriends() => _friends != null;
+  // "requested_friends" field.
+  List<DocumentReference>? _requestedFriends;
+  List<DocumentReference> get requestedFriends => _requestedFriends ?? const [];
+  bool hasRequestedFriends() => _requestedFriends != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -154,10 +134,8 @@ class UsersRecord extends FirestoreRecord {
     _favoriteGenres = getDataList(snapshotData['favorite_genres']);
     _userName = snapshotData['user_name'] as String?;
     _fanCount = castToType<int>(snapshotData['fan_count']);
-    _fans = getDataList(snapshotData['fans']);
     _friendsCount = castToType<int>(snapshotData['friends_count']);
     _followingCount = castToType<int>(snapshotData['following_count']);
-    _following = getDataList(snapshotData['following']);
     _bio = snapshotData['bio'] as String?;
     _backsplashPic = snapshotData['backsplash_pic'] as String?;
     _backsplashVideo = snapshotData['backsplash_video'] as String?;
@@ -165,16 +143,8 @@ class UsersRecord extends FirestoreRecord {
     _artistDescription = snapshotData['artist_description'] as String?;
     _hometown = snapshotData['hometown'] as String?;
     _currentLocation = snapshotData['current_location'] as String?;
-    _posts = getStructList(
-      snapshotData['posts'],
-      PostStruct.fromMap,
-    );
     _isVerified = snapshotData['is_verified'] as bool?;
-    _notifications = getStructList(
-      snapshotData['notifications'],
-      NotificationStruct.fromMap,
-    );
-    _friends = getDataList(snapshotData['friends']);
+    _requestedFriends = getDataList(snapshotData['requested_friends']);
   }
 
   static CollectionReference get collection =>
@@ -215,14 +185,8 @@ class UsersRecord extends FirestoreRecord {
           ),
           'user_name': snapshot.data['user_name'],
           'fan_count': snapshot.data['fan_count']?.round(),
-          'fans': safeGet(
-            () => snapshot.data['fans'].map((s) => toRef(s)).toList(),
-          ),
           'friends_count': snapshot.data['friends_count']?.round(),
           'following_count': snapshot.data['following_count']?.round(),
-          'following': safeGet(
-            () => snapshot.data['following'].map((s) => toRef(s)).toList(),
-          ),
           'bio': snapshot.data['bio'],
           'backsplash_pic': snapshot.data['backsplash_pic'],
           'backsplash_video': snapshot.data['backsplash_video'],
@@ -233,61 +197,11 @@ class UsersRecord extends FirestoreRecord {
           'artist_description': snapshot.data['artist_description'],
           'hometown': snapshot.data['hometown'],
           'current_location': snapshot.data['current_location'],
-          'posts': safeGet(
-            () => (snapshot.data['posts'] as Iterable)
-                .map(
-                  (data) => createPostStruct(
-                    postId: (data as Map<String, dynamic>)['post_id'],
-                    postTitle: (data as Map<String, dynamic>)['post_title'],
-                    postCaption: (data as Map<String, dynamic>)['post_caption'],
-                    postUser: safeGet(
-                      () => toRef((data as Map<String, dynamic>)['post_user']),
-                    ),
-                    timePosted: safeGet(
-                      () => DateTime.fromMillisecondsSinceEpoch(
-                          (data as Map<String, dynamic>)['time_posted']),
-                    ),
-                    likesCount:
-                        (data as Map<String, dynamic>)['likes_count']?.round(),
-                    commentsCount:
-                        (data as Map<String, dynamic>)['comments_count']
-                            ?.round(),
-                    sharesCount:
-                        (data as Map<String, dynamic>)['shares_count']?.round(),
-                    postVideo: (data as Map<String, dynamic>)['post_video'],
-                    postCoverPhoto:
-                        (data as Map<String, dynamic>)['post_cover_photo'],
-                    create: true,
-                    clearUnsetFields: false,
-                  ).toMap(),
-                )
-                .toList(),
-          ),
           'is_verified': snapshot.data['is_verified'],
-          'notifications': safeGet(
-            () => (snapshot.data['notifications'] as Iterable)
-                .map(
-                  (data) => createNotificationStruct(
-                    notificationType:
-                        (data as Map<String, dynamic>)['notification_type'],
-                    notificationTime: safeGet(
-                      () => DateTime.fromMillisecondsSinceEpoch(
-                          (data as Map<String, dynamic>)['notification_time']),
-                    ),
-                    notificationUser: safeGet(
-                      () => toRef(
-                          (data as Map<String, dynamic>)['notification_user']),
-                    ),
-                    notificationBody:
-                        (data as Map<String, dynamic>)['notification_body'],
-                    create: true,
-                    clearUnsetFields: false,
-                  ).toMap(),
-                )
+          'requested_friends': safeGet(
+            () => snapshot.data['requested_friends']
+                .map((s) => toRef(s))
                 .toList(),
-          ),
-          'friends': safeGet(
-            () => snapshot.data['friends'].map((s) => toRef(s)).toList(),
           ),
         },
         UsersRecord.collection.doc(snapshot.objectID),
@@ -388,10 +302,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         listEquality.equals(e1?.favoriteGenres, e2?.favoriteGenres) &&
         e1?.userName == e2?.userName &&
         e1?.fanCount == e2?.fanCount &&
-        listEquality.equals(e1?.fans, e2?.fans) &&
         e1?.friendsCount == e2?.friendsCount &&
         e1?.followingCount == e2?.followingCount &&
-        listEquality.equals(e1?.following, e2?.following) &&
         e1?.bio == e2?.bio &&
         e1?.backsplashPic == e2?.backsplashPic &&
         e1?.backsplashVideo == e2?.backsplashVideo &&
@@ -399,10 +311,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.artistDescription == e2?.artistDescription &&
         e1?.hometown == e2?.hometown &&
         e1?.currentLocation == e2?.currentLocation &&
-        listEquality.equals(e1?.posts, e2?.posts) &&
         e1?.isVerified == e2?.isVerified &&
-        listEquality.equals(e1?.notifications, e2?.notifications) &&
-        listEquality.equals(e1?.friends, e2?.friends);
+        listEquality.equals(e1?.requestedFriends, e2?.requestedFriends);
   }
 
   @override
@@ -417,10 +327,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.favoriteGenres,
         e?.userName,
         e?.fanCount,
-        e?.fans,
         e?.friendsCount,
         e?.followingCount,
-        e?.following,
         e?.bio,
         e?.backsplashPic,
         e?.backsplashVideo,
@@ -428,10 +336,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.artistDescription,
         e?.hometown,
         e?.currentLocation,
-        e?.posts,
         e?.isVerified,
-        e?.notifications,
-        e?.friends
+        e?.requestedFriends
       ]);
 
   @override

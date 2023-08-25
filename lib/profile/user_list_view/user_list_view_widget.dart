@@ -5,9 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'user_list_view_model.dart';
@@ -40,50 +38,6 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UserListViewModel());
-
-    // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('USER_LIST_VIEW_UserListView_ON_INIT_STAT');
-      if ((widget.queryType == 'Friends') || (widget.queryType == 'Mutuals')) {
-        logFirebaseEvent('UserListView_firestore_query');
-        _model.friendsList = await queryFriendsRecordOnce(
-          parent: widget.userAccount,
-        );
-        logFirebaseEvent('UserListView_update_widget_state');
-        _model.listToShow = _model.friendsList!
-            .map((e) => e.friendRef)
-            .withoutNulls
-            .toList()
-            .toList()
-            .cast<DocumentReference>();
-      } else {
-        if (widget.queryType == 'Fans') {
-          logFirebaseEvent('UserListView_firestore_query');
-          _model.fansList = await queryFansRecordOnce(
-            parent: widget.userAccount,
-          );
-          logFirebaseEvent('UserListView_update_widget_state');
-          _model.listToShow = _model.fansList!
-              .map((e) => e.fanRef)
-              .withoutNulls
-              .toList()
-              .toList()
-              .cast<DocumentReference>();
-        } else {
-          logFirebaseEvent('UserListView_firestore_query');
-          _model.followingList = await queryFollowingRecordOnce(
-            parent: widget.userAccount,
-          );
-          logFirebaseEvent('UserListView_update_widget_state');
-          _model.listToShow = _model.followingList!
-              .map((e) => e.followingRef)
-              .withoutNulls
-              .toList()
-              .toList()
-              .cast<DocumentReference>();
-        }
-      }
-    });
   }
 
   @override
@@ -97,19 +51,41 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Builder(
-      builder: (context) {
-        final usersQuery = _model.listToShow.toList();
+    return StreamBuilder<List<RelationshipsRecord>>(
+      stream: queryRelationshipsRecord(
+        parent: widget.userAccount,
+        queryBuilder: (relationshipsRecord) => relationshipsRecord
+            .where('relationship_type', isEqualTo: widget.queryType),
+      ),
+      builder: (context, snapshot) {
+        // Customize what your widget looks like when it's loading.
+        if (!snapshot.hasData) {
+          return Center(
+            child: SizedBox(
+              width: 50.0,
+              height: 50.0,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  FlutterFlowTheme.of(context).primary,
+                ),
+              ),
+            ),
+          );
+        }
+        List<RelationshipsRecord> columnRelationshipsRecordList =
+            snapshot.data!;
         return SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: List.generate(usersQuery.length, (usersQueryIndex) {
-              final usersQueryItem = usersQuery[usersQueryIndex];
-              return StreamBuilder<UsersRecord>(
-                stream:
-                    UsersRecord.getDocument(_model.listToShow[usersQueryIndex]),
+            children: List.generate(columnRelationshipsRecordList.length,
+                (columnIndex) {
+              final columnRelationshipsRecord =
+                  columnRelationshipsRecordList[columnIndex];
+              return FutureBuilder<UsersRecord>(
+                future: UsersRecord.getDocumentOnce(
+                    columnRelationshipsRecord.relationshipRef!),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
@@ -161,6 +137,18 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                                     'pageAccountType': serializeParam(
                                       containerUsersRecord.accountType,
                                       ParamType.String,
+                                    ),
+                                    'followingCount': serializeParam(
+                                      containerUsersRecord.followingCount,
+                                      ParamType.int,
+                                    ),
+                                    'fanCount': serializeParam(
+                                      containerUsersRecord.fanCount,
+                                      ParamType.int,
+                                    ),
+                                    'friendCount': serializeParam(
+                                      containerUsersRecord.friendsCount,
+                                      ParamType.int,
                                     ),
                                   }.withoutNulls,
                                   extra: <String, dynamic>{

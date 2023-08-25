@@ -347,142 +347,116 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if (((currentUserDocument?.friends?.toList() ?? [])
-                                      .contains(
-                                          otherUserPFPUsersRecord.reference) ==
-                                  false) &&
-                              (valueOrDefault(
-                                      currentUserDocument?.accountType, '') ==
-                                  'fan'))
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 20.0, 0.0),
-                              child: AuthUserStreamWidget(
-                                builder: (context) => FFButtonWidget(
-                                  onPressed: () async {
-                                    logFirebaseEvent(
-                                        'OTHER_USER_P_F_P_FriendButton_ON_TAP');
-                                    logFirebaseEvent(
-                                        'FriendButton_action_block');
-                                    await action_blocks.notifyUser(
-                                      context,
-                                      userToNotify:
-                                          otherUserPFPUsersRecord.reference,
-                                      notificationType: 'friend_request',
-                                      notificationBody:
-                                          'sent you a friend request',
-                                    );
-                                    logFirebaseEvent(
-                                        'FriendButton_show_snack_bar');
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Friend request sent',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
-                                        ),
-                                        duration: Duration(milliseconds: 4000),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondary,
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 20.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'OTHER_USER_P_F_P_FriendButton_ON_TAP');
+                                logFirebaseEvent('FriendButton_action_block');
+                                await action_blocks.notifyUser(
+                                  context,
+                                  userToNotify:
+                                      otherUserPFPUsersRecord.reference,
+                                  notificationType: 'friend_request',
+                                  notificationBody: 'sent you a friend request',
+                                  senderRef: currentUserReference,
+                                );
+                                logFirebaseEvent('FriendButton_show_snack_bar');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Friend request sent',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
                                       ),
-                                    );
-                                  },
-                                  text: 'Friend',
-                                  icon: Icon(
-                                    Icons.person_add,
-                                    size: 15.0,
-                                  ),
-                                  options: FFButtonOptions(
-                                    width: 115.0,
-                                    height: 40.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily,
-                                          color: Colors.white,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmallFamily),
-                                        ),
-                                    elevation: 3.0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(16.0),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
                                   ),
+                                );
+                              },
+                              text: 'Friend',
+                              icon: Icon(
+                                Icons.person_add,
+                                size: 15.0,
+                              ),
+                              options: FFButtonOptions(
+                                width: 115.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).alternate,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .titleSmallFamily,
+                                      color: Colors.white,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily),
+                                    ),
+                                elevation: 3.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
                                 ),
+                                borderRadius: BorderRadius.circular(16.0),
                               ),
                             ),
-                          if (((currentUserDocument?.friends?.toList() ?? [])
-                                      .contains(
-                                          otherUserPFPUsersRecord.reference) ==
-                                  true) &&
-                              (valueOrDefault(
-                                      currentUserDocument?.accountType, '') ==
-                                  'fan'))
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 20.0, 0.0),
-                              child: AuthUserStreamWidget(
-                                builder: (context) => FFButtonWidget(
-                                  onPressed: () async {
-                                    logFirebaseEvent(
-                                        'OTHER_USER_P_F_P_UnfriendButton_ON_TAP');
-                                    logFirebaseEvent(
-                                        'UnfriendButton_action_block');
-                                    await action_blocks.unfriend(
-                                      context,
-                                      userToUnfriend:
-                                          otherUserPFPUsersRecord.reference,
-                                    );
-                                    setState(() {});
-                                  },
-                                  text: 'Unfriend',
-                                  options: FFButtonOptions(
-                                    width: 115.0,
-                                    height: 40.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: Color(0x006542DC),
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          useGoogleFonts: GoogleFonts.asMap()
-                                              .containsKey(
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmallFamily),
-                                        ),
-                                    elevation: 3.0,
-                                    borderSide: BorderSide(
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 20.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'OTHER_USER_P_F_P_UnfriendButton_ON_TAP');
+                                logFirebaseEvent('UnfriendButton_action_block');
+                                await action_blocks.unfriend(
+                                  context,
+                                  userToUnfriend:
+                                      otherUserPFPUsersRecord.reference,
+                                );
+                                setState(() {});
+                              },
+                              text: 'Unfriend',
+                              options: FFButtonOptions(
+                                width: 115.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: Color(0x006542DC),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .titleSmallFamily,
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
-                                      width: 4.0,
+                                      useGoogleFonts: GoogleFonts.asMap()
+                                          .containsKey(
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmallFamily),
                                     ),
-                                    borderRadius: BorderRadius.circular(16.0),
-                                  ),
+                                elevation: 3.0,
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  width: 4.0,
                                 ),
+                                borderRadius: BorderRadius.circular(16.0),
                               ),
                             ),
+                          ),
                         ],
                       ),
                     ),
@@ -501,6 +475,8 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                           label1: _model.label1,
                           count2: _model.count2,
                           label2: _model.label2,
+                          otherUserAccountType:
+                              otherUserPFPUsersRecord.accountType,
                         ),
                       ),
                     ),

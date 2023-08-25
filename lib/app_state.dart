@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'flutter_flow/request_manager.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,6 +44,22 @@ class FFAppState extends ChangeNotifier {
   set CurrentPage(String _value) {
     _CurrentPage = _value;
   }
+
+  final _notificationsQueryManager =
+      StreamRequestManager<List<NotificationsRecord>>();
+  Stream<List<NotificationsRecord>> notificationsQuery({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Stream<List<NotificationsRecord>> Function() requestFn,
+  }) =>
+      _notificationsQueryManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearNotificationsQueryCache() => _notificationsQueryManager.clear();
+  void clearNotificationsQueryCacheKey(String? uniqueKey) =>
+      _notificationsQueryManager.clearRequest(uniqueKey);
 }
 
 LatLng? _latLngFromString(String? val) {

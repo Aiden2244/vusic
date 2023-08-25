@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:from_css_color/from_css_color.dart';
-import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -43,6 +41,8 @@ class NotificationsRecord extends FirestoreRecord {
   String get notificationText => _notificationText ?? '';
   bool hasNotificationText() => _notificationText != null;
 
+  DocumentReference get parentReference => reference.parent.parent!;
+
   void _initializeFields() {
     _recipientRef = snapshotData['recipient_ref'] as DocumentReference?;
     _senderRef = snapshotData['sender_ref'] as DocumentReference?;
@@ -52,8 +52,13 @@ class NotificationsRecord extends FirestoreRecord {
     _notificationText = snapshotData['notification_text'] as String?;
   }
 
-  static CollectionReference get collection =>
-      FirebaseFirestore.instance.collection('notifications');
+  static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
+      parent != null
+          ? parent.collection('notifications')
+          : FirebaseFirestore.instance.collectionGroup('notifications');
+
+  static DocumentReference createDoc(DocumentReference parent) =>
+      parent.collection('notifications').doc();
 
   static Stream<NotificationsRecord> getDocument(DocumentReference ref) =>
       ref.snapshots().map((s) => NotificationsRecord.fromSnapshot(s));
@@ -72,43 +77,6 @@ class NotificationsRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       NotificationsRecord._(reference, mapFromFirestore(data));
-
-  static NotificationsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
-      NotificationsRecord.getDocumentFromData(
-        {
-          'recipient_ref': safeGet(
-            () => toRef(snapshot.data['recipient_ref']),
-          ),
-          'sender_ref': safeGet(
-            () => toRef(snapshot.data['sender_ref']),
-          ),
-          'nofitication_type': snapshot.data['nofitication_type'],
-          'notification_created_time': safeGet(
-            () => DateTime.fromMillisecondsSinceEpoch(
-                snapshot.data['notification_created_time']),
-          ),
-          'notification_text': snapshot.data['notification_text'],
-        },
-        NotificationsRecord.collection.doc(snapshot.objectID),
-      );
-
-  static Future<List<NotificationsRecord>> search({
-    String? term,
-    FutureOr<LatLng>? location,
-    int? maxResults,
-    double? searchRadiusMeters,
-    bool useCache = false,
-  }) =>
-      FFAlgoliaManager.instance
-          .algoliaQuery(
-            index: 'notifications',
-            term: term,
-            maxResults: maxResults,
-            location: location,
-            searchRadiusMeters: searchRadiusMeters,
-            useCache: useCache,
-          )
-          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>

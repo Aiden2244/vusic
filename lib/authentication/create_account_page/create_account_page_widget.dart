@@ -372,7 +372,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                         backgroundColor: FlutterFlowTheme.of(context).error,
                       ),
                     );
-                    logFirebaseEvent('Button_clear_text_fields');
+                    logFirebaseEvent('Button_clear_text_fields_pin_codes');
                     setState(() {
                       _model.passFieldController?.clear();
                       _model.confPassFieldController?.clear();

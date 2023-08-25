@@ -446,15 +446,19 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
-                  child: wrapWithModel(
-                    model: _model.profileStatsBarModel,
-                    updateCallback: () => setState(() {}),
-                    child: ProfileStatsBarWidget(
-                      userRef: currentUserReference!,
-                      count1: _model.count1,
-                      label1: _model.label1,
-                      count2: _model.count2,
-                      label2: _model.label2,
+                  child: AuthUserStreamWidget(
+                    builder: (context) => wrapWithModel(
+                      model: _model.profileStatsBarModel,
+                      updateCallback: () => setState(() {}),
+                      child: ProfileStatsBarWidget(
+                        userRef: currentUserReference!,
+                        count1: _model.count1,
+                        label1: _model.label1,
+                        count2: _model.count2,
+                        label2: _model.label2,
+                        otherUserAccountType: valueOrDefault(
+                            currentUserDocument?.accountType, ''),
+                      ),
                     ),
                   ),
                 ),
