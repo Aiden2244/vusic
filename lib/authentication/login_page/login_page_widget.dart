@@ -118,7 +118,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       ],
                     ),
                   ),
-                  Spacer(),
                   Form(
                     key: _model.formKey,
                     autovalidateMode: AutovalidateMode.disabled,
@@ -132,6 +131,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             width: MediaQuery.sizeOf(context).width * 0.7,
                             child: TextFormField(
                               controller: _model.emailFieldController,
+                              autofocus: true,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Email',
@@ -206,6 +206,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             width: MediaQuery.sizeOf(context).width * 0.7,
                             child: TextFormField(
                               controller: _model.passFieldController,
+                              autofocus: true,
                               obscureText: !_model.passFieldVisibility,
                               decoration: InputDecoration(
                                 labelText: 'Password',

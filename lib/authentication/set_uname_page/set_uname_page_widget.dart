@@ -146,7 +146,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Label here...',
+                            labelText: 'Full Name',
                             labelStyle:
                                 FlutterFlowTheme.of(context).labelMedium,
                             hintText: 'Full Name',
