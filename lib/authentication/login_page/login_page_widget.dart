@@ -192,8 +192,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             FlutterFlowTheme.of(context)
                                                 .bodyMediumFamily),
                                   ),
-                              cursorColor: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
+                              cursorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
                               validator: _model.emailFieldControllerValidator
                                   .asValidator(context),
                             ),
