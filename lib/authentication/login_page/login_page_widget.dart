@@ -84,7 +84,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 ),
               ),
               Column(
-                mainAxisSize: MainAxisSize.max,
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Spacer(),
