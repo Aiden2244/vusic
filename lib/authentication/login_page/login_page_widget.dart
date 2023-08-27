@@ -421,6 +421,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     ),
                   ),
                   Spacer(),
+                  Divider(
+                    height: 20.0,
+                    thickness: 1.0,
+                    color: Color(0x006542DC),
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
