@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -232,7 +233,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.9, 0.0),
+                            alignment: AlignmentDirectional(0.90, 0.00),
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: FlutterFlowTheme.of(context).secondaryText,
@@ -284,7 +285,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.9, 0.0),
+                            alignment: AlignmentDirectional(0.90, 0.00),
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: FlutterFlowTheme.of(context).secondaryText,
@@ -336,7 +337,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.9, 0.0),
+                            alignment: AlignmentDirectional(0.90, 0.00),
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: FlutterFlowTheme.of(context).secondaryText,
@@ -395,7 +396,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.9, 0.0),
+                            alignment: AlignmentDirectional(0.90, 0.00),
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: FlutterFlowTheme.of(context).secondaryText,
@@ -447,7 +448,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.9, 0.0),
+                            alignment: AlignmentDirectional(0.90, 0.00),
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: FlutterFlowTheme.of(context).secondaryText,

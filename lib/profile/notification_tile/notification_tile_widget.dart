@@ -159,7 +159,7 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: AlignmentDirectional(-1.00, 0.00),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -206,7 +206,7 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                           ),
                           Expanded(
                             child: Align(
-                              alignment: AlignmentDirectional(-1.0, -1.0),
+                              alignment: AlignmentDirectional(-1.00, -1.00),
                               child: Text(
                                 valueOrDefault<String>(
                                   widget.notificationBody,
@@ -234,7 +234,7 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                 ),
                 if (widget.notificationType == 'friend_request')
                   Align(
-                    alignment: AlignmentDirectional(1.0, 0.0),
+                    alignment: AlignmentDirectional(1.00, 0.00),
                     child: Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 10.0, 0.0),

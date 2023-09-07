@@ -180,7 +180,7 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                                       '') ==
                                   'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4'))
                             Align(
-                              alignment: AlignmentDirectional(0.0, -1.0),
+                              alignment: AlignmentDirectional(0.00, -1.00),
                               child: AuthUserStreamWidget(
                                 builder: (context) => ClipRRect(
                                   borderRadius: BorderRadius.circular(0.0),
@@ -211,7 +211,7 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                                       '') !=
                                   'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4'))
                             Align(
-                              alignment: AlignmentDirectional(0.0, -1.0),
+                              alignment: AlignmentDirectional(0.00, -1.00),
                               child: AuthUserStreamWidget(
                                 builder: (context) => FlutterFlowVideoPlayer(
                                   path: valueOrDefault<String>(
@@ -231,7 +231,7 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                               ),
                             ),
                           Align(
-                            alignment: AlignmentDirectional(0.0, 2.47),
+                            alignment: AlignmentDirectional(0.00, 2.47),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -250,7 +250,7 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                                     ),
                                   ),
                                   child: Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    alignment: AlignmentDirectional(0.00, 0.00),
                                     child: Container(
                                       width: MediaQuery.sizeOf(context).width *
                                           0.35,
@@ -325,7 +325,7 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                       color: Color(0x006542DC),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: AlignmentDirectional(0.00, 0.00),
                       child: Text(
                         valueOrDefault<String>(
                           otherUserPFPUsersRecord.bio,

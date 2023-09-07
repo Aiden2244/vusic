@@ -303,7 +303,11 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                           _model.accountMenuValue ??= '',
                         ),
                         options: ['fan', 'musician'],
-                        optionLabels: ['Fan', 'Musician', ''],
+                        optionLabels: [
+                          'Discover new music',
+                          'Create/Promote music',
+                          ''
+                        ],
                         onChanged: (val) =>
                             setState(() => _model.accountMenuValue = val),
                         width: 300.0,
@@ -318,7 +322,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                                   FlutterFlowTheme.of(context)
                                       .bodyMediumFamily),
                             ),
-                        hintText: 'I am a...',
+                        hintText: 'I want to...',
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
                           color: FlutterFlowTheme.of(context).secondaryText,

@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/profile/profile_stats_bar/profile_stats_bar_widget.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:flutter/material.dart';
@@ -265,7 +266,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                   currentUserDocument?.backsplashVideo, '') ==
                               'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4'))
                         Align(
-                          alignment: AlignmentDirectional(0.0, -1.0),
+                          alignment: AlignmentDirectional(0.00, -1.00),
                           child: AuthUserStreamWidget(
                             builder: (context) => ClipRRect(
                               borderRadius: BorderRadius.circular(0.0),
@@ -294,7 +295,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                   currentUserDocument?.backsplashVideo, '') !=
                               'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4'))
                         Align(
-                          alignment: AlignmentDirectional(0.0, -1.0),
+                          alignment: AlignmentDirectional(0.00, -1.00),
                           child: AuthUserStreamWidget(
                             builder: (context) => FlutterFlowVideoPlayer(
                               path: valueOrDefault<String>(
@@ -314,7 +315,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                           ),
                         ),
                       Align(
-                        alignment: AlignmentDirectional(0.0, 2.47),
+                        alignment: AlignmentDirectional(0.00, 2.47),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -330,7 +331,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                 ),
                               ),
                               child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                                alignment: AlignmentDirectional(0.00, 0.00),
                                 child: AuthUserStreamWidget(
                                   builder: (context) => Container(
                                     width:
@@ -361,7 +362,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.00, 0.00),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         34.0, 0.0, 10.0, 0.0),
@@ -385,7 +386,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                         false) ==
                                     true)
                                   Align(
-                                    alignment: AlignmentDirectional(1.0, 0.0),
+                                    alignment: AlignmentDirectional(1.00, 0.00),
                                     child: AuthUserStreamWidget(
                                       builder: (context) => Icon(
                                         Icons.verified,
@@ -423,7 +424,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   color: Color(0x006542DC),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.00, 0.00),
                   child: AuthUserStreamWidget(
                     builder: (context) => Text(
                       valueOrDefault<String>(
