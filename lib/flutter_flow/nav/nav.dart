@@ -3,15 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
-import '../flutter_flow_theme.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 
-import '../../index.dart';
-import '../../main.dart';
-import '../lat_lng.dart';
-import '../place.dart';
+import '/index.dart';
+import '/main.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/lat_lng.dart';
+import '/flutter_flow/place.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -76,16 +78,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? SampleThemeTestWidget()
-          : LoginPageWidget(),
+      errorBuilder: (context, state) =>
+          appStateNotifier.loggedIn ? NavBarPage() : LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? SampleThemeTestWidget()
-              : LoginPageWidget(),
+          builder: (context, _) =>
+              appStateNotifier.loggedIn ? NavBarPage() : LoginPageWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -96,7 +96,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'SampleThemeTest',
           path: '/sampleThemeTest',
           requireAuth: true,
-          builder: (context, params) => SampleThemeTestWidget(),
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'SampleThemeTest')
+              : SampleThemeTestWidget(),
         ),
         FFRoute(
           name: 'CreateAccountPage',
@@ -113,8 +115,62 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'SetUnamePage',
           path: '/setUnamePage',
           builder: (context, params) => SetUnamePageWidget(),
+        ),
+        FFRoute(
+          name: 'ProfilePage',
+          path: '/profilePage',
+          requireAuth: true,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'ProfilePage')
+              : ProfilePageWidget(),
+        ),
+        FFRoute(
+          name: 'SearchPage',
+          path: '/searchPage',
+          requireAuth: true,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'SearchPage')
+              : SearchPageWidget(),
+        ),
+        FFRoute(
+          name: 'ProfileSettingsPage',
+          path: '/profileSettingsPage',
+          requireAuth: true,
+          builder: (context, params) => ProfileSettingsPageWidget(),
+        ),
+        FFRoute(
+          name: 'NotificationsPage',
+          path: '/notificationsPage',
+          requireAuth: true,
+          builder: (context, params) => NotificationsPageWidget(),
+        ),
+        FFRoute(
+          name: 'UserListPage',
+          path: '/userListPage',
+          requireAuth: true,
+          builder: (context, params) => UserListPageWidget(
+            titleText: params.getParam('titleText', ParamType.String),
+            account: params.getParam(
+                'account', ParamType.DocumentReference, false, ['users']),
+            queryType: params.getParam('queryType', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'OtherUserPFP',
+          path: '/otherUserPFP',
+          requireAuth: true,
+          builder: (context, params) => OtherUserPFPWidget(
+            pageUser: params.getParam(
+                'pageUser', ParamType.DocumentReference, false, ['users']),
+            pageAccountType:
+                params.getParam('pageAccountType', ParamType.String),
+            followingCount: params.getParam('followingCount', ParamType.int),
+            fanCount: params.getParam('fanCount', ParamType.int),
+            friendCount: params.getParam('friendCount', ParamType.int),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
+      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
