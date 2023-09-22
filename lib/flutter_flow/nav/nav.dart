@@ -160,17 +160,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/otherUserPFP',
           requireAuth: true,
           builder: (context, params) => OtherUserPFPWidget(
-            pageUser: params.getParam(
-                'pageUser', ParamType.DocumentReference, false, ['users']),
-            pageAccountType:
-                params.getParam('pageAccountType', ParamType.String),
-            followingCount: params.getParam('followingCount', ParamType.int),
-            fanCount: params.getParam('fanCount', ParamType.int),
-            friendCount: params.getParam('friendCount', ParamType.int),
+            pageUserRef: params.getParam(
+                'pageUserRef', ParamType.DocumentReference, false, ['users']),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {

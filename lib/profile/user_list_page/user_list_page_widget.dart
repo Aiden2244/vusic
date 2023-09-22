@@ -5,10 +5,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/profile/user_list_view/user_list_view_widget.dart';
-import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'user_list_page_model.dart';
@@ -42,12 +40,6 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'UserListPage'});
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('USER_LIST_UserListPage_ON_INIT_STATE');
-      logFirebaseEvent('UserListPage_action_block');
-      await action_blocks.updateCurrentPage(context);
-    });
   }
 
   @override
@@ -83,8 +75,23 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
               ),
               onPressed: () async {
                 logFirebaseEvent('USER_LIST_arrow_back_rounded_ICN_ON_TAP');
-                logFirebaseEvent('IconButton_navigate_back');
-                context.safePop();
+                if (widget.account == currentUserReference) {
+                  logFirebaseEvent('IconButton_navigate_to');
+
+                  context.pushNamed('ProfilePage');
+                } else {
+                  logFirebaseEvent('IconButton_navigate_to');
+
+                  context.pushNamed(
+                    'OtherUserPFP',
+                    queryParameters: {
+                      'pageUserRef': serializeParam(
+                        widget.account,
+                        ParamType.DocumentReference,
+                      ),
+                    }.withoutNulls,
+                  );
+                }
               },
             ),
           ),

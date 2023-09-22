@@ -3,10 +3,8 @@ import '/feed/user_search_result/user_search_result_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/actions/actions.dart' as action_blocks;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_page_model.dart';
@@ -30,13 +28,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
     _model = createModel(context, () => SearchPageModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'SearchPage'});
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('SEARCH_SearchPage_ON_INIT_STATE');
-      logFirebaseEvent('SearchPage_action_block');
-      await action_blocks.updateCurrentPage(context);
-    });
-
     _model.searchFieldController ??= TextEditingController();
   }
 
@@ -84,7 +75,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                       logFirebaseEvent(
                           'SEARCH_SearchField_ON_TEXTFIELD_CHANGE');
                       logFirebaseEvent('SearchField_algolia_search');
-                      setState(() => _model.algoliaSearchResults = null);
+                      safeSetState(() => _model.algoliaSearchResults = null);
                       await UsersRecord.search(
                         term: _model.searchFieldController.text,
                       )
@@ -169,15 +160,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                           return UserSearchResultWidget(
                             key: Key(
                                 'Keyg5e_${userSearchResultsIndex}_of_${userSearchResults.length}'),
-                            userImage: userSearchResultsItem.photoUrl,
-                            displayName: userSearchResultsItem.displayName,
-                            userName: userSearchResultsItem.userName,
-                            userAccountType: userSearchResultsItem.accountType,
-                            userRef: userSearchResultsItem.reference,
-                            followingCount:
-                                userSearchResultsItem.followingCount,
-                            fanCount: userSearchResultsItem.fanCount,
-                            friendsCount: userSearchResultsItem.friendsCount,
+                            userToDisplay: userSearchResultsItem,
                           );
                         },
                       );

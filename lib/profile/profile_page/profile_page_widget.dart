@@ -1,10 +1,11 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_video_player.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/profile/profile_stats_bar/profile_stats_bar_widget.dart';
-import '/actions/actions.dart' as action_blocks;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,27 +35,12 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('PROFILE_ProfilePage_ON_INIT_STATE');
-      logFirebaseEvent('ProfilePage_action_block');
-      await action_blocks.updateCurrentPage(context);
-      setState(() {});
-      if (valueOrDefault(currentUserDocument?.accountType, '') == 'fan') {
-        logFirebaseEvent('ProfilePage_update_widget_state');
-        setState(() {
-          _model.label2 = 'Friends';
-          _model.label1 = 'Following';
-          _model.count1 =
-              valueOrDefault(currentUserDocument?.followingCount, 0);
-          _model.count2 = valueOrDefault(currentUserDocument?.friendsCount, 0);
-        });
-      } else {
-        logFirebaseEvent('ProfilePage_update_widget_state');
-        setState(() {
-          _model.label2 = 'Mutuals';
-          _model.label1 = 'Fans';
-          _model.count1 = valueOrDefault(currentUserDocument?.fanCount, 0);
-          _model.count2 = valueOrDefault(currentUserDocument?.friendsCount, 0);
-        });
-      }
+      logFirebaseEvent('ProfilePage_firestore_query');
+      _model.authUserDoc = await queryUsersRecordOnce(
+        queryBuilder: (usersRecord) =>
+            usersRecord.where('uid', isEqualTo: currentUserUid),
+        singleRecord: true,
+      ).then((s) => s.firstOrNull);
     });
   }
 
@@ -255,65 +241,24 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   height: MediaQuery.sizeOf(context).height * 0.3,
                   child: Stack(
                     children: [
-                      if ((valueOrDefault(currentUserDocument?.backsplashVideo,
-                                      '') ==
-                                  null ||
-                              valueOrDefault(
-                                      currentUserDocument?.backsplashVideo,
-                                      '') ==
-                                  '') ||
-                          (valueOrDefault(
-                                  currentUserDocument?.backsplashVideo, '') ==
-                              'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4'))
-                        Align(
-                          alignment: AlignmentDirectional(0.00, -1.00),
-                          child: AuthUserStreamWidget(
-                            builder: (context) => ClipRRect(
-                              borderRadius: BorderRadius.circular(0.0),
-                              child: Image.network(
-                                valueOrDefault<String>(
-                                  valueOrDefault(
-                                      currentUserDocument?.backsplashPic, ''),
-                                  'https://images.unsplash.com/photo-1548502632-6b93092aad0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw5fHxtdXNpYyUyMHN0dWRpb3xlbnwwfHx8fDE2ODk2MjAxODF8MA&ixlib=rb-4.0.3&q=80&w=1080',
-                                ),
-                                width: MediaQuery.sizeOf(context).width * 1.0,
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.26,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      if ((valueOrDefault(currentUserDocument?.backsplashVideo,
-                                      '') !=
-                                  null &&
-                              valueOrDefault(
-                                      currentUserDocument?.backsplashVideo,
-                                      '') !=
-                                  '') ||
-                          (valueOrDefault(
-                                  currentUserDocument?.backsplashVideo, '') !=
-                              'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4'))
-                        Align(
-                          alignment: AlignmentDirectional(0.00, -1.00),
-                          child: AuthUserStreamWidget(
-                            builder: (context) => FlutterFlowVideoPlayer(
-                              path: valueOrDefault<String>(
+                      Align(
+                        alignment: AlignmentDirectional(0.00, -1.00),
+                        child: AuthUserStreamWidget(
+                          builder: (context) => ClipRRect(
+                            borderRadius: BorderRadius.circular(0.0),
+                            child: Image.network(
+                              valueOrDefault<String>(
                                 valueOrDefault(
-                                    currentUserDocument?.backsplashVideo, ''),
-                                'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                                    currentUserDocument?.backsplashPic, ''),
+                                'https://images.unsplash.com/photo-1548502632-6b93092aad0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw5fHxtdXNpYyUyMHN0dWRpb3xlbnwwfHx8fDE2ODk2MjAxODF8MA&ixlib=rb-4.0.3&q=80&w=1080',
                               ),
-                              videoType: VideoType.network,
                               width: MediaQuery.sizeOf(context).width * 1.0,
                               height: MediaQuery.sizeOf(context).height * 0.26,
-                              autoPlay: true,
-                              looping: true,
-                              showControls: false,
-                              allowFullScreen: false,
-                              allowPlaybackSpeedMenu: false,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
+                      ),
                       Align(
                         alignment: AlignmentDirectional(0.00, 2.47),
                         child: Column(
@@ -447,19 +392,11 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
-                  child: AuthUserStreamWidget(
-                    builder: (context) => wrapWithModel(
-                      model: _model.profileStatsBarModel,
-                      updateCallback: () => setState(() {}),
-                      child: ProfileStatsBarWidget(
-                        userRef: currentUserReference!,
-                        count1: _model.count1,
-                        label1: _model.label1,
-                        count2: _model.count2,
-                        label2: _model.label2,
-                        otherUserAccountType: valueOrDefault(
-                            currentUserDocument?.accountType, ''),
-                      ),
+                  child: wrapWithModel(
+                    model: _model.profileStatsBarModel,
+                    updateCallback: () => setState(() {}),
+                    child: ProfileStatsBarWidget(
+                      userToDisplayDataFor: _model.authUserDoc!,
                     ),
                   ),
                 ),

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:from_css_color/from_css_color.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -26,39 +28,61 @@ class NotificationsRecord extends FirestoreRecord {
   DocumentReference? get senderRef => _senderRef;
   bool hasSenderRef() => _senderRef != null;
 
-  // "nofitication_type" field.
-  String? _nofiticationType;
-  String get nofiticationType => _nofiticationType ?? '';
-  bool hasNofiticationType() => _nofiticationType != null;
+  // "type" field.
+  String? _type;
+  String get type => _type ?? '';
+  bool hasType() => _type != null;
 
-  // "notification_created_time" field.
-  DateTime? _notificationCreatedTime;
-  DateTime? get notificationCreatedTime => _notificationCreatedTime;
-  bool hasNotificationCreatedTime() => _notificationCreatedTime != null;
+  // "created_at" field.
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  bool hasCreatedAt() => _createdAt != null;
 
-  // "notification_text" field.
-  String? _notificationText;
-  String get notificationText => _notificationText ?? '';
-  bool hasNotificationText() => _notificationText != null;
+  // "is_read" field.
+  bool? _isRead;
+  bool get isRead => _isRead ?? false;
+  bool hasIsRead() => _isRead != null;
 
-  DocumentReference get parentReference => reference.parent.parent!;
+  // "notification_body" field.
+  String? _notificationBody;
+  String get notificationBody => _notificationBody ?? '';
+  bool hasNotificationBody() => _notificationBody != null;
+
+  // "post_ref" field.
+  DocumentReference? _postRef;
+  DocumentReference? get postRef => _postRef;
+  bool hasPostRef() => _postRef != null;
+
+  // "comment_ref" field.
+  DocumentReference? _commentRef;
+  DocumentReference? get commentRef => _commentRef;
+  bool hasCommentRef() => _commentRef != null;
+
+  // "sender_username" field.
+  String? _senderUsername;
+  String get senderUsername => _senderUsername ?? '';
+  bool hasSenderUsername() => _senderUsername != null;
+
+  // "sender_pfp" field.
+  String? _senderPfp;
+  String get senderPfp => _senderPfp ?? '';
+  bool hasSenderPfp() => _senderPfp != null;
 
   void _initializeFields() {
     _recipientRef = snapshotData['recipient_ref'] as DocumentReference?;
     _senderRef = snapshotData['sender_ref'] as DocumentReference?;
-    _nofiticationType = snapshotData['nofitication_type'] as String?;
-    _notificationCreatedTime =
-        snapshotData['notification_created_time'] as DateTime?;
-    _notificationText = snapshotData['notification_text'] as String?;
+    _type = snapshotData['type'] as String?;
+    _createdAt = snapshotData['created_at'] as DateTime?;
+    _isRead = snapshotData['is_read'] as bool?;
+    _notificationBody = snapshotData['notification_body'] as String?;
+    _postRef = snapshotData['post_ref'] as DocumentReference?;
+    _commentRef = snapshotData['comment_ref'] as DocumentReference?;
+    _senderUsername = snapshotData['sender_username'] as String?;
+    _senderPfp = snapshotData['sender_pfp'] as String?;
   }
 
-  static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
-      parent != null
-          ? parent.collection('notifications')
-          : FirebaseFirestore.instance.collectionGroup('notifications');
-
-  static DocumentReference createDoc(DocumentReference parent) =>
-      parent.collection('notifications').doc();
+  static CollectionReference get collection =>
+      FirebaseFirestore.instance.collection('notifications');
 
   static Stream<NotificationsRecord> getDocument(DocumentReference ref) =>
       ref.snapshots().map((s) => NotificationsRecord.fromSnapshot(s));
@@ -78,6 +102,52 @@ class NotificationsRecord extends FirestoreRecord {
   ) =>
       NotificationsRecord._(reference, mapFromFirestore(data));
 
+  static NotificationsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      NotificationsRecord.getDocumentFromData(
+        {
+          'recipient_ref': safeGet(
+            () => toRef(snapshot.data['recipient_ref']),
+          ),
+          'sender_ref': safeGet(
+            () => toRef(snapshot.data['sender_ref']),
+          ),
+          'type': snapshot.data['type'],
+          'created_at': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['created_at']),
+          ),
+          'is_read': snapshot.data['is_read'],
+          'notification_body': snapshot.data['notification_body'],
+          'post_ref': safeGet(
+            () => toRef(snapshot.data['post_ref']),
+          ),
+          'comment_ref': safeGet(
+            () => toRef(snapshot.data['comment_ref']),
+          ),
+          'sender_username': snapshot.data['sender_username'],
+          'sender_pfp': snapshot.data['sender_pfp'],
+        },
+        NotificationsRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<NotificationsRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'notifications',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
+
   @override
   String toString() =>
       'NotificationsRecord(reference: ${reference.path}, data: $snapshotData)';
@@ -94,17 +164,27 @@ class NotificationsRecord extends FirestoreRecord {
 Map<String, dynamic> createNotificationsRecordData({
   DocumentReference? recipientRef,
   DocumentReference? senderRef,
-  String? nofiticationType,
-  DateTime? notificationCreatedTime,
-  String? notificationText,
+  String? type,
+  DateTime? createdAt,
+  bool? isRead,
+  String? notificationBody,
+  DocumentReference? postRef,
+  DocumentReference? commentRef,
+  String? senderUsername,
+  String? senderPfp,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'recipient_ref': recipientRef,
       'sender_ref': senderRef,
-      'nofitication_type': nofiticationType,
-      'notification_created_time': notificationCreatedTime,
-      'notification_text': notificationText,
+      'type': type,
+      'created_at': createdAt,
+      'is_read': isRead,
+      'notification_body': notificationBody,
+      'post_ref': postRef,
+      'comment_ref': commentRef,
+      'sender_username': senderUsername,
+      'sender_pfp': senderPfp,
     }.withoutNulls,
   );
 
@@ -119,18 +199,28 @@ class NotificationsRecordDocumentEquality
   bool equals(NotificationsRecord? e1, NotificationsRecord? e2) {
     return e1?.recipientRef == e2?.recipientRef &&
         e1?.senderRef == e2?.senderRef &&
-        e1?.nofiticationType == e2?.nofiticationType &&
-        e1?.notificationCreatedTime == e2?.notificationCreatedTime &&
-        e1?.notificationText == e2?.notificationText;
+        e1?.type == e2?.type &&
+        e1?.createdAt == e2?.createdAt &&
+        e1?.isRead == e2?.isRead &&
+        e1?.notificationBody == e2?.notificationBody &&
+        e1?.postRef == e2?.postRef &&
+        e1?.commentRef == e2?.commentRef &&
+        e1?.senderUsername == e2?.senderUsername &&
+        e1?.senderPfp == e2?.senderPfp;
   }
 
   @override
   int hash(NotificationsRecord? e) => const ListEquality().hash([
         e?.recipientRef,
         e?.senderRef,
-        e?.nofiticationType,
-        e?.notificationCreatedTime,
-        e?.notificationText
+        e?.type,
+        e?.createdAt,
+        e?.isRead,
+        e?.notificationBody,
+        e?.postRef,
+        e?.commentRef,
+        e?.senderUsername,
+        e?.senderPfp
       ]);
 
   @override

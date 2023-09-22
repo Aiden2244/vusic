@@ -18,49 +18,111 @@ class PostsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "postedBy_ref" field.
-  DocumentReference? _postedByRef;
-  DocumentReference? get postedByRef => _postedByRef;
-  bool hasPostedByRef() => _postedByRef != null;
+  // "post_type" field.
+  String? _postType;
+  String get postType => _postType ?? '';
+  bool hasPostType() => _postType != null;
 
-  // "post_video" field.
-  String? _postVideo;
-  String get postVideo => _postVideo ?? '';
-  bool hasPostVideo() => _postVideo != null;
+  // "genre_tags" field.
+  List<String>? _genreTags;
+  List<String> get genreTags => _genreTags ?? const [];
+  bool hasGenreTags() => _genreTags != null;
 
-  // "post_photo" field.
-  String? _postPhoto;
-  String get postPhoto => _postPhoto ?? '';
-  bool hasPostPhoto() => _postPhoto != null;
+  // "spotify_link" field.
+  String? _spotifyLink;
+  String get spotifyLink => _spotifyLink ?? '';
+  bool hasSpotifyLink() => _spotifyLink != null;
 
-  // "post_audio" field.
-  String? _postAudio;
-  String get postAudio => _postAudio ?? '';
-  bool hasPostAudio() => _postAudio != null;
+  // "promotion_type" field.
+  String? _promotionType;
+  String get promotionType => _promotionType ?? '';
+  bool hasPromotionType() => _promotionType != null;
 
-  // "post_bodyText" field.
-  String? _postBodyText;
-  String get postBodyText => _postBodyText ?? '';
-  bool hasPostBodyText() => _postBodyText != null;
+  // "technical_ability_showcase" field.
+  bool? _technicalAbilityShowcase;
+  bool get technicalAbilityShowcase => _technicalAbilityShowcase ?? false;
+  bool hasTechnicalAbilityShowcase() => _technicalAbilityShowcase != null;
 
-  // "post_caption" field.
-  String? _postCaption;
-  String get postCaption => _postCaption ?? '';
-  bool hasPostCaption() => _postCaption != null;
+  // "live_show_promotion" field.
+  bool? _liveShowPromotion;
+  bool get liveShowPromotion => _liveShowPromotion ?? false;
+  bool hasLiveShowPromotion() => _liveShowPromotion != null;
 
-  // "parent_post" field.
-  DocumentReference? _parentPost;
-  DocumentReference? get parentPost => _parentPost;
-  bool hasParentPost() => _parentPost != null;
+  // "num_comments" field.
+  int? _numComments;
+  int get numComments => _numComments ?? 0;
+  bool hasNumComments() => _numComments != null;
+
+  // "num_upvotes" field.
+  int? _numUpvotes;
+  int get numUpvotes => _numUpvotes ?? 0;
+  bool hasNumUpvotes() => _numUpvotes != null;
+
+  // "num_downvotes" field.
+  int? _numDownvotes;
+  int get numDownvotes => _numDownvotes ?? 0;
+  bool hasNumDownvotes() => _numDownvotes != null;
+
+  // "cover_photo_URL" field.
+  String? _coverPhotoURL;
+  String get coverPhotoURL => _coverPhotoURL ?? '';
+  bool hasCoverPhotoURL() => _coverPhotoURL != null;
+
+  // "post_video_URL" field.
+  String? _postVideoURL;
+  String get postVideoURL => _postVideoURL ?? '';
+  bool hasPostVideoURL() => _postVideoURL != null;
+
+  // "post_photo_URL" field.
+  String? _postPhotoURL;
+  String get postPhotoURL => _postPhotoURL ?? '';
+  bool hasPostPhotoURL() => _postPhotoURL != null;
+
+  // "author_ref" field.
+  DocumentReference? _authorRef;
+  DocumentReference? get authorRef => _authorRef;
+  bool hasAuthorRef() => _authorRef != null;
+
+  // "num_shares" field.
+  int? _numShares;
+  int get numShares => _numShares ?? 0;
+  bool hasNumShares() => _numShares != null;
+
+  // "author_spotify_client_ID" field.
+  String? _authorSpotifyClientID;
+  String get authorSpotifyClientID => _authorSpotifyClientID ?? '';
+  bool hasAuthorSpotifyClientID() => _authorSpotifyClientID != null;
+
+  // "time_created" field.
+  DateTime? _timeCreated;
+  DateTime? get timeCreated => _timeCreated;
+  bool hasTimeCreated() => _timeCreated != null;
+
+  // "hashtags" field.
+  List<String>? _hashtags;
+  List<String> get hashtags => _hashtags ?? const [];
+  bool hasHashtags() => _hashtags != null;
 
   void _initializeFields() {
-    _postedByRef = snapshotData['postedBy_ref'] as DocumentReference?;
-    _postVideo = snapshotData['post_video'] as String?;
-    _postPhoto = snapshotData['post_photo'] as String?;
-    _postAudio = snapshotData['post_audio'] as String?;
-    _postBodyText = snapshotData['post_bodyText'] as String?;
-    _postCaption = snapshotData['post_caption'] as String?;
-    _parentPost = snapshotData['parent_post'] as DocumentReference?;
+    _postType = snapshotData['post_type'] as String?;
+    _genreTags = getDataList(snapshotData['genre_tags']);
+    _spotifyLink = snapshotData['spotify_link'] as String?;
+    _promotionType = snapshotData['promotion_type'] as String?;
+    _technicalAbilityShowcase =
+        snapshotData['technical_ability_showcase'] as bool?;
+    _liveShowPromotion = snapshotData['live_show_promotion'] as bool?;
+    _numComments = castToType<int>(snapshotData['num_comments']);
+    _numUpvotes = castToType<int>(snapshotData['num_upvotes']);
+    _numDownvotes = castToType<int>(snapshotData['num_downvotes']);
+    _coverPhotoURL = snapshotData['cover_photo_URL'] as String?;
+    _postVideoURL = snapshotData['post_video_URL'] as String?;
+    _postPhotoURL = snapshotData['post_photo_URL'] as String?;
+    _authorRef = snapshotData['author_ref'] as DocumentReference?;
+    _numShares = castToType<int>(snapshotData['num_shares']);
+    _authorSpotifyClientID =
+        snapshotData['author_spotify_client_ID'] as String?;
+    _timeCreated = snapshotData['time_created'] as DateTime?;
+    _hashtags = getDataList(snapshotData['hashtags']);
   }
 
   static CollectionReference get collection =>
@@ -86,16 +148,32 @@ class PostsRecord extends FirestoreRecord {
   static PostsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
       PostsRecord.getDocumentFromData(
         {
-          'postedBy_ref': safeGet(
-            () => toRef(snapshot.data['postedBy_ref']),
+          'post_type': snapshot.data['post_type'],
+          'genre_tags': safeGet(
+            () => snapshot.data['genre_tags'].toList(),
           ),
-          'post_video': snapshot.data['post_video'],
-          'post_photo': snapshot.data['post_photo'],
-          'post_audio': snapshot.data['post_audio'],
-          'post_bodyText': snapshot.data['post_bodyText'],
-          'post_caption': snapshot.data['post_caption'],
-          'parent_post': safeGet(
-            () => toRef(snapshot.data['parent_post']),
+          'spotify_link': snapshot.data['spotify_link'],
+          'promotion_type': snapshot.data['promotion_type'],
+          'technical_ability_showcase':
+              snapshot.data['technical_ability_showcase'],
+          'live_show_promotion': snapshot.data['live_show_promotion'],
+          'num_comments': snapshot.data['num_comments']?.round(),
+          'num_upvotes': snapshot.data['num_upvotes']?.round(),
+          'num_downvotes': snapshot.data['num_downvotes']?.round(),
+          'cover_photo_URL': snapshot.data['cover_photo_URL'],
+          'post_video_URL': snapshot.data['post_video_URL'],
+          'post_photo_URL': snapshot.data['post_photo_URL'],
+          'author_ref': safeGet(
+            () => toRef(snapshot.data['author_ref']),
+          ),
+          'num_shares': snapshot.data['num_shares']?.round(),
+          'author_spotify_client_ID': snapshot.data['author_spotify_client_ID'],
+          'time_created': safeGet(
+            () => DateTime.fromMillisecondsSinceEpoch(
+                snapshot.data['time_created']),
+          ),
+          'hashtags': safeGet(
+            () => snapshot.data['hashtags'].toList(),
           ),
         },
         PostsRecord.collection.doc(snapshot.objectID),
@@ -133,23 +211,39 @@ class PostsRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createPostsRecordData({
-  DocumentReference? postedByRef,
-  String? postVideo,
-  String? postPhoto,
-  String? postAudio,
-  String? postBodyText,
-  String? postCaption,
-  DocumentReference? parentPost,
+  String? postType,
+  String? spotifyLink,
+  String? promotionType,
+  bool? technicalAbilityShowcase,
+  bool? liveShowPromotion,
+  int? numComments,
+  int? numUpvotes,
+  int? numDownvotes,
+  String? coverPhotoURL,
+  String? postVideoURL,
+  String? postPhotoURL,
+  DocumentReference? authorRef,
+  int? numShares,
+  String? authorSpotifyClientID,
+  DateTime? timeCreated,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'postedBy_ref': postedByRef,
-      'post_video': postVideo,
-      'post_photo': postPhoto,
-      'post_audio': postAudio,
-      'post_bodyText': postBodyText,
-      'post_caption': postCaption,
-      'parent_post': parentPost,
+      'post_type': postType,
+      'spotify_link': spotifyLink,
+      'promotion_type': promotionType,
+      'technical_ability_showcase': technicalAbilityShowcase,
+      'live_show_promotion': liveShowPromotion,
+      'num_comments': numComments,
+      'num_upvotes': numUpvotes,
+      'num_downvotes': numDownvotes,
+      'cover_photo_URL': coverPhotoURL,
+      'post_video_URL': postVideoURL,
+      'post_photo_URL': postPhotoURL,
+      'author_ref': authorRef,
+      'num_shares': numShares,
+      'author_spotify_client_ID': authorSpotifyClientID,
+      'time_created': timeCreated,
     }.withoutNulls,
   );
 
@@ -161,24 +255,45 @@ class PostsRecordDocumentEquality implements Equality<PostsRecord> {
 
   @override
   bool equals(PostsRecord? e1, PostsRecord? e2) {
-    return e1?.postedByRef == e2?.postedByRef &&
-        e1?.postVideo == e2?.postVideo &&
-        e1?.postPhoto == e2?.postPhoto &&
-        e1?.postAudio == e2?.postAudio &&
-        e1?.postBodyText == e2?.postBodyText &&
-        e1?.postCaption == e2?.postCaption &&
-        e1?.parentPost == e2?.parentPost;
+    const listEquality = ListEquality();
+    return e1?.postType == e2?.postType &&
+        listEquality.equals(e1?.genreTags, e2?.genreTags) &&
+        e1?.spotifyLink == e2?.spotifyLink &&
+        e1?.promotionType == e2?.promotionType &&
+        e1?.technicalAbilityShowcase == e2?.technicalAbilityShowcase &&
+        e1?.liveShowPromotion == e2?.liveShowPromotion &&
+        e1?.numComments == e2?.numComments &&
+        e1?.numUpvotes == e2?.numUpvotes &&
+        e1?.numDownvotes == e2?.numDownvotes &&
+        e1?.coverPhotoURL == e2?.coverPhotoURL &&
+        e1?.postVideoURL == e2?.postVideoURL &&
+        e1?.postPhotoURL == e2?.postPhotoURL &&
+        e1?.authorRef == e2?.authorRef &&
+        e1?.numShares == e2?.numShares &&
+        e1?.authorSpotifyClientID == e2?.authorSpotifyClientID &&
+        e1?.timeCreated == e2?.timeCreated &&
+        listEquality.equals(e1?.hashtags, e2?.hashtags);
   }
 
   @override
   int hash(PostsRecord? e) => const ListEquality().hash([
-        e?.postedByRef,
-        e?.postVideo,
-        e?.postPhoto,
-        e?.postAudio,
-        e?.postBodyText,
-        e?.postCaption,
-        e?.parentPost
+        e?.postType,
+        e?.genreTags,
+        e?.spotifyLink,
+        e?.promotionType,
+        e?.technicalAbilityShowcase,
+        e?.liveShowPromotion,
+        e?.numComments,
+        e?.numUpvotes,
+        e?.numDownvotes,
+        e?.coverPhotoURL,
+        e?.postVideoURL,
+        e?.postPhotoURL,
+        e?.authorRef,
+        e?.numShares,
+        e?.authorSpotifyClientID,
+        e?.timeCreated,
+        e?.hashtags
       ]);
 
   @override
