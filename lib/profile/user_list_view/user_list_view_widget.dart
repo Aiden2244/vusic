@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,7 +43,47 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('USER_LIST_VIEW_UserListView_ON_INIT_STAT');
-      logFirebaseEvent('UserListView_not_defined');
+      if (widget.queryType == 'Following') {
+        logFirebaseEvent('UserListView_firestore_query');
+        _model.followingQuery = await queryFollowsRecordOnce(
+          queryBuilder: (followsRecord) =>
+              followsRecord.where('followingID', isEqualTo: widget.userAccount),
+          limit: 15,
+        );
+        logFirebaseEvent('UserListView_update_widget_state');
+        _model.followsDocRefList =
+            _model.followingQuery!.toList().cast<FollowsRecord>();
+        while (_model.usersToDisplay.length < _model.followsDocRefList.length) {
+          logFirebaseEvent('UserListView_action_block');
+          _model.followingID = await _model.extractUserFromFollowsDoc(
+            context,
+            followsDoc: _model.followsDocRefList[_model.followDocCount],
+            returnFollowerID: false,
+          );
+          logFirebaseEvent('UserListView_update_widget_state');
+          _model.addToUsersToDisplay(_model.followingID!);
+        }
+      } else {
+        logFirebaseEvent('UserListView_firestore_query');
+        _model.followerQuery = await queryFollowsRecordOnce(
+          queryBuilder: (followsRecord) =>
+              followsRecord.where('followerID', isEqualTo: widget.userAccount),
+          limit: 15,
+        );
+        logFirebaseEvent('UserListView_update_widget_state');
+        _model.followsDocRefList =
+            _model.followerQuery!.toList().cast<FollowsRecord>();
+        while (_model.usersToDisplay.length < _model.followsDocRefList.length) {
+          logFirebaseEvent('UserListView_action_block');
+          _model.followerID = await _model.extractUserFromFollowsDoc(
+            context,
+            followsDoc: _model.followsDocRefList[_model.followDocCount],
+            returnFollowerID: true,
+          );
+          logFirebaseEvent('UserListView_update_widget_state');
+          _model.addToUsersToDisplay(_model.followerID!);
+        }
+      }
     });
   }
 

@@ -149,7 +149,7 @@ Future updateFollowerCount(
   }
 }
 
-Future<bool> isFollowing(
+Future<bool?> isFollowing(
   BuildContext context, {
   required DocumentReference? followingUser,
   required DocumentReference? followedUser,
@@ -163,7 +163,7 @@ Future<bool> isFollowing(
         .where('followingID', isEqualTo: followingUser),
     singleRecord: true,
   ).then((s) => s.firstOrNull);
-  return (followingDoc != null) == true;
+  return followingDoc != null;
 }
 
 Future unfollowUser(
@@ -206,7 +206,7 @@ Future unfollowUser(
   );
 }
 
-Future<DocumentReference> getFollowsDocRef(
+Future<DocumentReference?> getFollowsDocRef(
   BuildContext context, {
   required DocumentReference? followedUser,
   required DocumentReference? followingUser,
@@ -284,7 +284,7 @@ Future removeFollower(
   );
 }
 
-Future<UsersRecord> getUserFromReference(
+Future<UsersRecord?> getUserFromReference(
   BuildContext context, {
   required DocumentReference? userToGet,
 }) async {
