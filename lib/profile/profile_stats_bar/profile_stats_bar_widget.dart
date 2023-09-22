@@ -243,7 +243,9 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                 ),
-              if (!_model.userFollowsThisAccount!)
+              if (!_model.userFollowsThisAccount! &&
+                  (widget.userToDisplayDataFor?.reference !=
+                      currentUserReference))
                 FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('PROFILE_STATS_BAR_FollowButton_ON_TAP');
@@ -281,7 +283,9 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                 ),
-              if (_model.userFollowsThisAccount ?? true)
+              if (_model.userFollowsThisAccount! &&
+                  (widget.userToDisplayDataFor?.reference !=
+                      currentUserReference))
                 FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('PROFILE_STATS_BAR_UnfollowButton_ON_TAP');
