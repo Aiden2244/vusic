@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,17 +34,6 @@ class UserListViewModel extends FlutterFlowModel {
   void updateUsersToDisplayAtIndex(
           int index, Function(DocumentReference) updateFn) =>
       usersToDisplay[index] = updateFn(usersToDisplay[index]);
-
-  ///  State fields for stateful widgets in this component.
-
-  // Stores action output result for [Firestore Query - Query a collection] action in UserListView widget.
-  List<FollowsRecord>? followingQuery;
-  // Stores action output result for [Action Block - ExtractUserFromFollowsDoc] action in UserListView widget.
-  DocumentReference? followingID;
-  // Stores action output result for [Firestore Query - Query a collection] action in UserListView widget.
-  List<FollowsRecord>? followerQuery;
-  // Stores action output result for [Action Block - ExtractUserFromFollowsDoc] action in UserListView widget.
-  DocumentReference? followerID;
 
   /// Initialization and disposal methods.
 
