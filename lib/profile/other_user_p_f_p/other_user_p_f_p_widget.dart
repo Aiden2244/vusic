@@ -120,157 +120,164 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
             ),
             body: SafeArea(
               top: true,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 0.3,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(0.00, -1.00),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(0.0),
-                              child: Image.network(
-                                valueOrDefault<String>(
-                                  otherUserPFPUsersRecord.backsplashPic,
-                                  'https://images.unsplash.com/photo-1548502632-6b93092aad0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw5fHxtdXNpYyUyMHN0dWRpb3xlbnwwfHx8fDE2ODk2MjAxODF8MA&ixlib=rb-4.0.3&q=80&w=1080',
+              child: Visibility(
+                visible:
+                    _model.profileStatsBarModel.userFollowsThisAccount != null,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 0.3,
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(0.00, -1.00),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(0.0),
+                                child: Image.network(
+                                  valueOrDefault<String>(
+                                    otherUserPFPUsersRecord.backsplashPic,
+                                    'https://images.unsplash.com/photo-1548502632-6b93092aad0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw5fHxtdXNpYyUyMHN0dWRpb3xlbnwwfHx8fDE2ODk2MjAxODF8MA&ixlib=rb-4.0.3&q=80&w=1080',
+                                  ),
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.26,
+                                  fit: BoxFit.cover,
                                 ),
-                                width: MediaQuery.sizeOf(context).width * 1.0,
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.26,
-                                fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0.00, 2.47),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.35,
-                                  height:
-                                      MediaQuery.sizeOf(context).width * 0.35,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0.00, 0.00),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.35,
-                                      height: MediaQuery.sizeOf(context).width *
-                                          0.35,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
+                            Align(
+                              alignment: AlignmentDirectional(0.00, 2.47),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.35,
+                                    height:
+                                        MediaQuery.sizeOf(context).width * 0.35,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 2.0,
                                       ),
-                                      child: Image.network(
-                                        valueOrDefault<String>(
-                                          otherUserPFPUsersRecord.photoUrl,
-                                          'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
+                                    ),
+                                    child: Align(
+                                      alignment:
+                                          AlignmentDirectional(0.00, 0.00),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.35,
+                                        height:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.35,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
                                         ),
-                                        fit: BoxFit.cover,
+                                        child: Image.network(
+                                          valueOrDefault<String>(
+                                            otherUserPFPUsersRecord.photoUrl,
+                                            'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Divider(
-                                  thickness: 1.0,
-                                  color: Color(0x006542DC),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 30.0,
-                                      height: 30.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                      ),
-                                    ),
-                                    Text(
-                                      otherUserPFPUsersRecord.userName,
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleSmall,
-                                    ),
-                                    Container(
-                                      width: 30.0,
-                                      height: 30.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                      ),
-                                      child: Visibility(
-                                        visible: otherUserPFPUsersRecord
-                                                .isVerified ==
-                                            true,
-                                        child: Icon(
-                                          Icons.verified,
+                                  Divider(
+                                    thickness: 1.0,
+                                    color: Color(0x006542DC),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 30.0,
+                                        height: 30.0,
+                                        decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          size: 24.0,
+                                              .primaryBackground,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                      Text(
+                                        otherUserPFPUsersRecord.userName,
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleSmall,
+                                      ),
+                                      Container(
+                                        width: 30.0,
+                                        height: 30.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBackground,
+                                        ),
+                                        child: Visibility(
+                                          visible: otherUserPFPUsersRecord
+                                                  .isVerified ==
+                                              true,
+                                          child: Icon(
+                                            Icons.verified,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            size: 24.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        height: 80.0,
+                        thickness: 1.0,
+                        color: Color(0x006542DC),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0.00, 0.00),
+                        child: Text(
+                          valueOrDefault<String>(
+                            otherUserPFPUsersRecord.bio,
+                            'Follow my band on VUSIC!',
                           ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      height: 80.0,
-                      thickness: 1.0,
-                      color: Color(0x006542DC),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(0.00, 0.00),
-                      child: Text(
-                        valueOrDefault<String>(
-                          otherUserPFPUsersRecord.bio,
-                          'Follow my band on VUSIC!',
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                      ),
-                    ),
-                    Divider(
-                      thickness: 1.0,
-                      indent: 10.0,
-                      endIndent: 10.0,
-                      color: FlutterFlowTheme.of(context).alternate,
-                    ),
-                    Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: 110.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                      ),
-                      child: wrapWithModel(
-                        model: _model.profileStatsBarModel,
-                        updateCallback: () => setState(() {}),
-                        updateOnChange: true,
-                        child: ProfileStatsBarWidget(
-                          userToDisplayDataFor: otherUserPFPUsersRecord,
+                          style: FlutterFlowTheme.of(context).bodyMedium,
                         ),
                       ),
-                    ),
-                  ],
+                      Divider(
+                        thickness: 1.0,
+                        indent: 10.0,
+                        endIndent: 10.0,
+                        color: FlutterFlowTheme.of(context).alternate,
+                      ),
+                      Container(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: 110.0,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                        ),
+                        child: wrapWithModel(
+                          model: _model.profileStatsBarModel,
+                          updateCallback: () => setState(() {}),
+                          updateOnChange: true,
+                          child: ProfileStatsBarWidget(
+                            userToDisplayDataFor: otherUserPFPUsersRecord,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
