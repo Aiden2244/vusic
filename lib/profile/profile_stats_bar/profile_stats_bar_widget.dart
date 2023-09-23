@@ -255,6 +255,10 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                       userToFollow: widget.userToDisplayDataFor?.reference,
                     );
                     setState(() {});
+                    logFirebaseEvent('FollowButton_update_widget_state');
+                    setState(() {
+                      _model.userFollowsThisAccount = true;
+                    });
                   },
                   text: 'Follow',
                   icon: Icon(
@@ -295,6 +299,10 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                       userToUnfollow: widget.userToDisplayDataFor?.reference,
                     );
                     setState(() {});
+                    logFirebaseEvent('UnfollowButton_update_widget_state');
+                    setState(() {
+                      _model.userFollowsThisAccount = false;
+                    });
                   },
                   text: 'Unfollow',
                   options: FFButtonOptions(
