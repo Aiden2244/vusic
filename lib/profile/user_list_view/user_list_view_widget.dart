@@ -67,7 +67,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
         logFirebaseEvent('UserListView_firestore_query');
         _model.followerQuery = await queryFollowsRecordOnce(
           queryBuilder: (followsRecord) =>
-              followsRecord.where('followerID', isEqualTo: widget.userAccount),
+              followsRecord.where('followedID', isEqualTo: widget.userAccount),
           limit: 15,
         );
         logFirebaseEvent('UserListView_update_widget_state');

@@ -98,6 +98,11 @@ class UsersRecord extends FirestoreRecord {
   int get followerCount => _followerCount ?? 0;
   bool hasFollowerCount() => _followerCount != null;
 
+  // "blocked_by" field.
+  List<int>? _blockedBy;
+  List<int> get blockedBy => _blockedBy ?? const [];
+  bool hasBlockedBy() => _blockedBy != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -115,6 +120,7 @@ class UsersRecord extends FirestoreRecord {
     _isVerified = snapshotData['is_verified'] as bool?;
     _followingCount = castToType<int>(snapshotData['following_count']);
     _followerCount = castToType<int>(snapshotData['follower_count']);
+    _blockedBy = getDataList(snapshotData['blocked_by']);
   }
 
   static CollectionReference get collection =>
@@ -164,6 +170,11 @@ class UsersRecord extends FirestoreRecord {
           'is_verified': snapshot.data['is_verified'],
           'following_count': snapshot.data['following_count']?.round(),
           'follower_count': snapshot.data['follower_count']?.round(),
+          'blocked_by': safeGet(
+            () => snapshot.data['blocked_by']
+                .map((i) => (i as num).round())
+                .toList(),
+          ),
         },
         UsersRecord.collection.doc(snapshot.objectID),
       );
@@ -260,7 +271,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.artistDescription == e2?.artistDescription &&
         e1?.isVerified == e2?.isVerified &&
         e1?.followingCount == e2?.followingCount &&
-        e1?.followerCount == e2?.followerCount;
+        e1?.followerCount == e2?.followerCount &&
+        listEquality.equals(e1?.blockedBy, e2?.blockedBy);
   }
 
   @override
@@ -280,7 +292,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.artistDescription,
         e?.isVerified,
         e?.followingCount,
-        e?.followerCount
+        e?.followerCount,
+        e?.blockedBy
       ]);
 
   @override

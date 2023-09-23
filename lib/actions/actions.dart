@@ -16,8 +16,8 @@ Future followUser(
   logFirebaseEvent('FollowUser_backend_call');
 
   await FollowsRecord.collection.doc().set(createFollowsRecordData(
-        followerID: userToFollow,
         followingID: currentUserReference,
+        followedID: userToFollow,
       ));
   logFirebaseEvent('FollowUser_action_block');
   await action_blocks.updateFollowerCount(
@@ -159,7 +159,7 @@ Future<bool?> isFollowing(
   logFirebaseEvent('IsFollowing_firestore_query');
   followingDoc = await queryFollowsRecordOnce(
     queryBuilder: (followsRecord) => followsRecord
-        .where('followerID', isEqualTo: followedUser)
+        .where('followedID', isEqualTo: followedUser)
         .where('followingID', isEqualTo: followingUser),
     singleRecord: true,
   ).then((s) => s.firstOrNull);
@@ -216,7 +216,7 @@ Future<DocumentReference?> getFollowsDocRef(
   logFirebaseEvent('GetFollowsDocRef_firestore_query');
   followingDoc = await queryFollowsRecordOnce(
     queryBuilder: (followsRecord) => followsRecord
-        .where('followerID', isEqualTo: followedUser)
+        .where('followedID', isEqualTo: followedUser)
         .where('followingID', isEqualTo: followingUser),
     singleRecord: true,
   ).then((s) => s.firstOrNull);

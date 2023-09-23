@@ -61,7 +61,7 @@ class UserListViewModel extends FlutterFlowModel {
     required bool? returnFollowerID,
   }) async {
     if (returnFollowerID == true) {
-      return followsDoc?.followerID;
+      return followsDoc?.followedID;
     }
 
     return followsDoc?.followingID;

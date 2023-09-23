@@ -16,19 +16,19 @@ class FollowsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "followerID" field.
-  DocumentReference? _followerID;
-  DocumentReference? get followerID => _followerID;
-  bool hasFollowerID() => _followerID != null;
-
   // "followingID" field.
   DocumentReference? _followingID;
   DocumentReference? get followingID => _followingID;
   bool hasFollowingID() => _followingID != null;
 
+  // "followedID" field.
+  DocumentReference? _followedID;
+  DocumentReference? get followedID => _followedID;
+  bool hasFollowedID() => _followedID != null;
+
   void _initializeFields() {
-    _followerID = snapshotData['followerID'] as DocumentReference?;
     _followingID = snapshotData['followingID'] as DocumentReference?;
+    _followedID = snapshotData['followedID'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -66,13 +66,13 @@ class FollowsRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createFollowsRecordData({
-  DocumentReference? followerID,
   DocumentReference? followingID,
+  DocumentReference? followedID,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'followerID': followerID,
       'followingID': followingID,
+      'followedID': followedID,
     }.withoutNulls,
   );
 
@@ -84,13 +84,13 @@ class FollowsRecordDocumentEquality implements Equality<FollowsRecord> {
 
   @override
   bool equals(FollowsRecord? e1, FollowsRecord? e2) {
-    return e1?.followerID == e2?.followerID &&
-        e1?.followingID == e2?.followingID;
+    return e1?.followingID == e2?.followingID &&
+        e1?.followedID == e2?.followedID;
   }
 
   @override
   int hash(FollowsRecord? e) =>
-      const ListEquality().hash([e?.followerID, e?.followingID]);
+      const ListEquality().hash([e?.followingID, e?.followedID]);
 
   @override
   bool isValidKey(Object? o) => o is FollowsRecord;

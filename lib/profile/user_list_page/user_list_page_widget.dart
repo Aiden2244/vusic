@@ -6,7 +6,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/profile/user_list_view/user_list_view_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'user_list_page_model.dart';
@@ -40,6 +42,25 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'UserListPage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('USER_LIST_UserListPage_ON_INIT_STATE');
+      if (widget.queryType == 'Following') {
+        logFirebaseEvent('UserListPage_firestore_query');
+        _model.usersYouFollow = await queryFollowsRecordOnce(
+          queryBuilder: (followsRecord) =>
+              followsRecord.where('followingID', isEqualTo: widget.account),
+          limit: 15,
+        );
+      } else {
+        logFirebaseEvent('UserListPage_firestore_query');
+        _model.usersFollowingYou = await queryFollowsRecordOnce(
+          queryBuilder: (followsRecord) =>
+              followsRecord.where('followedID', isEqualTo: widget.account),
+          limit: 15,
+        );
+      }
+    });
   }
 
   @override
