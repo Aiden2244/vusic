@@ -53,7 +53,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
       );
       logFirebaseEvent('ProfileStatsBar_update_widget_state');
       setState(() {
-        _model.userFollowsThisAccount = _model.userFollowsUser;
+        _model.userFollowsThisAccount = _model.userFollowsUser!;
       });
       return;
     });
@@ -243,7 +243,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                 ),
-              if (!_model.userFollowsThisAccount! &&
+              if (!_model.userFollowsThisAccount &&
                   (widget.userToDisplayDataFor?.reference !=
                       currentUserReference))
                 FFButtonWidget(
@@ -287,7 +287,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                 ),
-              if (_model.userFollowsThisAccount! &&
+              if (_model.userFollowsThisAccount &&
                   (widget.userToDisplayDataFor?.reference !=
                       currentUserReference))
                 FFButtonWidget(

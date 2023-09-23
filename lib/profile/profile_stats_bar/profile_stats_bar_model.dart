@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class ProfileStatsBarModel extends FlutterFlowModel {
   ///  Local state fields for this component.
 
-  bool? userFollowsThisAccount;
+  bool userFollowsThisAccount = false;
 
   ///  State fields for stateful widgets in this component.
 
