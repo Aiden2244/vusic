@@ -72,7 +72,10 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
               ClipRRect(
                 borderRadius: BorderRadius.circular(40.0),
                 child: Image.network(
-                  widget.userToDisplay!.photoUrl,
+                  valueOrDefault<String>(
+                    widget.userToDisplay?.photoUrl,
+                    'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo.png?alt=media&token=094a5d8f-00ad-4f1f-9ab1-db45e7cc407a',
+                  ),
                   width: 60.0,
                   height: 60.0,
                   fit: BoxFit.cover,
