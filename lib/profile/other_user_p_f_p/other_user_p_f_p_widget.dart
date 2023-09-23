@@ -50,9 +50,7 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
     context.watch<FFAppState>();
 
     return FutureBuilder<UsersRecord>(
-      future: FFAppState().recentlyAccessedUsers(
-        requestFn: () => UsersRecord.getDocumentOnce(widget.pageUserRef!),
-      ),
+      future: UsersRecord.getDocumentOnce(widget.pageUserRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
