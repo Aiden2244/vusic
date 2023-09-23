@@ -15,54 +15,39 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    match /usernames/{document} {
+    match /comments/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if false;
       allow delete: if false;
     }
 
-    match /posts/{parent}/comments/{document} {
+    match /follows/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if false;
       allow delete: if false;
     }
 
-    match /{path=**}/comments/{document} {
+    match /notifications/{document} {
+      allow create: if true;
       allow read: if true;
-    }
-
-
-    match /users/{parent}/userPosts/{document} {
-      allow create: if request.auth.uid == parent;
-      allow read: if true;
-      allow write: if request.auth.uid == parent;
+      allow write: if false;
       allow delete: if false;
     }
 
-    match /users/{parent}/notifications/{document} {
+    match /reports/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if true;
       allow delete: if true;
     }
 
-    match /{path=**}/notifications/{document} {
-      allow read: if true;
-    }
-
-
-    match /users/{parent}/relationships/{document} {
+    match /blocked_users/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if true;
       allow delete: if true;
     }
-
-    match /{path=**}/relationships/{document} {
-      allow read: if true;
-    }
-
   }
 }

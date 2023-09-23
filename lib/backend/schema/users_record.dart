@@ -63,21 +63,6 @@ class UsersRecord extends FirestoreRecord {
   String get userName => _userName ?? '';
   bool hasUserName() => _userName != null;
 
-  // "fan_count" field.
-  int? _fanCount;
-  int get fanCount => _fanCount ?? 0;
-  bool hasFanCount() => _fanCount != null;
-
-  // "friends_count" field.
-  int? _friendsCount;
-  int get friendsCount => _friendsCount ?? 0;
-  bool hasFriendsCount() => _friendsCount != null;
-
-  // "following_count" field.
-  int? _followingCount;
-  int get followingCount => _followingCount ?? 0;
-  bool hasFollowingCount() => _followingCount != null;
-
   // "bio" field.
   String? _bio;
   String get bio => _bio ?? '';
@@ -87,11 +72,6 @@ class UsersRecord extends FirestoreRecord {
   String? _backsplashPic;
   String get backsplashPic => _backsplashPic ?? '';
   bool hasBacksplashPic() => _backsplashPic != null;
-
-  // "backsplash_video" field.
-  String? _backsplashVideo;
-  String get backsplashVideo => _backsplashVideo ?? '';
-  bool hasBacksplashVideo() => _backsplashVideo != null;
 
   // "last_username_change" field.
   DateTime? _lastUsernameChange;
@@ -103,25 +83,25 @@ class UsersRecord extends FirestoreRecord {
   String get artistDescription => _artistDescription ?? '';
   bool hasArtistDescription() => _artistDescription != null;
 
-  // "hometown" field.
-  String? _hometown;
-  String get hometown => _hometown ?? '';
-  bool hasHometown() => _hometown != null;
-
-  // "current_location" field.
-  String? _currentLocation;
-  String get currentLocation => _currentLocation ?? '';
-  bool hasCurrentLocation() => _currentLocation != null;
-
   // "is_verified" field.
   bool? _isVerified;
   bool get isVerified => _isVerified ?? false;
   bool hasIsVerified() => _isVerified != null;
 
-  // "requested_friends" field.
-  List<DocumentReference>? _requestedFriends;
-  List<DocumentReference> get requestedFriends => _requestedFriends ?? const [];
-  bool hasRequestedFriends() => _requestedFriends != null;
+  // "following_count" field.
+  int? _followingCount;
+  int get followingCount => _followingCount ?? 0;
+  bool hasFollowingCount() => _followingCount != null;
+
+  // "follower_count" field.
+  int? _followerCount;
+  int get followerCount => _followerCount ?? 0;
+  bool hasFollowerCount() => _followerCount != null;
+
+  // "blocked_by" field.
+  List<int>? _blockedBy;
+  List<int> get blockedBy => _blockedBy ?? const [];
+  bool hasBlockedBy() => _blockedBy != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -133,18 +113,14 @@ class UsersRecord extends FirestoreRecord {
     _accountType = snapshotData['account_type'] as String?;
     _favoriteGenres = getDataList(snapshotData['favorite_genres']);
     _userName = snapshotData['user_name'] as String?;
-    _fanCount = castToType<int>(snapshotData['fan_count']);
-    _friendsCount = castToType<int>(snapshotData['friends_count']);
-    _followingCount = castToType<int>(snapshotData['following_count']);
     _bio = snapshotData['bio'] as String?;
     _backsplashPic = snapshotData['backsplash_pic'] as String?;
-    _backsplashVideo = snapshotData['backsplash_video'] as String?;
     _lastUsernameChange = snapshotData['last_username_change'] as DateTime?;
     _artistDescription = snapshotData['artist_description'] as String?;
-    _hometown = snapshotData['hometown'] as String?;
-    _currentLocation = snapshotData['current_location'] as String?;
     _isVerified = snapshotData['is_verified'] as bool?;
-    _requestedFriends = getDataList(snapshotData['requested_friends']);
+    _followingCount = castToType<int>(snapshotData['following_count']);
+    _followerCount = castToType<int>(snapshotData['follower_count']);
+    _blockedBy = getDataList(snapshotData['blocked_by']);
   }
 
   static CollectionReference get collection =>
@@ -184,23 +160,19 @@ class UsersRecord extends FirestoreRecord {
             () => snapshot.data['favorite_genres'].toList(),
           ),
           'user_name': snapshot.data['user_name'],
-          'fan_count': snapshot.data['fan_count']?.round(),
-          'friends_count': snapshot.data['friends_count']?.round(),
-          'following_count': snapshot.data['following_count']?.round(),
           'bio': snapshot.data['bio'],
           'backsplash_pic': snapshot.data['backsplash_pic'],
-          'backsplash_video': snapshot.data['backsplash_video'],
           'last_username_change': safeGet(
             () => DateTime.fromMillisecondsSinceEpoch(
                 snapshot.data['last_username_change']),
           ),
           'artist_description': snapshot.data['artist_description'],
-          'hometown': snapshot.data['hometown'],
-          'current_location': snapshot.data['current_location'],
           'is_verified': snapshot.data['is_verified'],
-          'requested_friends': safeGet(
-            () => snapshot.data['requested_friends']
-                .map((s) => toRef(s))
+          'following_count': snapshot.data['following_count']?.round(),
+          'follower_count': snapshot.data['follower_count']?.round(),
+          'blocked_by': safeGet(
+            () => snapshot.data['blocked_by']
+                .map((i) => (i as num).round())
                 .toList(),
           ),
         },
@@ -247,17 +219,13 @@ Map<String, dynamic> createUsersRecordData({
   String? phoneNumber,
   String? accountType,
   String? userName,
-  int? fanCount,
-  int? friendsCount,
-  int? followingCount,
   String? bio,
   String? backsplashPic,
-  String? backsplashVideo,
   DateTime? lastUsernameChange,
   String? artistDescription,
-  String? hometown,
-  String? currentLocation,
   bool? isVerified,
+  int? followingCount,
+  int? followerCount,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -269,17 +237,13 @@ Map<String, dynamic> createUsersRecordData({
       'phone_number': phoneNumber,
       'account_type': accountType,
       'user_name': userName,
-      'fan_count': fanCount,
-      'friends_count': friendsCount,
-      'following_count': followingCount,
       'bio': bio,
       'backsplash_pic': backsplashPic,
-      'backsplash_video': backsplashVideo,
       'last_username_change': lastUsernameChange,
       'artist_description': artistDescription,
-      'hometown': hometown,
-      'current_location': currentLocation,
       'is_verified': isVerified,
+      'following_count': followingCount,
+      'follower_count': followerCount,
     }.withoutNulls,
   );
 
@@ -301,18 +265,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.accountType == e2?.accountType &&
         listEquality.equals(e1?.favoriteGenres, e2?.favoriteGenres) &&
         e1?.userName == e2?.userName &&
-        e1?.fanCount == e2?.fanCount &&
-        e1?.friendsCount == e2?.friendsCount &&
-        e1?.followingCount == e2?.followingCount &&
         e1?.bio == e2?.bio &&
         e1?.backsplashPic == e2?.backsplashPic &&
-        e1?.backsplashVideo == e2?.backsplashVideo &&
         e1?.lastUsernameChange == e2?.lastUsernameChange &&
         e1?.artistDescription == e2?.artistDescription &&
-        e1?.hometown == e2?.hometown &&
-        e1?.currentLocation == e2?.currentLocation &&
         e1?.isVerified == e2?.isVerified &&
-        listEquality.equals(e1?.requestedFriends, e2?.requestedFriends);
+        e1?.followingCount == e2?.followingCount &&
+        e1?.followerCount == e2?.followerCount &&
+        listEquality.equals(e1?.blockedBy, e2?.blockedBy);
   }
 
   @override
@@ -326,18 +286,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.accountType,
         e?.favoriteGenres,
         e?.userName,
-        e?.fanCount,
-        e?.friendsCount,
-        e?.followingCount,
         e?.bio,
         e?.backsplashPic,
-        e?.backsplashVideo,
         e?.lastUsernameChange,
         e?.artistDescription,
-        e?.hometown,
-        e?.currentLocation,
         e?.isVerified,
-        e?.requestedFriends
+        e?.followingCount,
+        e?.followerCount,
+        e?.blockedBy
       ]);
 
   @override

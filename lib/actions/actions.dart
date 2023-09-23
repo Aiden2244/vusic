@@ -9,385 +9,292 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Future updateCurrentPage(BuildContext context) async {
-  if (FFAppState().CurrentPage == null || FFAppState().CurrentPage == '') {
-    logFirebaseEvent('UpdateCurrentPage_update_app_state');
-    FFAppState().CurrentPage =
-        'vusic://vusic.com${GoRouter.of(context).location}';
-  } else {
-    logFirebaseEvent('UpdateCurrentPage_update_app_state');
-    FFAppState().LastPageVisited = FFAppState().CurrentPage;
-    FFAppState().CurrentPage =
-        'vusic://vusic.com${GoRouter.of(context).location}';
-  }
-}
-
-Future unfriend(
+Future followUser(
   BuildContext context, {
-  required DocumentReference? userToUnfriend,
+  required DocumentReference? userToFollow,
 }) async {
-  final firestoreBatch = FirebaseFirestore.instance.batch();
-  try {
-    logFirebaseEvent('Unfriend_alert_dialog');
-    var confirmDialogResponse = await showDialog<bool>(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('Unfriend'),
-              content: Text(
-                  'Are you sure you want to unfriend this user? They will not be notified that you removed them.'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext, false),
-                  child: Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext, true),
-                  child: Text('Unfriend'),
-                ),
-              ],
-            );
-          },
-        ) ??
-        false;
-    logFirebaseEvent('Unfriend_action_block');
-    await action_blocks.deleteRelationship(
-      context,
-      userToRemoveDocumentFrom: userToUnfriend,
-      userToRemove: currentUserReference,
-    );
-    logFirebaseEvent('Unfriend_backend_call');
+  logFirebaseEvent('FollowUser_backend_call');
 
-    firestoreBatch.update(userToUnfriend!, {
-      'friends_count': FieldValue.increment(-(1)),
-    });
-    logFirebaseEvent('Unfriend_backend_call');
-
-    firestoreBatch.update(currentUserReference!, {
-      'friends_count': FieldValue.increment(-(1)),
-    });
-    logFirebaseEvent('Unfriend_show_snack_bar');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Removed friend',
-          style: TextStyle(),
-        ),
-        duration: Duration(milliseconds: 4000),
-        backgroundColor: FlutterFlowTheme.of(context).secondary,
+  await FollowsRecord.collection.doc().set(createFollowsRecordData(
+        followingID: currentUserReference,
+        followedID: userToFollow,
+      ));
+  logFirebaseEvent('FollowUser_action_block');
+  await action_blocks.updateFollowerCount(
+    context,
+    userRef: userToFollow,
+    decrement: false,
+  );
+  logFirebaseEvent('FollowUser_action_block');
+  await action_blocks.updateFollowingCount(
+    context,
+    userRef: currentUserReference,
+    decrement: false,
+  );
+  logFirebaseEvent('FollowUser_action_block');
+  await action_blocks.createNotification(
+    context,
+    recipient: userToFollow,
+    sender: currentUserReference,
+    type: 'new_follower',
+    notificationBody: 'started following you',
+    senderUserName: valueOrDefault(currentUserDocument?.userName, ''),
+    senderPFP: currentUserPhoto,
+  );
+  logFirebaseEvent('FollowUser_show_snack_bar');
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        'User followed successfully!',
+        style: TextStyle(),
       ),
-    );
-  } finally {
-    await firestoreBatch.commit();
-  }
+      duration: Duration(milliseconds: 4000),
+      backgroundColor: FlutterFlowTheme.of(context).secondary,
+    ),
+  );
 }
 
-Future unfollowMusican(
+Future createNotification(
   BuildContext context, {
-  required DocumentReference? accountToUnfollow,
-}) async {
-  final firestoreBatch = FirebaseFirestore.instance.batch();
-  try {
-    logFirebaseEvent('UnfollowMusican_alert_dialog');
-    var confirmDialogResponse = await showDialog<bool>(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('Unfollow Artist'),
-              content: Text(
-                  'Are you sure you want to unfollow this artist? They will not be notified that you removed them.'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext, false),
-                  child: Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext, true),
-                  child: Text('Unfollow'),
-                ),
-              ],
-            );
-          },
-        ) ??
-        false;
-    logFirebaseEvent('UnfollowMusican_action_block');
-    await action_blocks.deleteRelationship(
-      context,
-      userToRemoveDocumentFrom: accountToUnfollow,
-      userToRemove: currentUserReference,
-    );
-    logFirebaseEvent('UnfollowMusican_backend_call');
-
-    firestoreBatch.update(accountToUnfollow!, {
-      'fan_count': FieldValue.increment(-(1)),
-    });
-    logFirebaseEvent('UnfollowMusican_backend_call');
-
-    firestoreBatch.update(currentUserReference!, {
-      'following_count': FieldValue.increment(-(1)),
-    });
-    logFirebaseEvent('UnfollowMusican_show_snack_bar');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Artist unfollowed',
-          style: TextStyle(),
-        ),
-        duration: Duration(milliseconds: 4000),
-        backgroundColor: FlutterFlowTheme.of(context).secondary,
-      ),
-    );
-  } finally {
-    await firestoreBatch.commit();
-  }
-}
-
-Future removeFanFollower(
-  BuildContext context, {
-  required DocumentReference? fanToRemove,
-}) async {
-  final firestoreBatch = FirebaseFirestore.instance.batch();
-  try {
-    logFirebaseEvent('RemoveFanFollower_alert_dialog');
-    var confirmDialogResponse = await showDialog<bool>(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              title: Text('Remove Fan'),
-              content: Text(
-                  'Are you sure you want to remove this fan? They will not be notified that you removed them.'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext, false),
-                  child: Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext, true),
-                  child: Text('Remove Fan'),
-                ),
-              ],
-            );
-          },
-        ) ??
-        false;
-    logFirebaseEvent('RemoveFanFollower_action_block');
-    await action_blocks.deleteRelationship(
-      context,
-      userToRemoveDocumentFrom: fanToRemove,
-      userToRemove: currentUserReference,
-    );
-    logFirebaseEvent('RemoveFanFollower_backend_call');
-
-    firestoreBatch.update(fanToRemove!, {
-      'following_count': FieldValue.increment(-(1)),
-    });
-    logFirebaseEvent('RemoveFanFollower_backend_call');
-
-    firestoreBatch.update(currentUserReference!, {
-      'fan_count': FieldValue.increment(-(1)),
-    });
-    logFirebaseEvent('RemoveFanFollower_show_snack_bar');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Removed follower',
-          style: TextStyle(),
-        ),
-        duration: Duration(milliseconds: 4000),
-        backgroundColor: FlutterFlowTheme.of(context).secondary,
-      ),
-    );
-  } finally {
-    await firestoreBatch.commit();
-  }
-}
-
-Future notifyUser(
-  BuildContext context, {
-  required DocumentReference? userToNotify,
-  required String? notificationType,
+  required DocumentReference? recipient,
+  DocumentReference? sender,
+  required String? type,
   required String? notificationBody,
-  required DocumentReference? senderRef,
+  DocumentReference? postRef,
+  DocumentReference? commentRef,
+  String? senderUserName,
+  String? senderPFP,
 }) async {
-  logFirebaseEvent('NotifyUser_backend_call');
+  NotificationsRecord? newNotification;
 
-  await NotificationsRecord.createDoc(userToNotify!)
-      .set(createNotificationsRecordData(
-    recipientRef: userToNotify,
-    senderRef: senderRef,
-    nofiticationType: notificationType,
-    notificationCreatedTime: getCurrentTimestamp,
-    notificationText: notificationBody,
+  logFirebaseEvent('CreateNotification_backend_call');
+
+  var notificationsRecordReference = NotificationsRecord.collection.doc();
+  await notificationsRecordReference.set(createNotificationsRecordData(
+    recipientRef: recipient,
+    senderRef: sender,
+    type: type,
+    createdAt: getCurrentTimestamp,
+    isRead: false,
+    notificationBody: notificationBody,
+    postRef: postRef,
+    commentRef: commentRef,
+    senderUsername: senderUserName,
+    senderPfp: senderPFP,
   ));
+  newNotification = NotificationsRecord.getDocumentFromData(
+      createNotificationsRecordData(
+        recipientRef: recipient,
+        senderRef: sender,
+        type: type,
+        createdAt: getCurrentTimestamp,
+        isRead: false,
+        notificationBody: notificationBody,
+        postRef: postRef,
+        commentRef: commentRef,
+        senderUsername: senderUserName,
+        senderPfp: senderPFP,
+      ),
+      notificationsRecordReference);
 }
 
-Future followMusician(
+Future updateFollowingCount(
   BuildContext context, {
-  required DocumentReference? musicianToFollow,
+  required DocumentReference? userRef,
+  required bool? decrement,
 }) async {
   final firestoreBatch = FirebaseFirestore.instance.batch();
   try {
-    logFirebaseEvent('FollowMusician_action_block');
-    await action_blocks.createRelationship(
-      context,
-      relationshipType: 'fan',
-      userToAdd: currentUserReference,
-      userToCreateDocumentFor: musicianToFollow,
-    );
-    logFirebaseEvent('FollowMusician_action_block');
-    await action_blocks.createRelationship(
-      context,
-      relationshipType: 'following',
-      userToAdd: musicianToFollow,
-      userToCreateDocumentFor: currentUserReference,
-    );
-    logFirebaseEvent('FollowMusician_action_block');
-    await action_blocks.notifyUser(
-      context,
-      userToNotify: musicianToFollow,
-      notificationType: 'new_follower',
-      notificationBody: 'started following you',
-      senderRef: currentUserReference,
-    );
-    logFirebaseEvent('FollowMusician_backend_call');
+    if (decrement == true) {
+      logFirebaseEvent('UpdateFollowingCount_backend_call');
 
-    firestoreBatch.update(musicianToFollow!, {
-      'fan_count': FieldValue.increment(1),
-    });
-    logFirebaseEvent('FollowMusician_backend_call');
+      firestoreBatch.update(userRef!, {
+        'following_count': FieldValue.increment(-(1)),
+      });
+    } else {
+      logFirebaseEvent('UpdateFollowingCount_backend_call');
 
-    firestoreBatch.update(currentUserReference!, {
-      'following_count': FieldValue.increment(1),
-    });
-    logFirebaseEvent('FollowMusician_show_snack_bar');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Followed artist',
-          style: TextStyle(),
-        ),
-        duration: Duration(milliseconds: 4000),
-        backgroundColor: FlutterFlowTheme.of(context).secondary,
-      ),
-    );
+      firestoreBatch.update(userRef!, {
+        'following_count': FieldValue.increment(1),
+      });
+    }
   } finally {
     await firestoreBatch.commit();
   }
 }
 
-Future acceptFriendRequest(
+Future updateFollowerCount(
   BuildContext context, {
-  required DocumentReference? friendToAdd,
+  required DocumentReference? userRef,
+  required bool? decrement,
 }) async {
   final firestoreBatch = FirebaseFirestore.instance.batch();
   try {
-    logFirebaseEvent('AcceptFriendRequest_action_block');
-    await action_blocks.createRelationship(
-      context,
-      relationshipType: 'friend',
-      userToAdd: friendToAdd,
-      userToCreateDocumentFor: currentUserReference,
-    );
-    logFirebaseEvent('AcceptFriendRequest_action_block');
-    await action_blocks.notifyUser(
-      context,
-      userToNotify: friendToAdd,
-      notificationType: 'friend_request_accept',
-      notificationBody: 'accepted your friend request',
-      senderRef: currentUserReference,
-    );
-    logFirebaseEvent('AcceptFriendRequest_action_block');
-    await action_blocks.deleteNotification(
-      context,
-      senderRef: friendToAdd,
-      notificationType: 'friend_request',
-    );
-    logFirebaseEvent('AcceptFriendRequest_backend_call');
+    if (decrement == true) {
+      logFirebaseEvent('UpdateFollowerCount_backend_call');
 
-    firestoreBatch.update(currentUserReference!, {
-      'requested_friends': FieldValue.arrayRemove([friendToAdd]),
-      'friends_count': FieldValue.increment(1),
-    });
-    logFirebaseEvent('AcceptFriendRequest_backend_call');
+      firestoreBatch.update(userRef!, {
+        'follower_count': FieldValue.increment(-(1)),
+      });
+    } else {
+      logFirebaseEvent('UpdateFollowerCount_backend_call');
 
-    firestoreBatch.update(friendToAdd!, {
-      'friends_count': FieldValue.increment(1),
-    });
-    logFirebaseEvent('AcceptFriendRequest_show_snack_bar');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Added friend',
-          style: TextStyle(),
-        ),
-        duration: Duration(milliseconds: 4000),
-        backgroundColor: FlutterFlowTheme.of(context).secondary,
-      ),
-    );
+      firestoreBatch.update(userRef!, {
+        'follower_count': FieldValue.increment(1),
+      });
+    }
   } finally {
     await firestoreBatch.commit();
   }
 }
 
-Future deleteNotification(
+Future<bool?> isFollowing(
   BuildContext context, {
-  required DocumentReference? senderRef,
-  required String? notificationType,
+  required DocumentReference? followingUser,
+  required DocumentReference? followedUser,
 }) async {
-  NotificationsRecord? notificationToDelete;
+  FollowsRecord? followingDoc;
 
-  logFirebaseEvent('DeleteNotification_firestore_query');
-  notificationToDelete = await queryNotificationsRecordOnce(
-    parent: currentUserReference,
-    queryBuilder: (notificationsRecord) => notificationsRecord
-        .where('sender_ref', isEqualTo: senderRef)
-        .where('nofitication_type', isEqualTo: notificationType),
+  logFirebaseEvent('IsFollowing_firestore_query');
+  followingDoc = await queryFollowsRecordOnce(
+    queryBuilder: (followsRecord) => followsRecord
+        .where('followedID', isEqualTo: followedUser)
+        .where('followingID', isEqualTo: followingUser),
     singleRecord: true,
   ).then((s) => s.firstOrNull);
-  logFirebaseEvent('DeleteNotification_backend_call');
-  await notificationToDelete!.reference.delete();
+  return followingDoc != null;
 }
 
-Future createRelationship(
+Future unfollowUser(
   BuildContext context, {
-  required String? relationshipType,
-  required DocumentReference? userToAdd,
-  required DocumentReference? userToCreateDocumentFor,
+  required DocumentReference? userToUnfollow,
 }) async {
-  logFirebaseEvent('CreateRelationship_backend_call');
+  DocumentReference? followingDoc;
 
-  await RelationshipsRecord.createDoc(userToCreateDocumentFor!)
-      .set(createRelationshipsRecordData(
-    relationshipRef: userToAdd,
-    relationshipType: relationshipType,
-    relationshipCreated: getCurrentTimestamp,
-  ));
+  logFirebaseEvent('UnfollowUser_action_block');
+  await action_blocks.updateFollowerCount(
+    context,
+    userRef: userToUnfollow,
+    decrement: true,
+  );
+  logFirebaseEvent('UnfollowUser_action_block');
+  await action_blocks.updateFollowingCount(
+    context,
+    userRef: currentUserReference,
+    decrement: true,
+  );
+  logFirebaseEvent('UnfollowUser_action_block');
+  followingDoc = await action_blocks.getFollowsDocRef(
+    context,
+    followedUser: userToUnfollow,
+    followingUser: currentUserReference,
+  );
+  logFirebaseEvent('UnfollowUser_backend_call');
+  await followingDoc!.delete();
+  logFirebaseEvent('UnfollowUser_show_snack_bar');
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        'User unfolloweed',
+        style: TextStyle(),
+      ),
+      duration: Duration(milliseconds: 4000),
+      backgroundColor: FlutterFlowTheme.of(context).secondary,
+    ),
+  );
 }
 
-Future deleteRelationship(
+Future<DocumentReference?> getFollowsDocRef(
   BuildContext context, {
-  required DocumentReference? userToRemoveDocumentFrom,
+  required DocumentReference? followedUser,
+  required DocumentReference? followingUser,
+}) async {
+  FollowsRecord? followingDoc;
+
+  logFirebaseEvent('GetFollowsDocRef_firestore_query');
+  followingDoc = await queryFollowsRecordOnce(
+    queryBuilder: (followsRecord) => followsRecord
+        .where('followedID', isEqualTo: followedUser)
+        .where('followingID', isEqualTo: followingUser),
+    singleRecord: true,
+  ).then((s) => s.firstOrNull);
+  return followingDoc?.reference;
+}
+
+Future removeFollower(
+  BuildContext context, {
   required DocumentReference? userToRemove,
 }) async {
-  RelationshipsRecord? documentToDelete1;
-  RelationshipsRecord? documentToDelete;
+  DocumentReference? followingDoc;
 
-  logFirebaseEvent('DeleteRelationship_firestore_query');
-  documentToDelete1 = await queryRelationshipsRecordOnce(
-    parent: userToRemoveDocumentFrom,
-    queryBuilder: (relationshipsRecord) =>
-        relationshipsRecord.where('relationship_ref', isEqualTo: userToRemove),
+  logFirebaseEvent('RemoveFollower_alert_dialog');
+  var confirmDialogResponse = await showDialog<bool>(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            title: Text('Remove Follower'),
+            content: Text(
+                'Are you sure you want to remove this user as a follower (they will not be notified that you removed them)?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext, false),
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext, true),
+                child: Text('Remove Follower'),
+              ),
+            ],
+          );
+        },
+      ) ??
+      false;
+  logFirebaseEvent('RemoveFollower_action_block');
+  await action_blocks.updateFollowerCount(
+    context,
+    userRef: currentUserReference,
+    decrement: true,
+  );
+  logFirebaseEvent('RemoveFollower_action_block');
+  await action_blocks.updateFollowingCount(
+    context,
+    userRef: userToRemove,
+    decrement: true,
+  );
+  logFirebaseEvent('RemoveFollower_action_block');
+  followingDoc = await action_blocks.getFollowsDocRef(
+    context,
+    followedUser: currentUserReference,
+    followingUser: userToRemove,
+  );
+  logFirebaseEvent('RemoveFollower_backend_call');
+  await followingDoc!.delete();
+  logFirebaseEvent('RemoveFollower_show_snack_bar');
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        'User removed as a follower',
+        style: TextStyle(),
+      ),
+      duration: Duration(milliseconds: 4000),
+      backgroundColor: FlutterFlowTheme.of(context).secondary,
+    ),
+  );
+}
+
+Future<UsersRecord?> getUserFromReference(
+  BuildContext context, {
+  required DocumentReference? userToGet,
+}) async {
+  UsersRecord? userDoc;
+
+  logFirebaseEvent('GetUserFromReference_firestore_query');
+  userDoc = await queryUsersRecordOnce(
+    queryBuilder: (usersRecord) =>
+        usersRecord.where('uid', isEqualTo: userToGet?.id),
     singleRecord: true,
   ).then((s) => s.firstOrNull);
-  logFirebaseEvent('DeleteRelationship_backend_call');
-  await documentToDelete1!.reference.delete();
-  logFirebaseEvent('DeleteRelationship_firestore_query');
-  documentToDelete = await queryRelationshipsRecordOnce(
-    parent: userToRemove,
-    queryBuilder: (relationshipsRecord) => relationshipsRecord
-        .where('relationship_ref', isEqualTo: userToRemoveDocumentFrom),
-    singleRecord: true,
-  ).then((s) => s.firstOrNull);
-  logFirebaseEvent('DeleteRelationship_backend_call');
-  await documentToDelete!.reference.delete();
+  return userDoc;
 }

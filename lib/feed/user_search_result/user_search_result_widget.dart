@@ -1,7 +1,7 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -13,24 +13,10 @@ export 'user_search_result_model.dart';
 class UserSearchResultWidget extends StatefulWidget {
   const UserSearchResultWidget({
     Key? key,
-    required this.userImage,
-    required this.displayName,
-    required this.userName,
-    required this.userAccountType,
-    required this.userRef,
-    this.followingCount,
-    this.fanCount,
-    required this.friendsCount,
+    required this.userToDisplay,
   }) : super(key: key);
 
-  final String? userImage;
-  final String? displayName;
-  final String? userName;
-  final String? userAccountType;
-  final DocumentReference? userRef;
-  final int? followingCount;
-  final int? fanCount;
-  final int? friendsCount;
+  final UsersRecord? userToDisplay;
 
   @override
   _UserSearchResultWidgetState createState() => _UserSearchResultWidgetState();
@@ -86,7 +72,10 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
               ClipRRect(
                 borderRadius: BorderRadius.circular(40.0),
                 child: Image.network(
-                  widget.userImage!,
+                  valueOrDefault<String>(
+                    widget.userToDisplay?.photoUrl,
+                    'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo.png?alt=media&token=094a5d8f-00ad-4f1f-9ab1-db45e7cc407a',
+                  ),
                   width: 60.0,
                   height: 60.0,
                   fit: BoxFit.cover,
@@ -102,7 +91,10 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
                       padding:
                           EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
                       child: Text(
-                        widget.displayName!,
+                        valueOrDefault<String>(
+                          widget.userToDisplay?.displayName,
+                          'VUSIC User',
+                        ),
                         style: FlutterFlowTheme.of(context).titleMedium,
                       ),
                     ),
@@ -132,7 +124,10 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
                             ),
                           ),
                           Text(
-                            widget.userName!,
+                            valueOrDefault<String>(
+                              widget.userToDisplay?.userName,
+                              'default_user_name',
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodySmall
                                 .override(
@@ -153,7 +148,10 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
                             ),
                           ),
                           Text(
-                            widget.userAccountType!,
+                            valueOrDefault<String>(
+                              widget.userToDisplay?.accountType,
+                              'Unset',
+                            ),
                             style: FlutterFlowTheme.of(context).bodySmall,
                           ),
                         ],
@@ -168,33 +166,15 @@ class _UserSearchResultWidgetState extends State<UserSearchResultWidget>
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('USER_SEARCH_RESULT_Card_jxdkylmm_ON_TAP');
-                  logFirebaseEvent('Card_update_app_state');
-                  FFAppState().lastSearchedUser = widget.userRef;
-                  logFirebaseEvent('Card_navigate_to');
+                  logFirebaseEvent('USER_SEARCH_RESULT_COMP_Nax_ON_TAP');
+                  logFirebaseEvent('Nax_navigate_to');
 
                   context.pushNamed(
                     'OtherUserPFP',
                     queryParameters: {
-                      'pageUser': serializeParam(
-                        widget.userRef,
+                      'pageUserRef': serializeParam(
+                        widget.userToDisplay?.reference,
                         ParamType.DocumentReference,
-                      ),
-                      'pageAccountType': serializeParam(
-                        widget.userAccountType,
-                        ParamType.String,
-                      ),
-                      'followingCount': serializeParam(
-                        widget.followingCount,
-                        ParamType.int,
-                      ),
-                      'fanCount': serializeParam(
-                        widget.fanCount,
-                        ParamType.int,
-                      ),
-                      'friendCount': serializeParam(
-                        widget.friendsCount,
-                        ParamType.int,
                       ),
                     }.withoutNulls,
                     extra: <String, dynamic>{

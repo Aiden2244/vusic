@@ -5,10 +5,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/profile/notification_tile/notification_tile_widget.dart';
-import '/actions/actions.dart' as action_blocks;
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'notifications_page_model.dart';
@@ -34,12 +32,6 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'NotificationsPage'});
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('NOTIFICATIONS_NotificationsPage_ON_INIT_');
-      logFirebaseEvent('NotificationsPage_action_block');
-      await action_blocks.updateCurrentPage(context);
-    });
   }
 
   @override
@@ -54,12 +46,11 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
     context.watch<FFAppState>();
 
     return StreamBuilder<List<NotificationsRecord>>(
-      stream: FFAppState().notificationsQuery(
-        requestFn: () => queryNotificationsRecord(
-          parent: currentUserReference,
-          queryBuilder: (notificationsRecord) => notificationsRecord
-              .orderBy('notification_created_time', descending: true),
-        ),
+      stream: queryNotificationsRecord(
+        queryBuilder: (notificationsRecord) => notificationsRecord
+            .where('recipient_ref', isEqualTo: currentUserReference)
+            .orderBy('created_at', descending: true),
+        limit: 10,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -133,56 +124,31 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                   itemBuilder: (context, notificationsListIndex) {
                     final notificationsListItem =
                         notificationsList[notificationsListIndex];
-                    return StreamBuilder<UsersRecord>(
-                      stream: UsersRecord.getDocument(
-                          notificationsListItem.senderRef!),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        final notificationTileUsersRecord = snapshot.data!;
-                        return wrapWithModel(
-                          model: _model.notificationTileModels.getModel(
-                            random_data.randomString(
-                              10,
-                              20,
-                              true,
-                              true,
-                              true,
-                            ),
-                            notificationsListIndex,
-                          ),
-                          updateCallback: () => setState(() {}),
-                          updateOnChange: true,
-                          child: NotificationTileWidget(
-                            key: Key(
-                              'Key6hd_${random_data.randomString(
-                                10,
-                                20,
-                                true,
-                                true,
-                                true,
-                              )}',
-                            ),
-                            notificationBody:
-                                notificationsListItem.notificationText,
-                            notificationType:
-                                notificationsListItem.nofiticationType,
-                            sender: notificationTileUsersRecord,
-                          ),
-                        );
-                      },
+                    return wrapWithModel(
+                      model: _model.notificationTileModels.getModel(
+                        random_data.randomString(
+                          10,
+                          20,
+                          true,
+                          true,
+                          true,
+                        ),
+                        notificationsListIndex,
+                      ),
+                      updateCallback: () => setState(() {}),
+                      updateOnChange: true,
+                      child: NotificationTileWidget(
+                        key: Key(
+                          'Key6hd_${random_data.randomString(
+                            10,
+                            20,
+                            true,
+                            true,
+                            true,
+                          )}',
+                        ),
+                        notificationToDisplay: notificationsListItem,
+                      ),
                     );
                   },
                 );
