@@ -239,8 +239,12 @@ class _NotificationTileWidgetState extends State<NotificationTileWidget> {
                           color: FlutterFlowTheme.of(context).primaryText,
                           size: 20.0,
                         ),
-                        onPressed: () {
-                          print('IconButton pressed ...');
+                        onPressed: () async {
+                          logFirebaseEvent(
+                              'NOTIFICATION_TILE_COMP_delete_ICN_ON_TAP');
+                          logFirebaseEvent('IconButton_backend_call');
+                          await widget.notificationToDisplay!.reference
+                              .delete();
                         },
                       ),
                     ),
