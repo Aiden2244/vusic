@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -354,6 +355,12 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                     if (user == null) {
                       return;
                     }
+
+                    await UsersRecord.collection
+                        .doc(user.uid)
+                        .update(createUsersRecordData(
+                          email: _model.emailFieldController.text,
+                        ));
 
                     logFirebaseEvent('Button_navigate_to');
 

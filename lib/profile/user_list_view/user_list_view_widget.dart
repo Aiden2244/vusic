@@ -110,16 +110,44 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Container(
-                          width: 40.0,
-                          height: 40.0,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.network(
-                            containerUsersRecord.photoUrl,
-                            fit: BoxFit.fitWidth,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            logFirebaseEvent(
+                                'USER_LIST_VIEW_CircleImage_r98vbcmv_ON_T');
+                            if (containerUsersRecord.reference ==
+                                currentUserReference) {
+                              logFirebaseEvent('CircleImage_navigate_to');
+
+                              context.pushNamed('ProfilePage');
+                            } else {
+                              logFirebaseEvent('CircleImage_navigate_to');
+
+                              context.pushNamed(
+                                'OtherUserPFP',
+                                queryParameters: {
+                                  'pageUserRef': serializeParam(
+                                    widget.userAccount,
+                                    ParamType.DocumentReference,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            }
+                          },
+                          child: Container(
+                            width: 40.0,
+                            height: 40.0,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: Image.network(
+                              containerUsersRecord.photoUrl,
+                              fit: BoxFit.fitWidth,
+                            ),
                           ),
                         ),
                         Expanded(
