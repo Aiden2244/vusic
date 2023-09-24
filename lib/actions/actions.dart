@@ -104,23 +104,18 @@ Future updateFollowingCount(
   required DocumentReference? userRef,
   required bool? decrement,
 }) async {
-  final firestoreBatch = FirebaseFirestore.instance.batch();
-  try {
-    if (decrement == true) {
-      logFirebaseEvent('UpdateFollowingCount_backend_call');
+  if (decrement == true) {
+    logFirebaseEvent('UpdateFollowingCount_backend_call');
 
-      firestoreBatch.update(userRef!, {
-        'following_count': FieldValue.increment(-(1)),
-      });
-    } else {
-      logFirebaseEvent('UpdateFollowingCount_backend_call');
+    await userRef!.update({
+      'following_count': FieldValue.increment(-(1)),
+    });
+  } else {
+    logFirebaseEvent('UpdateFollowingCount_backend_call');
 
-      firestoreBatch.update(userRef!, {
-        'following_count': FieldValue.increment(1),
-      });
-    }
-  } finally {
-    await firestoreBatch.commit();
+    await userRef!.update({
+      'following_count': FieldValue.increment(1),
+    });
   }
 }
 
@@ -129,23 +124,18 @@ Future updateFollowerCount(
   required DocumentReference? userRef,
   required bool? decrement,
 }) async {
-  final firestoreBatch = FirebaseFirestore.instance.batch();
-  try {
-    if (decrement == true) {
-      logFirebaseEvent('UpdateFollowerCount_backend_call');
+  if (decrement == true) {
+    logFirebaseEvent('UpdateFollowerCount_backend_call');
 
-      firestoreBatch.update(userRef!, {
-        'follower_count': FieldValue.increment(-(1)),
-      });
-    } else {
-      logFirebaseEvent('UpdateFollowerCount_backend_call');
+    await userRef!.update({
+      'follower_count': FieldValue.increment(-(1)),
+    });
+  } else {
+    logFirebaseEvent('UpdateFollowerCount_backend_call');
 
-      firestoreBatch.update(userRef!, {
-        'follower_count': FieldValue.increment(1),
-      });
-    }
-  } finally {
-    await firestoreBatch.commit();
+    await userRef!.update({
+      'follower_count': FieldValue.increment(1),
+    });
   }
 }
 
