@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/feed/user_search_result/user_search_result_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -135,7 +136,11 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
                   child: Builder(
                     builder: (context) {
-                      if (_model.algoliaSearchResults == null) {
+                      if (_model.algoliaSearchResults
+                              ?.where(
+                                  (e) => e.reference != currentUserReference)
+                              .toList() ==
+                          null) {
                         return Center(
                           child: SizedBox(
                             width: 50.0,
@@ -148,8 +153,12 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                           ),
                         );
                       }
-                      final userSearchResults =
-                          _model.algoliaSearchResults?.toList() ?? [];
+                      final userSearchResults = _model.algoliaSearchResults
+                              ?.where(
+                                  (e) => e.reference != currentUserReference)
+                              .toList()
+                              ?.toList() ??
+                          [];
                       return ListView.builder(
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.vertical,

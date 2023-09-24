@@ -264,6 +264,7 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                       child: wrapWithModel(
                         model: _model.profileStatsBarModel,
                         updateCallback: () => setState(() {}),
+                        updateOnChange: true,
                         child: ProfileStatsBarWidget(
                           userToDisplayDataFor: otherUserPFPUsersRecord,
                         ),

@@ -53,7 +53,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
       );
       logFirebaseEvent('ProfileStatsBar_update_widget_state');
       setState(() {
-        _model.userFollowsThisAccount = _model.userFollowsUser;
+        _model.userFollowsThisAccount = _model.userFollowsUser!;
       });
       return;
     });
@@ -243,7 +243,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                 ),
-              if (!_model.userFollowsThisAccount! &&
+              if (!_model.userFollowsThisAccount &&
                   (widget.userToDisplayDataFor?.reference !=
                       currentUserReference))
                 FFButtonWidget(
@@ -255,6 +255,10 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                       userToFollow: widget.userToDisplayDataFor?.reference,
                     );
                     setState(() {});
+                    logFirebaseEvent('FollowButton_update_widget_state');
+                    setState(() {
+                      _model.userFollowsThisAccount = true;
+                    });
                   },
                   text: 'Follow',
                   icon: Icon(
@@ -283,7 +287,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                 ),
-              if (_model.userFollowsThisAccount! &&
+              if (_model.userFollowsThisAccount &&
                   (widget.userToDisplayDataFor?.reference !=
                       currentUserReference))
                 FFButtonWidget(
@@ -295,6 +299,10 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                       userToUnfollow: widget.userToDisplayDataFor?.reference,
                     );
                     setState(() {});
+                    logFirebaseEvent('UnfollowButton_update_widget_state');
+                    setState(() {
+                      _model.userFollowsThisAccount = false;
+                    });
                   },
                   text: 'Unfollow',
                   options: FFButtonOptions(

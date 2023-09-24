@@ -197,7 +197,7 @@ Future unfollowUser(
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(
-        'User unfolloweed',
+        'User unfollowed',
         style: TextStyle(),
       ),
       duration: Duration(milliseconds: 4000),
