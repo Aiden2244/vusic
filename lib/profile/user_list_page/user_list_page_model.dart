@@ -15,12 +15,15 @@ import 'package:provider/provider.dart';
 class UserListPageModel extends FlutterFlowModel {
   ///  Local state fields for this page.
 
-  List<UsersRecord> listToShow = [];
-  void addToListToShow(UsersRecord item) => listToShow.add(item);
-  void removeFromListToShow(UsersRecord item) => listToShow.remove(item);
-  void removeAtIndexFromListToShow(int index) => listToShow.removeAt(index);
-  void updateListToShowAtIndex(int index, Function(UsersRecord) updateFn) =>
-      listToShow[index] = updateFn(listToShow[index]);
+  List<FollowsRecord> listOfFollows = [];
+  void addToListOfFollows(FollowsRecord item) => listOfFollows.add(item);
+  void removeFromListOfFollows(FollowsRecord item) =>
+      listOfFollows.remove(item);
+  void removeAtIndexFromListOfFollows(int index) =>
+      listOfFollows.removeAt(index);
+  void updateListOfFollowsAtIndex(
+          int index, Function(FollowsRecord) updateFn) =>
+      listOfFollows[index] = updateFn(listOfFollows[index]);
 
   ///  State fields for stateful widgets in this page.
 
@@ -29,18 +32,13 @@ class UserListPageModel extends FlutterFlowModel {
   List<FollowsRecord>? usersYouFollow;
   // Stores action output result for [Firestore Query - Query a collection] action in UserListPage widget.
   List<FollowsRecord>? usersFollowingYou;
-  // Model for UserListView component.
-  late UserListViewModel userListViewModel;
 
   /// Initialization and disposal methods.
 
-  void initState(BuildContext context) {
-    userListViewModel = createModel(context, () => UserListViewModel());
-  }
+  void initState(BuildContext context) {}
 
   void dispose() {
     unfocusNode.dispose();
-    userListViewModel.dispose();
   }
 
   /// Action blocks are added here.

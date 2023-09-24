@@ -3,8 +3,8 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,11 +16,14 @@ class UserListViewWidget extends StatefulWidget {
   const UserListViewWidget({
     Key? key,
     required this.userAccount,
-    required this.queryType,
-  }) : super(key: key);
+    String? queryType,
+    required this.followsDoc,
+  })  : this.queryType = queryType ?? 'Following',
+        super(key: key);
 
   final DocumentReference? userAccount;
-  final String? queryType;
+  final String queryType;
+  final FollowsRecord? followsDoc;
 
   @override
   _UserListViewWidgetState createState() => _UserListViewWidgetState();
@@ -43,46 +46,16 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('USER_LIST_VIEW_UserListView_ON_INIT_STAT');
-      if (widget.queryType == 'Following') {
-        logFirebaseEvent('UserListView_firestore_query');
-        _model.followingQuery = await queryFollowsRecordOnce(
-          queryBuilder: (followsRecord) =>
-              followsRecord.where('followingID', isEqualTo: widget.userAccount),
-          limit: 15,
-        );
+      if (widget.followsDoc?.followingID == widget.userAccount) {
         logFirebaseEvent('UserListView_update_widget_state');
-        _model.followsDocRefList =
-            _model.followingQuery!.toList().cast<FollowsRecord>();
-        while (_model.usersToDisplay.length < _model.followsDocRefList.length) {
-          logFirebaseEvent('UserListView_action_block');
-          _model.followingID = await _model.extractUserFromFollowsDoc(
-            context,
-            followsDoc: _model.followsDocRefList[_model.followDocCount],
-            returnFollowerID: false,
-          );
-          logFirebaseEvent('UserListView_update_widget_state');
-          _model.addToUsersToDisplay(_model.followingID!);
-        }
+        setState(() {
+          _model.userToShowDataFor = widget.followsDoc?.followedID;
+        });
       } else {
-        logFirebaseEvent('UserListView_firestore_query');
-        _model.followerQuery = await queryFollowsRecordOnce(
-          queryBuilder: (followsRecord) =>
-              followsRecord.where('followedID', isEqualTo: widget.userAccount),
-          limit: 15,
-        );
         logFirebaseEvent('UserListView_update_widget_state');
-        _model.followsDocRefList =
-            _model.followerQuery!.toList().cast<FollowsRecord>();
-        while (_model.usersToDisplay.length < _model.followsDocRefList.length) {
-          logFirebaseEvent('UserListView_action_block');
-          _model.followerID = await _model.extractUserFromFollowsDoc(
-            context,
-            followsDoc: _model.followsDocRefList[_model.followDocCount],
-            returnFollowerID: true,
-          );
-          logFirebaseEvent('UserListView_update_widget_state');
-          _model.addToUsersToDisplay(_model.followerID!);
-        }
+        setState(() {
+          _model.userToShowDataFor = widget.followsDoc?.followingID;
+        });
       }
     });
   }
@@ -105,7 +78,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           FutureBuilder<UsersRecord>(
-            future: UsersRecord.getDocumentOnce(widget.userAccount!),
+            future: UsersRecord.getDocumentOnce(_model.userToShowDataFor!),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
               if (!snapshot.hasData) {
@@ -247,8 +220,26 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                                 color: FlutterFlowTheme.of(context).primaryText,
                                 size: 24.0,
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'USER_LIST_VIEW_person_remove_ICN_ON_TAP');
+                                if (widget.queryType == 'Following') {
+                                  logFirebaseEvent('IconButton_action_block');
+                                  await action_blocks.unfollowUser(
+                                    context,
+                                    userToUnfollow:
+                                        containerUsersRecord.reference,
+                                  );
+                                  setState(() {});
+                                } else {
+                                  logFirebaseEvent('IconButton_action_block');
+                                  await action_blocks.removeFollower(
+                                    context,
+                                    userToRemove:
+                                        containerUsersRecord.reference,
+                                  );
+                                  setState(() {});
+                                }
                               },
                             ),
                           ),

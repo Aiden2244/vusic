@@ -215,9 +215,8 @@ class _OtherUserPFPWidgetState extends State<OtherUserPFPWidget> {
                                             .primaryBackground,
                                       ),
                                       child: Visibility(
-                                        visible: otherUserPFPUsersRecord
-                                                .isVerified ==
-                                            true,
+                                        visible:
+                                            otherUserPFPUsersRecord.isVerified,
                                         child: Icon(
                                           Icons.verified,
                                           color: FlutterFlowTheme.of(context)

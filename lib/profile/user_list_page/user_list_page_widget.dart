@@ -50,15 +50,25 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         _model.usersYouFollow = await queryFollowsRecordOnce(
           queryBuilder: (followsRecord) =>
               followsRecord.where('followingID', isEqualTo: widget.account),
-          limit: 15,
+          limit: 100,
         );
+        logFirebaseEvent('UserListPage_update_widget_state');
+        setState(() {
+          _model.listOfFollows =
+              _model.usersYouFollow!.toList().cast<FollowsRecord>();
+        });
       } else {
         logFirebaseEvent('UserListPage_firestore_query');
         _model.usersFollowingYou = await queryFollowsRecordOnce(
           queryBuilder: (followsRecord) =>
               followsRecord.where('followedID', isEqualTo: widget.account),
-          limit: 15,
+          limit: 100,
         );
+        logFirebaseEvent('UserListPage_update_widget_state');
+        setState(() {
+          _model.listOfFollows =
+              _model.usersFollowingYou!.toList().cast<FollowsRecord>();
+        });
       }
     });
   }
@@ -82,39 +92,36 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          leading: Visibility(
-            visible: widget.account == currentUserReference,
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 60.0,
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 30.0,
-              ),
-              onPressed: () async {
-                logFirebaseEvent('USER_LIST_arrow_back_rounded_ICN_ON_TAP');
-                if (widget.account == currentUserReference) {
-                  logFirebaseEvent('IconButton_navigate_to');
-
-                  context.pushNamed('ProfilePage');
-                } else {
-                  logFirebaseEvent('IconButton_navigate_to');
-
-                  context.pushNamed(
-                    'OtherUserPFP',
-                    queryParameters: {
-                      'pageUserRef': serializeParam(
-                        widget.account,
-                        ParamType.DocumentReference,
-                      ),
-                    }.withoutNulls,
-                  );
-                }
-              },
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
             ),
+            onPressed: () async {
+              logFirebaseEvent('USER_LIST_arrow_back_rounded_ICN_ON_TAP');
+              if (widget.account == currentUserReference) {
+                logFirebaseEvent('IconButton_navigate_to');
+
+                context.pushNamed('ProfilePage');
+              } else {
+                logFirebaseEvent('IconButton_navigate_to');
+
+                context.pushNamed(
+                  'OtherUserPFP',
+                  queryParameters: {
+                    'pageUserRef': serializeParam(
+                      widget.account,
+                      ParamType.DocumentReference,
+                    ),
+                  }.withoutNulls,
+                );
+              }
+            },
           ),
           title: Text(
             valueOrDefault<String>(
@@ -135,31 +142,26 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: StreamBuilder<UsersRecord>(
-            stream: UsersRecord.getDocument(widget.account!),
-            builder: (context, snapshot) {
-              // Customize what your widget looks like when it's loading.
-              if (!snapshot.hasData) {
-                return Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
-                      ),
-                    ),
-                  ),
-                );
-              }
-              final userListViewUsersRecord = snapshot.data!;
-              return wrapWithModel(
-                model: _model.userListViewModel,
-                updateCallback: () => setState(() {}),
-                child: UserListViewWidget(
-                  userAccount: widget.account!,
-                  queryType: widget.queryType!,
-                ),
+          child: Builder(
+            builder: (context) {
+              final listOfFollowsPassedInListView =
+                  _model.listOfFollows.toList();
+              return ListView.builder(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                itemCount: listOfFollowsPassedInListView.length,
+                itemBuilder: (context, listOfFollowsPassedInListViewIndex) {
+                  final listOfFollowsPassedInListViewItem =
+                      listOfFollowsPassedInListView[
+                          listOfFollowsPassedInListViewIndex];
+                  return UserListViewWidget(
+                    key: Key(
+                        'Keyh7p_${listOfFollowsPassedInListViewIndex}_of_${listOfFollowsPassedInListView.length}'),
+                    queryType: widget.queryType!,
+                    userAccount: widget.account!,
+                    followsDoc: listOfFollowsPassedInListViewItem,
+                  );
+                },
               );
             },
           ),
