@@ -130,7 +130,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                                 'OtherUserPFP',
                                 queryParameters: {
                                   'pageUserRef': serializeParam(
-                                    widget.userAccount,
+                                    containerUsersRecord.reference,
                                     ParamType.DocumentReference,
                                   ),
                                 }.withoutNulls,
