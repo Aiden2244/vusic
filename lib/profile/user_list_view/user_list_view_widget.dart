@@ -118,7 +118,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                           onTap: () async {
                             logFirebaseEvent(
                                 'USER_LIST_VIEW_CircleImage_r98vbcmv_ON_T');
-                            if (containerUsersRecord.reference ==
+                            if (_model.userToShowDataFor ==
                                 currentUserReference) {
                               logFirebaseEvent('CircleImage_navigate_to');
 
