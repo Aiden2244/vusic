@@ -12,7 +12,7 @@ export '/profile/profile_page/profile_page_widget.dart' show ProfilePageWidget;
 export '/feed/search_page/search_page_widget.dart' show SearchPageWidget;
 export '/profile/profile_settings_page/profile_settings_page_widget.dart'
     show ProfileSettingsPageWidget;
-export '/profile/notifications_page/notifications_page_widget.dart'
+export '/notifications/notifications_page/notifications_page_widget.dart'
     show NotificationsPageWidget;
 export '/profile/user_list_page/user_list_page_widget.dart'
     show UserListPageWidget;

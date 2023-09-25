@@ -142,28 +142,31 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Builder(
-            builder: (context) {
-              final listOfFollowsPassedInListView =
-                  _model.listOfFollows.toList();
-              return ListView.builder(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.vertical,
-                itemCount: listOfFollowsPassedInListView.length,
-                itemBuilder: (context, listOfFollowsPassedInListViewIndex) {
-                  final listOfFollowsPassedInListViewItem =
-                      listOfFollowsPassedInListView[
-                          listOfFollowsPassedInListViewIndex];
-                  return UserListViewWidget(
-                    key: Key(
-                        'Keyh7p_${listOfFollowsPassedInListViewIndex}_of_${listOfFollowsPassedInListView.length}'),
-                    queryType: widget.queryType!,
-                    userAccount: widget.account!,
-                    followsDoc: listOfFollowsPassedInListViewItem,
-                  );
-                },
-              );
-            },
+          child: Visibility(
+            visible: _model.listOfFollows.length > 0,
+            child: Builder(
+              builder: (context) {
+                final listOfFollowsPassedInListView =
+                    _model.listOfFollows.toList();
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.vertical,
+                  itemCount: listOfFollowsPassedInListView.length,
+                  itemBuilder: (context, listOfFollowsPassedInListViewIndex) {
+                    final listOfFollowsPassedInListViewItem =
+                        listOfFollowsPassedInListView[
+                            listOfFollowsPassedInListViewIndex];
+                    return UserListViewWidget(
+                      key: Key(
+                          'Keyh7p_${listOfFollowsPassedInListViewIndex}_of_${listOfFollowsPassedInListView.length}'),
+                      queryType: widget.queryType!,
+                      userAccount: widget.account!,
+                      followsDoc: listOfFollowsPassedInListViewItem,
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),
