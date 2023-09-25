@@ -48,14 +48,10 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
       logFirebaseEvent('USER_LIST_VIEW_UserListView_ON_INIT_STAT');
       if (widget.followsDoc?.followingID == widget.userAccount) {
         logFirebaseEvent('UserListView_update_widget_state');
-        _model.updatePage(() {
-          _model.userToShowDataFor = widget.followsDoc?.followedID;
-        });
+        _model.userToShowDataFor = widget.followsDoc?.followedID;
       } else {
         logFirebaseEvent('UserListView_update_widget_state');
-        _model.updatePage(() {
-          _model.userToShowDataFor = widget.followsDoc?.followingID;
-        });
+        _model.userToShowDataFor = widget.followsDoc?.followingID;
       }
     });
   }
@@ -77,8 +73,8 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FutureBuilder<UsersRecord>(
-            future: UsersRecord.getDocumentOnce(_model.userToShowDataFor!),
+          StreamBuilder<UsersRecord>(
+            stream: UsersRecord.getDocument(_model.userToShowDataFor!),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
               if (!snapshot.hasData) {
