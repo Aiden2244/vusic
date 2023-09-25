@@ -15,9 +15,9 @@ export 'user_list_view_model.dart';
 class UserListViewWidget extends StatefulWidget {
   const UserListViewWidget({
     Key? key,
-    required this.userAccount,
+    this.userAccount,
     String? queryType,
-    required this.followsDoc,
+    this.followsDoc,
   })  : this.queryType = queryType ?? 'Following',
         super(key: key);
 
@@ -48,10 +48,14 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
       logFirebaseEvent('USER_LIST_VIEW_UserListView_ON_INIT_STAT');
       if (widget.followsDoc?.followingID == widget.userAccount) {
         logFirebaseEvent('UserListView_update_widget_state');
-        _model.userToShowDataFor = widget.followsDoc?.followedID;
+        setState(() {
+          _model.userToShowDataFor = widget.followsDoc?.followedID;
+        });
       } else {
         logFirebaseEvent('UserListView_update_widget_state');
-        _model.userToShowDataFor = widget.followsDoc?.followingID;
+        setState(() {
+          _model.userToShowDataFor = widget.followsDoc?.followingID;
+        });
       }
     });
   }
