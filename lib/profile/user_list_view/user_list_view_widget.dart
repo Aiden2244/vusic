@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/actions/actions.dart' as action_blocks;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'user_list_view_model.dart';
@@ -15,15 +14,13 @@ export 'user_list_view_model.dart';
 class UserListViewWidget extends StatefulWidget {
   const UserListViewWidget({
     Key? key,
-    required this.userAccount,
+    required this.userToShowDataFor,
     String? queryType,
-    required this.followsDoc,
   })  : this.queryType = queryType ?? 'Following',
         super(key: key);
 
-  final DocumentReference? userAccount;
+  final DocumentReference? userToShowDataFor;
   final String queryType;
-  final FollowsRecord? followsDoc;
 
   @override
   _UserListViewWidgetState createState() => _UserListViewWidgetState();
@@ -42,22 +39,6 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UserListViewModel());
-
-    // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('USER_LIST_VIEW_UserListView_ON_INIT_STAT');
-      if (widget.followsDoc?.followingID == widget.userAccount) {
-        logFirebaseEvent('UserListView_update_widget_state');
-        setState(() {
-          _model.userToShowDataFor = widget.followsDoc?.followedID;
-        });
-      } else {
-        logFirebaseEvent('UserListView_update_widget_state');
-        setState(() {
-          _model.userToShowDataFor = widget.followsDoc?.followingID;
-        });
-      }
-    });
   }
 
   @override
@@ -72,7 +53,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
     context.watch<FFAppState>();
 
     return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(_model.userToShowDataFor!),
+      stream: UsersRecord.getDocument(widget.userToShowDataFor!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -111,7 +92,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                     onTap: () async {
                       logFirebaseEvent(
                           'USER_LIST_VIEW_CircleImage_dwfghybf_ON_T');
-                      if (_model.userToShowDataFor == currentUserReference) {
+                      if (widget.userToShowDataFor == currentUserReference) {
                         logFirebaseEvent('CircleImage_navigate_to');
 
                         context.pushNamed('ProfilePage');
@@ -122,7 +103,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                           'OtherUserPFP',
                           queryParameters: {
                             'pageUserRef': serializeParam(
-                              containerUsersRecord.reference,
+                              widget.userToShowDataFor,
                               ParamType.DocumentReference,
                             ),
                           }.withoutNulls,
@@ -218,7 +199,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                       ),
                     ),
                   ),
-                  if (widget.userAccount == currentUserReference)
+                  if (widget.userToShowDataFor == currentUserReference)
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),

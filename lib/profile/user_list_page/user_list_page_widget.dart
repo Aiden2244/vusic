@@ -54,8 +54,12 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         );
         logFirebaseEvent('UserListPage_update_widget_state');
         setState(() {
-          _model.listOfFollows =
-              _model.usersYouFollow!.toList().cast<FollowsRecord>();
+          _model.listOfUserRefs = _model.usersYouFollow!
+              .map((e) => e.followingID)
+              .withoutNulls
+              .toList()
+              .toList()
+              .cast<DocumentReference>();
         });
       } else {
         logFirebaseEvent('UserListPage_firestore_query');
@@ -66,8 +70,12 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         );
         logFirebaseEvent('UserListPage_update_widget_state');
         setState(() {
-          _model.listOfFollows =
-              _model.usersFollowingYou!.toList().cast<FollowsRecord>();
+          _model.listOfUserRefs = _model.usersFollowingYou!
+              .map((e) => e.followedID)
+              .withoutNulls
+              .toList()
+              .toList()
+              .cast<DocumentReference>();
         });
       }
     });
@@ -144,20 +152,19 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
           top: true,
           child: Builder(
             builder: (context) {
-              final followsDocToProcess =
-                  _model.listOfFollows.toList().take(20).toList();
+              final userRefToProcess =
+                  _model.listOfUserRefs.toList().take(20).toList();
               return Column(
                 mainAxisSize: MainAxisSize.max,
-                children: List.generate(followsDocToProcess.length,
-                    (followsDocToProcessIndex) {
-                  final followsDocToProcessItem =
-                      followsDocToProcess[followsDocToProcessIndex];
+                children: List.generate(userRefToProcess.length,
+                    (userRefToProcessIndex) {
+                  final userRefToProcessItem =
+                      userRefToProcess[userRefToProcessIndex];
                   return UserListViewWidget(
                     key: Key(
-                        'Keypys_${followsDocToProcessIndex}_of_${followsDocToProcess.length}'),
+                        'Keypys_${userRefToProcessIndex}_of_${userRefToProcess.length}'),
                     queryType: widget.queryType!,
-                    userAccount: widget.account!,
-                    followsDoc: followsDocToProcessItem,
+                    userToShowDataFor: userRefToProcessItem,
                   );
                 }),
               );
