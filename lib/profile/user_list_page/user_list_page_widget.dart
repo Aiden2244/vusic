@@ -144,24 +144,22 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
           top: true,
           child: Builder(
             builder: (context) {
-              final listOfFollowsPassedInListView =
-                  _model.listOfFollows.toList();
-              return ListView.builder(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.vertical,
-                itemCount: listOfFollowsPassedInListView.length,
-                itemBuilder: (context, listOfFollowsPassedInListViewIndex) {
-                  final listOfFollowsPassedInListViewItem =
-                      listOfFollowsPassedInListView[
-                          listOfFollowsPassedInListViewIndex];
+              final followsDocToProcess =
+                  _model.listOfFollows.toList().take(20).toList();
+              return Column(
+                mainAxisSize: MainAxisSize.max,
+                children: List.generate(followsDocToProcess.length,
+                    (followsDocToProcessIndex) {
+                  final followsDocToProcessItem =
+                      followsDocToProcess[followsDocToProcessIndex];
                   return UserListViewWidget(
                     key: Key(
-                        'Keyh7p_${listOfFollowsPassedInListViewIndex}_of_${listOfFollowsPassedInListView.length}'),
+                        'Keypys_${followsDocToProcessIndex}_of_${followsDocToProcess.length}'),
                     queryType: widget.queryType!,
                     userAccount: widget.account!,
-                    followsDoc: listOfFollowsPassedInListViewItem,
+                    followsDoc: followsDocToProcessItem,
                   );
-                },
+                }),
               );
             },
           ),
