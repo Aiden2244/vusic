@@ -158,7 +158,7 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
                     key: Key(
                         'Keyh7p_${listOfFollowsPassedInListViewIndex}_of_${listOfFollowsPassedInListView.length}'),
                     queryType: widget.queryType!,
-                    userAccount: widget.account,
+                    userAccount: widget.account!,
                     followsDoc: listOfFollowsPassedInListViewItem,
                   );
                 },
