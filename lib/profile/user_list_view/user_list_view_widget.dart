@@ -48,12 +48,12 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
       logFirebaseEvent('USER_LIST_VIEW_UserListView_ON_INIT_STAT');
       if (widget.followsDoc?.followingID == widget.userAccount) {
         logFirebaseEvent('UserListView_update_widget_state');
-        setState(() {
+        _model.updatePage(() {
           _model.userToShowDataFor = widget.followsDoc?.followedID;
         });
       } else {
         logFirebaseEvent('UserListView_update_widget_state');
-        setState(() {
+        _model.updatePage(() {
           _model.userToShowDataFor = widget.followsDoc?.followingID;
         });
       }
