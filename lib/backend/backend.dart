@@ -12,6 +12,8 @@ import 'schema/follows_record.dart';
 import 'schema/notifications_record.dart';
 import 'schema/reports_record.dart';
 import 'schema/blocked_users_record.dart';
+import 'schema/help_center_record.dart';
+import 'schema/f_a_qs_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,6 +28,8 @@ export 'schema/follows_record.dart';
 export 'schema/notifications_record.dart';
 export 'schema/reports_record.dart';
 export 'schema/blocked_users_record.dart';
+export 'schema/help_center_record.dart';
+export 'schema/f_a_qs_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -281,6 +285,80 @@ Future<List<BlockedUsersRecord>> queryBlockedUsersRecordOnce({
     queryCollectionOnce(
       BlockedUsersRecord.collection,
       BlockedUsersRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query HelpCenterRecords (as a Stream and as a Future).
+Future<int> queryHelpCenterRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      HelpCenterRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<HelpCenterRecord>> queryHelpCenterRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      HelpCenterRecord.collection,
+      HelpCenterRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<HelpCenterRecord>> queryHelpCenterRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      HelpCenterRecord.collection,
+      HelpCenterRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query FAQsRecords (as a Stream and as a Future).
+Future<int> queryFAQsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      FAQsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<FAQsRecord>> queryFAQsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      FAQsRecord.collection,
+      FAQsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<FAQsRecord>> queryFAQsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      FAQsRecord.collection,
+      FAQsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
