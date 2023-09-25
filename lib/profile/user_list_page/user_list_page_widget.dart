@@ -55,7 +55,7 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         logFirebaseEvent('UserListPage_update_widget_state');
         setState(() {
           _model.listOfUserRefs = _model.usersYouFollow!
-              .map((e) => e.followingID)
+              .map((e) => e.followedID)
               .withoutNulls
               .toList()
               .toList()
@@ -71,7 +71,7 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
         logFirebaseEvent('UserListPage_update_widget_state');
         setState(() {
           _model.listOfUserRefs = _model.usersFollowingYou!
-              .map((e) => e.followedID)
+              .map((e) => e.followingID)
               .withoutNulls
               .toList()
               .toList()
