@@ -454,13 +454,13 @@ packages:
     source: hosted
     version: "4.0.2"
   image:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: image
-      sha256: "93d1141eb65fe62414d5492de96ca2bff97eba0ca9218a89ad407a6f201fcadf"
+      sha256: a72242c9a0ffb65d03de1b7113bc4e189686fc07c7147b8b41811d0dd0e0d9bf
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.2"
+    version: "4.0.17"
   intl:
     dependency: "direct main"
     description:
