@@ -396,10 +396,10 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                       accountType: _model.accountMenuValue,
                       userName: _model.unameFieldController.text,
                       createdTime: getCurrentTimestamp,
-                      lastUsernameChange: getCurrentTimestamp,
                       followingCount: 0,
-                      email: '',
                       followerCount: 0,
+                      photoUrl:
+                          'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
                     ));
                     logFirebaseEvent('Button_navigate_to');
 

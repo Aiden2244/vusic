@@ -31,6 +31,9 @@ dependencies:
   cloud_firestore: 4.8.0
   cloud_firestore_platform_interface: 5.15.0
   cloud_firestore_web: 3.6.0
+  cloud_functions: 4.3.2
+  cloud_functions_platform_interface: 5.4.2
+  cloud_functions_web: 4.5.2
   dropdown_button2: 2.0.0
   easy_debounce: 2.0.1
   equatable: 2.0.5
