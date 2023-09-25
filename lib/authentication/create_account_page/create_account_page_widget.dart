@@ -360,6 +360,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                         .doc(user.uid)
                         .update(createUsersRecordData(
                           email: _model.emailFieldController.text,
+                          displayName: '',
                         ));
 
                     logFirebaseEvent('Button_navigate_to');
