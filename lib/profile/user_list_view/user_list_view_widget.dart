@@ -201,7 +201,7 @@ class _UserListViewWidgetState extends State<UserListViewWidget> {
                       ),
                     ),
                   ),
-                  if (widget.userToShowDataFor == currentUserReference)
+                  if (widget.userForWhomTheDataRelates == currentUserReference)
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
