@@ -15,15 +15,15 @@ import 'package:provider/provider.dart';
 class UserListPageModel extends FlutterFlowModel {
   ///  Local state fields for this page.
 
-  List<FollowsRecord> listOfFollows = [];
-  void addToListOfFollows(FollowsRecord item) => listOfFollows.add(item);
-  void removeFromListOfFollows(FollowsRecord item) =>
-      listOfFollows.remove(item);
-  void removeAtIndexFromListOfFollows(int index) =>
-      listOfFollows.removeAt(index);
-  void updateListOfFollowsAtIndex(
-          int index, Function(FollowsRecord) updateFn) =>
-      listOfFollows[index] = updateFn(listOfFollows[index]);
+  List<DocumentReference> listOfUserRefs = [];
+  void addToListOfUserRefs(DocumentReference item) => listOfUserRefs.add(item);
+  void removeFromListOfUserRefs(DocumentReference item) =>
+      listOfUserRefs.remove(item);
+  void removeAtIndexFromListOfUserRefs(int index) =>
+      listOfUserRefs.removeAt(index);
+  void updateListOfUserRefsAtIndex(
+          int index, Function(DocumentReference) updateFn) =>
+      listOfUserRefs[index] = updateFn(listOfUserRefs[index]);
 
   ///  State fields for stateful widgets in this page.
 
