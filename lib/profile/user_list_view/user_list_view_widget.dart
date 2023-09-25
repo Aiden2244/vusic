@@ -16,11 +16,13 @@ class UserListViewWidget extends StatefulWidget {
     Key? key,
     required this.userToShowDataFor,
     String? queryType,
+    required this.userForWhomTheDataRelates,
   })  : this.queryType = queryType ?? 'Following',
         super(key: key);
 
   final DocumentReference? userToShowDataFor;
   final String queryType;
+  final DocumentReference? userForWhomTheDataRelates;
 
   @override
   _UserListViewWidgetState createState() => _UserListViewWidgetState();

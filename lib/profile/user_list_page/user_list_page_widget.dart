@@ -165,6 +165,7 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
                         'Keypys_${userRefToProcessIndex}_of_${userRefToProcess.length}'),
                     queryType: widget.queryType!,
                     userToShowDataFor: userRefToProcessItem,
+                    userForWhomTheDataRelates: widget.account!,
                   );
                 }),
               );
