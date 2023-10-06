@@ -6,8 +6,10 @@ if (!admin.apps.length) {
   admin.initializeApp();
 }
 
-// Import the syncUserToAlgolia function
-const syncUserToAlgolia = require("./syncUserToAlgolia");
+// Import functions
+const syncUserToAlgolia = require("./syncUserToAlgolia.js");
+const removeUserFromAlgolia = require("./removeUserFromAlgolia.js");
 
 // Export the function
 exports.syncUserToAlgolia = syncUserToAlgolia;
+exports.removeUserFromAlgolia = removeUserFromAlgolia;
