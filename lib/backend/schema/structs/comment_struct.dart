@@ -1,4 +1,5 @@
 // ignore_for_file: unnecessary_getters_setters
+import '/backend/algolia/serialization_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -103,6 +104,34 @@ class CommentStruct extends FFFirebaseStruct {
           data['comment_id'],
           ParamType.String,
           false,
+        ),
+      );
+
+  static CommentStruct fromAlgoliaData(Map<String, dynamic> data) =>
+      CommentStruct(
+        commentText: convertAlgoliaParam(
+          data['comment_text'],
+          ParamType.String,
+          false,
+        ),
+        commentUser: convertAlgoliaParam(
+          data['comment_user'],
+          ParamType.DocumentReference,
+          false,
+        ),
+        commentTime: convertAlgoliaParam(
+          data['comment_time'],
+          ParamType.DateTime,
+          false,
+        ),
+        commentId: convertAlgoliaParam(
+          data['comment_id'],
+          ParamType.String,
+          false,
+        ),
+        firestoreUtilData: FirestoreUtilData(
+          clearUnsetFields: false,
+          create: true,
         ),
       );
 

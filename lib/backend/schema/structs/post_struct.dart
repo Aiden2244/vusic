@@ -1,4 +1,5 @@
 // ignore_for_file: unnecessary_getters_setters
+import '/backend/algolia/serialization_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -270,6 +271,74 @@ class PostStruct extends FFFirebaseStruct {
           data['post_cover_photo'],
           ParamType.String,
           false,
+        ),
+      );
+
+  static PostStruct fromAlgoliaData(Map<String, dynamic> data) => PostStruct(
+        postId: convertAlgoliaParam(
+          data['post_id'],
+          ParamType.String,
+          false,
+        ),
+        postTitle: convertAlgoliaParam(
+          data['post_title'],
+          ParamType.String,
+          false,
+        ),
+        postCaption: convertAlgoliaParam(
+          data['post_caption'],
+          ParamType.String,
+          false,
+        ),
+        postUser: convertAlgoliaParam(
+          data['post_user'],
+          ParamType.DocumentReference,
+          false,
+        ),
+        timePosted: convertAlgoliaParam(
+          data['time_posted'],
+          ParamType.DateTime,
+          false,
+        ),
+        likesCount: convertAlgoliaParam(
+          data['likes_count'],
+          ParamType.int,
+          false,
+        ),
+        likes: convertAlgoliaParam<DocumentReference>(
+          data['likes'],
+          ParamType.DocumentReference,
+          true,
+        ),
+        commentsCount: convertAlgoliaParam(
+          data['comments_count'],
+          ParamType.int,
+          false,
+        ),
+        comments: convertAlgoliaParam<CommentStruct>(
+          data['comments'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: CommentStruct.fromAlgoliaData,
+        ),
+        sharesCount: convertAlgoliaParam(
+          data['shares_count'],
+          ParamType.int,
+          false,
+        ),
+        postVideo: convertAlgoliaParam(
+          data['post_video'],
+          ParamType.String,
+          false,
+        ),
+        postCoverPhoto: convertAlgoliaParam(
+          data['post_cover_photo'],
+          ParamType.String,
+          false,
+        ),
+        firestoreUtilData: FirestoreUtilData(
+          clearUnsetFields: false,
+          create: true,
         ),
       );
 

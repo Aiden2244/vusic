@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -15,7 +14,16 @@ import 'set_uname_page_model.dart';
 export 'set_uname_page_model.dart';
 
 class SetUnamePageWidget extends StatefulWidget {
-  const SetUnamePageWidget({Key? key}) : super(key: key);
+  const SetUnamePageWidget({
+    Key? key,
+    this.email,
+    this.passwd,
+    this.confPasswd,
+  }) : super(key: key);
+
+  final String? email;
+  final String? passwd;
+  final String? confPasswd;
 
   @override
   _SetUnamePageWidgetState createState() => _SetUnamePageWidgetState();
@@ -50,7 +58,9 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -388,22 +398,47 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                       ),
                     );
                   } else {
-                    logFirebaseEvent('Button_backend_call');
+                    logFirebaseEvent('Button_auth');
+                    GoRouter.of(context).prepareAuthEvent();
+                    if (widget.passwd! != widget.confPasswd!) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Passwords don\'t match!',
+                          ),
+                        ),
+                      );
+                      return;
+                    }
 
-                    await currentUserReference!.update(createUsersRecordData(
-                      displayName: _model.nameFieldController.text,
-                      phoneNumber: _model.phoneFieldController.text,
-                      accountType: _model.accountMenuValue,
-                      userName: _model.unameFieldController.text,
-                      createdTime: getCurrentTimestamp,
-                      followingCount: 0,
-                      followerCount: 0,
-                      photoUrl:
-                          'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
-                    ));
+                    final user = await authManager.createAccountWithEmail(
+                      context,
+                      widget.email!,
+                      widget.passwd!,
+                    );
+                    if (user == null) {
+                      return;
+                    }
+
+                    await UsersRecord.collection
+                        .doc(user.uid)
+                        .update(createUsersRecordData(
+                          email: widget.email,
+                          displayName: _model.nameFieldController.text,
+                          photoUrl:
+                              'https://firebasestorage.googleapis.com/v0/b/vusic-final-c44ec.appspot.com/o/Vusic%20Logo%20Large.png?alt=media&token=7bd3dcee-5a03-4dd5-89b4-17f4fcc67dbc',
+                          createdTime: getCurrentTimestamp,
+                          phoneNumber: _model.phoneFieldController.text,
+                          accountType: _model.accountMenuValue,
+                          userName: _model.unameFieldController.text,
+                          isVerified: _model.accountMenuValue == 'musician',
+                          followingCount: 0,
+                          followerCount: 0,
+                        ));
+
                     logFirebaseEvent('Button_navigate_to');
 
-                    context.pushNamed('SampleThemeTest');
+                    context.pushNamedAuth('SampleThemeTest', context.mounted);
                   }
                 },
                 text: 'Create Account',

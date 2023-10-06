@@ -51,7 +51,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
         followingUser: currentUserReference,
         followedUser: widget.userToDisplayDataFor?.reference,
       );
-      logFirebaseEvent('ProfileStatsBar_update_widget_state');
+      logFirebaseEvent('ProfileStatsBar_update_component_state');
       setState(() {
         _model.userFollowsThisAccount = _model.userFollowsUser!;
       });
@@ -255,7 +255,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                       userToFollow: widget.userToDisplayDataFor?.reference,
                     );
                     setState(() {});
-                    logFirebaseEvent('FollowButton_update_widget_state');
+                    logFirebaseEvent('FollowButton_update_component_state');
                     setState(() {
                       _model.userFollowsThisAccount = true;
                     });
@@ -299,7 +299,7 @@ class _ProfileStatsBarWidgetState extends State<ProfileStatsBarWidget> {
                       userToUnfollow: widget.userToDisplayDataFor?.reference,
                     );
                     setState(() {});
-                    logFirebaseEvent('UnfollowButton_update_widget_state');
+                    logFirebaseEvent('UnfollowButton_update_component_state');
                     setState(() {
                       _model.userFollowsThisAccount = false;
                     });

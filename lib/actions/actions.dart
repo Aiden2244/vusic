@@ -108,13 +108,21 @@ Future updateFollowingCount(
     logFirebaseEvent('UpdateFollowingCount_backend_call');
 
     await userRef!.update({
-      'following_count': FieldValue.increment(-(1)),
+      ...mapToFirestore(
+        {
+          'following_count': FieldValue.increment(-(1)),
+        },
+      ),
     });
   } else {
     logFirebaseEvent('UpdateFollowingCount_backend_call');
 
     await userRef!.update({
-      'following_count': FieldValue.increment(1),
+      ...mapToFirestore(
+        {
+          'following_count': FieldValue.increment(1),
+        },
+      ),
     });
   }
 }
@@ -128,13 +136,21 @@ Future updateFollowerCount(
     logFirebaseEvent('UpdateFollowerCount_backend_call');
 
     await userRef!.update({
-      'follower_count': FieldValue.increment(-(1)),
+      ...mapToFirestore(
+        {
+          'follower_count': FieldValue.increment(-(1)),
+        },
+      ),
     });
   } else {
     logFirebaseEvent('UpdateFollowerCount_backend_call');
 
     await userRef!.update({
-      'follower_count': FieldValue.increment(1),
+      ...mapToFirestore(
+        {
+          'follower_count': FieldValue.increment(1),
+        },
+      ),
     });
   }
 }
@@ -149,8 +165,14 @@ Future<bool?> isFollowing(
   logFirebaseEvent('IsFollowing_firestore_query');
   followingDoc = await queryFollowsRecordOnce(
     queryBuilder: (followsRecord) => followsRecord
-        .where('followedID', isEqualTo: followedUser)
-        .where('followingID', isEqualTo: followingUser),
+        .where(
+          'followedID',
+          isEqualTo: followedUser,
+        )
+        .where(
+          'followingID',
+          isEqualTo: followingUser,
+        ),
     singleRecord: true,
   ).then((s) => s.firstOrNull);
   return followingDoc != null;
@@ -206,8 +228,14 @@ Future<DocumentReference?> getFollowsDocRef(
   logFirebaseEvent('GetFollowsDocRef_firestore_query');
   followingDoc = await queryFollowsRecordOnce(
     queryBuilder: (followsRecord) => followsRecord
-        .where('followedID', isEqualTo: followedUser)
-        .where('followingID', isEqualTo: followingUser),
+        .where(
+          'followedID',
+          isEqualTo: followedUser,
+        )
+        .where(
+          'followingID',
+          isEqualTo: followingUser,
+        ),
     singleRecord: true,
   ).then((s) => s.firstOrNull);
   return followingDoc?.reference;
@@ -282,8 +310,10 @@ Future<UsersRecord?> getUserFromReference(
 
   logFirebaseEvent('GetUserFromReference_firestore_query');
   userDoc = await queryUsersRecordOnce(
-    queryBuilder: (usersRecord) =>
-        usersRecord.where('uid', isEqualTo: userToGet?.id),
+    queryBuilder: (usersRecord) => usersRecord.where(
+      'uid',
+      isEqualTo: userToGet?.id,
+    ),
     singleRecord: true,
   ).then((s) => s.firstOrNull);
   return userDoc;

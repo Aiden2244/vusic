@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:from_css_color/from_css_color.dart';
+import '/backend/algolia/serialization_util.dart';
 import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
@@ -105,24 +106,33 @@ class NotificationsRecord extends FirestoreRecord {
   static NotificationsRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
       NotificationsRecord.getDocumentFromData(
         {
-          'recipient_ref': safeGet(
-            () => toRef(snapshot.data['recipient_ref']),
+          'recipient_ref': convertAlgoliaParam(
+            snapshot.data['recipient_ref'],
+            ParamType.DocumentReference,
+            false,
           ),
-          'sender_ref': safeGet(
-            () => toRef(snapshot.data['sender_ref']),
+          'sender_ref': convertAlgoliaParam(
+            snapshot.data['sender_ref'],
+            ParamType.DocumentReference,
+            false,
           ),
           'type': snapshot.data['type'],
-          'created_at': safeGet(
-            () => DateTime.fromMillisecondsSinceEpoch(
-                snapshot.data['created_at']),
+          'created_at': convertAlgoliaParam(
+            snapshot.data['created_at'],
+            ParamType.DateTime,
+            false,
           ),
           'is_read': snapshot.data['is_read'],
           'notification_body': snapshot.data['notification_body'],
-          'post_ref': safeGet(
-            () => toRef(snapshot.data['post_ref']),
+          'post_ref': convertAlgoliaParam(
+            snapshot.data['post_ref'],
+            ParamType.DocumentReference,
+            false,
           ),
-          'comment_ref': safeGet(
-            () => toRef(snapshot.data['comment_ref']),
+          'comment_ref': convertAlgoliaParam(
+            snapshot.data['comment_ref'],
+            ParamType.DocumentReference,
+            false,
           ),
           'sender_username': snapshot.data['sender_username'],
           'sender_pfp': snapshot.data['sender_pfp'],

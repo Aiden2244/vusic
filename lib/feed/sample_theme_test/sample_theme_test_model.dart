@@ -3,13 +3,14 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'sample_theme_test_widget.dart' show SampleThemeTestWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class SampleThemeTestModel extends FlutterFlowModel {
+class SampleThemeTestModel extends FlutterFlowModel<SampleThemeTestWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

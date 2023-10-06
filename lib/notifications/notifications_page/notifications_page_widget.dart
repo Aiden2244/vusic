@@ -48,7 +48,10 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
     return StreamBuilder<List<NotificationsRecord>>(
       stream: queryNotificationsRecord(
         queryBuilder: (notificationsRecord) => notificationsRecord
-            .where('recipient_ref', isEqualTo: currentUserReference)
+            .where(
+              'recipient_ref',
+              isEqualTo: currentUserReference,
+            )
             .orderBy('created_at', descending: true),
         limit: 10,
       ),
@@ -73,7 +76,9 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
         List<NotificationsRecord> notificationsPageNotificationsRecordList =
             snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+          onTap: () => _model.unfocusNode.canRequestFocus
+              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+              : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

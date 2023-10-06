@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:from_css_color/from_css_color.dart';
+import '/backend/algolia/serialization_util.dart';
 import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
@@ -157,20 +158,39 @@ class PostsRecord extends FirestoreRecord {
           'technical_ability_showcase':
               snapshot.data['technical_ability_showcase'],
           'live_show_promotion': snapshot.data['live_show_promotion'],
-          'num_comments': snapshot.data['num_comments']?.round(),
-          'num_upvotes': snapshot.data['num_upvotes']?.round(),
-          'num_downvotes': snapshot.data['num_downvotes']?.round(),
+          'num_comments': convertAlgoliaParam(
+            snapshot.data['num_comments'],
+            ParamType.int,
+            false,
+          ),
+          'num_upvotes': convertAlgoliaParam(
+            snapshot.data['num_upvotes'],
+            ParamType.int,
+            false,
+          ),
+          'num_downvotes': convertAlgoliaParam(
+            snapshot.data['num_downvotes'],
+            ParamType.int,
+            false,
+          ),
           'cover_photo_URL': snapshot.data['cover_photo_URL'],
           'post_video_URL': snapshot.data['post_video_URL'],
           'post_photo_URL': snapshot.data['post_photo_URL'],
-          'author_ref': safeGet(
-            () => toRef(snapshot.data['author_ref']),
+          'author_ref': convertAlgoliaParam(
+            snapshot.data['author_ref'],
+            ParamType.DocumentReference,
+            false,
           ),
-          'num_shares': snapshot.data['num_shares']?.round(),
+          'num_shares': convertAlgoliaParam(
+            snapshot.data['num_shares'],
+            ParamType.int,
+            false,
+          ),
           'author_spotify_client_ID': snapshot.data['author_spotify_client_ID'],
-          'time_created': safeGet(
-            () => DateTime.fromMillisecondsSinceEpoch(
-                snapshot.data['time_created']),
+          'time_created': convertAlgoliaParam(
+            snapshot.data['time_created'],
+            ParamType.DateTime,
+            false,
           ),
           'hashtags': safeGet(
             () => snapshot.data['hashtags'].toList(),

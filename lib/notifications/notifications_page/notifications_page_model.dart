@@ -6,11 +6,12 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/notifications/notification_tile/notification_tile_widget.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
+import 'notifications_page_widget.dart' show NotificationsPageWidget;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class NotificationsPageModel extends FlutterFlowModel {
+class NotificationsPageModel extends FlutterFlowModel<NotificationsPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

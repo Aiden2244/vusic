@@ -44,8 +44,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
 
     return StreamBuilder<List<UsersRecord>>(
       stream: queryUsersRecord(
-        queryBuilder: (usersRecord) =>
-            usersRecord.where('uid', isEqualTo: currentUserReference?.id),
+        queryBuilder: (usersRecord) => usersRecord.where(
+          'uid',
+          isEqualTo: currentUserReference?.id,
+        ),
         singleRecord: true,
       ),
       builder: (context, snapshot) {
@@ -75,7 +77,9 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             ? profilePageUsersRecordList.first
             : null;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+          onTap: () => _model.unfocusNode.canRequestFocus
+              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+              : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

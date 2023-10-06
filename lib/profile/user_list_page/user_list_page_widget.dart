@@ -48,11 +48,13 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
       if (widget.queryType == 'Following') {
         logFirebaseEvent('UserListPage_firestore_query');
         _model.usersYouFollow = await queryFollowsRecordOnce(
-          queryBuilder: (followsRecord) =>
-              followsRecord.where('followingID', isEqualTo: widget.account),
+          queryBuilder: (followsRecord) => followsRecord.where(
+            'followingID',
+            isEqualTo: widget.account,
+          ),
           limit: 100,
         );
-        logFirebaseEvent('UserListPage_update_widget_state');
+        logFirebaseEvent('UserListPage_update_page_state');
         setState(() {
           _model.listOfUserRefs = _model.usersYouFollow!
               .map((e) => e.followedID)
@@ -64,11 +66,13 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
       } else {
         logFirebaseEvent('UserListPage_firestore_query');
         _model.usersFollowingYou = await queryFollowsRecordOnce(
-          queryBuilder: (followsRecord) =>
-              followsRecord.where('followedID', isEqualTo: widget.account),
+          queryBuilder: (followsRecord) => followsRecord.where(
+            'followedID',
+            isEqualTo: widget.account,
+          ),
           limit: 100,
         );
-        logFirebaseEvent('UserListPage_update_widget_state');
+        logFirebaseEvent('UserListPage_update_page_state');
         setState(() {
           _model.listOfUserRefs = _model.usersFollowingYou!
               .map((e) => e.followingID)
@@ -93,7 +97,9 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -375,7 +381,7 @@ class _UserListPageWidgetState extends State<UserListPageWidget> {
                                         }
 
                                         logFirebaseEvent(
-                                            'IconButton_update_widget_state');
+                                            'IconButton_update_page_state');
                                         setState(() {
                                           _model.removeFromListOfUserRefs(
                                               userRefToProcessItem);

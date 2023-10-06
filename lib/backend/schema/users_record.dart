@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:from_css_color/from_css_color.dart';
+import '/backend/algolia/serialization_util.dart';
 import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
@@ -150,9 +151,10 @@ class UsersRecord extends FirestoreRecord {
           'display_name': snapshot.data['display_name'],
           'photo_url': snapshot.data['photo_url'],
           'uid': snapshot.data['uid'],
-          'created_time': safeGet(
-            () => DateTime.fromMillisecondsSinceEpoch(
-                snapshot.data['created_time']),
+          'created_time': convertAlgoliaParam(
+            snapshot.data['created_time'],
+            ParamType.DateTime,
+            false,
           ),
           'phone_number': snapshot.data['phone_number'],
           'account_type': snapshot.data['account_type'],
@@ -162,18 +164,29 @@ class UsersRecord extends FirestoreRecord {
           'user_name': snapshot.data['user_name'],
           'bio': snapshot.data['bio'],
           'backsplash_pic': snapshot.data['backsplash_pic'],
-          'last_username_change': safeGet(
-            () => DateTime.fromMillisecondsSinceEpoch(
-                snapshot.data['last_username_change']),
+          'last_username_change': convertAlgoliaParam(
+            snapshot.data['last_username_change'],
+            ParamType.DateTime,
+            false,
           ),
           'artist_description': snapshot.data['artist_description'],
           'is_verified': snapshot.data['is_verified'],
-          'following_count': snapshot.data['following_count']?.round(),
-          'follower_count': snapshot.data['follower_count']?.round(),
+          'following_count': convertAlgoliaParam(
+            snapshot.data['following_count'],
+            ParamType.int,
+            false,
+          ),
+          'follower_count': convertAlgoliaParam(
+            snapshot.data['follower_count'],
+            ParamType.int,
+            false,
+          ),
           'blocked_by': safeGet(
-            () => snapshot.data['blocked_by']
-                .map((i) => (i as num).round())
-                .toList(),
+            () => convertAlgoliaParam<int>(
+              snapshot.data['blocked_by'],
+              ParamType.int,
+              true,
+            ).toList(),
           ),
         },
         UsersRecord.collection.doc(snapshot.objectID),

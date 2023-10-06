@@ -1,5 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -47,7 +45,9 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
+      onTap: () => _model.unfocusNode.canRequestFocus
+          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+          : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -333,39 +333,25 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                   }
                   if (_model.passFieldController.text ==
                       _model.confPassFieldController.text) {
-                    logFirebaseEvent('Button_auth');
-                    GoRouter.of(context).prepareAuthEvent();
-                    if (_model.passFieldController.text !=
-                        _model.confPassFieldController.text) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Passwords don\'t match!',
-                          ),
-                        ),
-                      );
-                      return;
-                    }
-
-                    final user = await authManager.createAccountWithEmail(
-                      context,
-                      _model.emailFieldController.text,
-                      _model.passFieldController.text,
-                    );
-                    if (user == null) {
-                      return;
-                    }
-
-                    await UsersRecord.collection
-                        .doc(user.uid)
-                        .update(createUsersRecordData(
-                          email: _model.emailFieldController.text,
-                          displayName: '',
-                        ));
-
                     logFirebaseEvent('Button_navigate_to');
 
-                    context.pushNamedAuth('SetUnamePage', context.mounted);
+                    context.pushNamed(
+                      'SetUnamePage',
+                      queryParameters: {
+                        'email': serializeParam(
+                          _model.emailFieldController.text,
+                          ParamType.String,
+                        ),
+                        'passwd': serializeParam(
+                          _model.passFieldController.text,
+                          ParamType.String,
+                        ),
+                        'confPasswd': serializeParam(
+                          _model.confPassFieldController.text,
+                          ParamType.String,
+                        ),
+                      }.withoutNulls,
+                    );
                   } else {
                     logFirebaseEvent('Button_show_snack_bar');
                     ScaffoldMessenger.of(context).showSnackBar(
