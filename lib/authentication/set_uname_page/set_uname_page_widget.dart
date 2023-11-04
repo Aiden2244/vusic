@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +43,13 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'SetUnamePage'});
     _model.nameFieldController ??= TextEditingController();
+    _model.nameFieldFocusNode ??= FocusNode();
+
     _model.unameFieldController ??= TextEditingController();
+    _model.unameFieldFocusNode ??= FocusNode();
+
     _model.phoneFieldController ??= TextEditingController();
+    _model.phoneFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -55,6 +61,15 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -153,6 +168,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                         width: MediaQuery.sizeOf(context).width * 0.7,
                         child: TextFormField(
                           controller: _model.nameFieldController,
+                          focusNode: _model.nameFieldFocusNode,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -204,6 +220,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                         width: MediaQuery.sizeOf(context).width * 0.7,
                         child: TextFormField(
                           controller: _model.unameFieldController,
+                          focusNode: _model.unameFieldFocusNode,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -254,6 +271,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                         width: MediaQuery.sizeOf(context).width * 0.7,
                         child: TextFormField(
                           controller: _model.phoneFieldController,
+                          focusNode: _model.phoneFieldFocusNode,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -312,7 +330,7 @@ class _SetUnamePageWidgetState extends State<SetUnamePageWidget> {
                             FormFieldController<String>(
                           _model.accountMenuValue ??= '',
                         ),
-                        options: ['fan', 'musician'],
+                        options: List<String>.from(['fan', 'musician']),
                         optionLabels: [
                           'Discover new music',
                           'Create/Promote music',

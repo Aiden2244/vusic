@@ -59,7 +59,7 @@ dependencies:
   google_sign_in_ios: 5.6.1
   google_sign_in_platform_interface: 2.4.0
   google_sign_in_web: 0.11.0+2
-  intl: 0.18.0
+  intl: 0.18.1
   json_path: 0.6.2
   mask_text_input_formatter: 2.4.0
   page_transition: 2.0.4
@@ -94,7 +94,9 @@ dependencies:
 
 dev_dependencies:
   flutter_launcher_icons: 0.13.1
+  flutter_lints: 3.0.0
   image: 4.0.17
+  lints: 3.0.0
 
   flutter_test:
     sdk: flutter
@@ -129,8 +131,6 @@ flutter:
     - assets/lottie_animations/
     - assets/rive_animations/
     - assets/pdfs/
-
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

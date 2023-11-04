@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'set_uname_page_widget.dart' show SetUnamePageWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class SetUnamePageModel extends FlutterFlowModel<SetUnamePageWidget> {
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for NameField widget.
+  FocusNode? nameFieldFocusNode;
   TextEditingController? nameFieldController;
   String? Function(BuildContext, String?)? nameFieldControllerValidator;
   String? _nameFieldControllerValidator(BuildContext context, String? val) {
@@ -33,6 +35,7 @@ class SetUnamePageModel extends FlutterFlowModel<SetUnamePageWidget> {
   }
 
   // State field(s) for UnameField widget.
+  FocusNode? unameFieldFocusNode;
   TextEditingController? unameFieldController;
   String? Function(BuildContext, String?)? unameFieldControllerValidator;
   String? _unameFieldControllerValidator(BuildContext context, String? val) {
@@ -53,6 +56,7 @@ class SetUnamePageModel extends FlutterFlowModel<SetUnamePageWidget> {
   }
 
   // State field(s) for PhoneField widget.
+  FocusNode? phoneFieldFocusNode;
   TextEditingController? phoneFieldController;
   final phoneFieldMask = MaskTextInputFormatter(mask: '(###) ###-####');
   String? Function(BuildContext, String?)? phoneFieldControllerValidator;
@@ -85,8 +89,13 @@ class SetUnamePageModel extends FlutterFlowModel<SetUnamePageWidget> {
 
   void dispose() {
     unfocusNode.dispose();
+    nameFieldFocusNode?.dispose();
     nameFieldController?.dispose();
+
+    unameFieldFocusNode?.dispose();
     unameFieldController?.dispose();
+
+    phoneFieldFocusNode?.dispose();
     phoneFieldController?.dispose();
   }
 

@@ -7,6 +7,7 @@ import '/actions/actions.dart' as action_blocks;
 import 'profile_stats_bar_widget.dart' show ProfileStatsBarWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

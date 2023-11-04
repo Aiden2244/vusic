@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'create_account_page_widget.dart' show CreateAccountPageWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class CreateAccountPageModel extends FlutterFlowModel<CreateAccountPageWidget> {
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for EmailField widget.
+  FocusNode? emailFieldFocusNode;
   TextEditingController? emailFieldController;
   String? Function(BuildContext, String?)? emailFieldControllerValidator;
   String? _emailFieldControllerValidator(BuildContext context, String? val) {
@@ -28,6 +30,7 @@ class CreateAccountPageModel extends FlutterFlowModel<CreateAccountPageWidget> {
   }
 
   // State field(s) for PassField widget.
+  FocusNode? passFieldFocusNode;
   TextEditingController? passFieldController;
   late bool passFieldVisibility;
   String? Function(BuildContext, String?)? passFieldControllerValidator;
@@ -44,6 +47,7 @@ class CreateAccountPageModel extends FlutterFlowModel<CreateAccountPageWidget> {
   }
 
   // State field(s) for ConfPassField widget.
+  FocusNode? confPassFieldFocusNode;
   TextEditingController? confPassFieldController;
   late bool confPassFieldVisibility;
   String? Function(BuildContext, String?)? confPassFieldControllerValidator;
@@ -71,8 +75,13 @@ class CreateAccountPageModel extends FlutterFlowModel<CreateAccountPageWidget> {
 
   void dispose() {
     unfocusNode.dispose();
+    emailFieldFocusNode?.dispose();
     emailFieldController?.dispose();
+
+    passFieldFocusNode?.dispose();
     passFieldController?.dispose();
+
+    confPassFieldFocusNode?.dispose();
     confPassFieldController?.dispose();
   }
 

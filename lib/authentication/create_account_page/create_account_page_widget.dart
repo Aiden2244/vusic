@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'create_account_page_model.dart';
@@ -29,8 +30,13 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'CreateAccountPage'});
     _model.emailFieldController ??= TextEditingController();
+    _model.emailFieldFocusNode ??= FocusNode();
+
     _model.passFieldController ??= TextEditingController();
+    _model.passFieldFocusNode ??= FocusNode();
+
     _model.confPassFieldController ??= TextEditingController();
+    _model.confPassFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -42,6 +48,15 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -136,6 +151,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                             width: MediaQuery.sizeOf(context).width * 0.7,
                             child: TextFormField(
                               controller: _model.emailFieldController,
+                              focusNode: _model.emailFieldFocusNode,
                               autofocus: true,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -188,6 +204,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                             width: MediaQuery.sizeOf(context).width * 0.7,
                             child: TextFormField(
                               controller: _model.passFieldController,
+                              focusNode: _model.passFieldFocusNode,
                               autofocus: true,
                               obscureText: !_model.passFieldVisibility,
                               decoration: InputDecoration(
@@ -254,6 +271,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                             width: MediaQuery.sizeOf(context).width * 0.7,
                             child: TextFormField(
                               controller: _model.confPassFieldController,
+                              focusNode: _model.confPassFieldFocusNode,
                               autofocus: true,
                               obscureText: !_model.confPassFieldVisibility,
                               decoration: InputDecoration(
