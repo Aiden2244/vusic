@@ -7,6 +7,7 @@ import '/profile/profile_stats_bar/profile_stats_bar_widget.dart';
 import 'other_user_p_f_p_widget.dart' show OtherUserPFPWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

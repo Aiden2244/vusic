@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'search_page_model.dart';
@@ -30,6 +31,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'SearchPage'});
     _model.searchFieldController ??= TextEditingController();
+    _model.searchFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -41,6 +43,15 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -71,6 +82,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 16.0),
                 child: TextFormField(
                   controller: _model.searchFieldController,
+                  focusNode: _model.searchFieldFocusNode,
                   onChanged: (_) => EasyDebounce.debounce(
                     '_model.searchFieldController',
                     Duration(milliseconds: 2000),

@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     });
 
     _model.emailFieldController ??= TextEditingController();
+    _model.emailFieldFocusNode ??= FocusNode();
+
     _model.passFieldController ??= TextEditingController();
+    _model.passFieldFocusNode ??= FocusNode();
   }
 
   @override
@@ -48,6 +52,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (isiOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     context.watch<FFAppState>();
 
     return GestureDetector(
@@ -133,6 +146,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             width: MediaQuery.sizeOf(context).width * 0.7,
                             child: TextFormField(
                               controller: _model.emailFieldController,
+                              focusNode: _model.emailFieldFocusNode,
                               autofocus: true,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -208,6 +222,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             width: MediaQuery.sizeOf(context).width * 0.7,
                             child: TextFormField(
                               controller: _model.passFieldController,
+                              focusNode: _model.passFieldFocusNode,
                               autofocus: true,
                               obscureText: !_model.passFieldVisibility,
                               decoration: InputDecoration(
@@ -506,35 +521,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(4.0, 20.0, 4.0, 4.0),
                         child: FFButtonWidget(
-                          onPressed: () async {
-                            logFirebaseEvent('LOGIN_PAGE_PAGE__BTN_ON_TAP');
-                            logFirebaseEvent('Button_auth');
-                            GoRouter.of(context).prepareAuthEvent();
-                            final user =
-                                await authManager.signInWithGoogle(context);
-                            if (user == null) {
-                              return;
-                            }
-                            if (valueOrDefault(
-                                        currentUserDocument?.accountType, '') !=
-                                    null &&
-                                valueOrDefault(
-                                        currentUserDocument?.accountType, '') !=
-                                    '') {
-                              logFirebaseEvent('Button_navigate_to');
-
-                              context.pushNamedAuth(
-                                  'SampleThemeTest', context.mounted);
-
-                              return;
-                            } else {
-                              logFirebaseEvent('Button_navigate_to');
-
-                              context.pushNamedAuth(
-                                  'SetUnamePage', context.mounted);
-
-                              return;
-                            }
+                          onPressed: () {
+                            print('SpotifyLogin pressed ...');
                           },
                           text: '',
                           icon: FaIcon(

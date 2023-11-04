@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'login_page_widget.dart' show LoginPageWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for EmailField widget.
+  FocusNode? emailFieldFocusNode;
   TextEditingController? emailFieldController;
   String? Function(BuildContext, String?)? emailFieldControllerValidator;
   String? _emailFieldControllerValidator(BuildContext context, String? val) {
@@ -30,6 +32,7 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
   }
 
   // State field(s) for PassField widget.
+  FocusNode? passFieldFocusNode;
   TextEditingController? passFieldController;
   late bool passFieldVisibility;
   String? Function(BuildContext, String?)? passFieldControllerValidator;
@@ -51,7 +54,10 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
 
   void dispose() {
     unfocusNode.dispose();
+    emailFieldFocusNode?.dispose();
     emailFieldController?.dispose();
+
+    passFieldFocusNode?.dispose();
     passFieldController?.dispose();
   }
 

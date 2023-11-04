@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'search_page_widget.dart' show SearchPageWidget;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,7 @@ class SearchPageModel extends FlutterFlowModel<SearchPageWidget> {
 
   final unfocusNode = FocusNode();
   // State field(s) for SearchField widget.
+  FocusNode? searchFieldFocusNode;
   TextEditingController? searchFieldController;
   String? Function(BuildContext, String?)? searchFieldControllerValidator;
   // Algolia Search Results from action on SearchField
@@ -30,6 +32,7 @@ class SearchPageModel extends FlutterFlowModel<SearchPageWidget> {
 
   void dispose() {
     unfocusNode.dispose();
+    searchFieldFocusNode?.dispose();
     searchFieldController?.dispose();
   }
 
